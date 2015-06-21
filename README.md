@@ -3,7 +3,7 @@
 
 Alvin -- MAPS (WEATHER?) <br>
 Elvis -- STOCKS <br>
-Madelyn --  <br>
+Madelyn -- CALENDAR / TRENDING / HOROSCOPE  <br>
 
 
 
@@ -45,7 +45,9 @@ Music card, using new Billboard data
 Alarm card, a card to set alarm and that displays upcoming alarms
 Trending card, using the Twitter trends or similar feed
 Must include at least one notifications feature.
-Bonus
+
+
+<b>Bonus</b>
 
 Here are some bonus features you might want to use for certain cards:
 
