@@ -1,9 +1,9 @@
 # googlecards
 
 
-Alvin -- MAPS (WEATHER?) <br>
-Elvis -- STOCKS <br>
-Madelyn -- CALENDAR / TRENDING / HOROSCOPE  <br>
+<b>Alvin</b> -- MAPS (WEATHER?) <br>
+<b>Elvis</b> -- STOCKS <br>
+<b>Madelyn</b> -- CALENDAR / TRENDING / HOROSCOPE  <br>
 
 
 
