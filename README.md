@@ -1,8 +1,8 @@
 # googlecards
 
 
-Alvin -- MAPS (WEATHER)
-Elvis -- STOCKS 
+Alvin -- MAPS (WEATHER) <br>
+Elvis -- STOCKS <br>
 Madelyn -- 
 
 
