@@ -14,9 +14,9 @@ Madelyn --  <br>
 
 
 
-<b>Now Feed</b>
+<b>NOW FEED</b>
 
-<u>Requirements</u>
+<b>Requirements</b>
 
 The purpose of this project is to create a Google Now style feed. Every item in the feed is a card. The user can scroll through the feed of cards or interact with cards.
 
@@ -31,7 +31,7 @@ Have well-organized code that makes it easy to add new features.
 Either be locked to one orientation or look great in both landscape and portrait.
 Remember to use the software engineering practices we've developed this unit! Work on different branches for different features. Code review each other. Design APIs together. You can do it!
 
-<u>Features</u>
+<b>Features</b>
 
 Must have a todo list feature that stores/retrieves a file locally.
 Must have at least n of the following features, where n is the number of people in your team:
@@ -68,7 +68,7 @@ We will have demos in class on Thursday July 2nd. I will probably ask your team 
 
 We will also have demo rehearsals in class on Thursday June 30th. These are not optional, so prepare to be code complete by this date at the latest.
 
-<u>Submissions</u>
+<b>Submissions</b>
 
 Team Names - github.com/repository
 
