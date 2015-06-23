@@ -1,9 +1,9 @@
 # googlecards
 
 
-<b>Alvin</b> -- MAPS (WEATHER?) <br>
-<b>Elvis</b> -- STOCKS <br>
-<b>Madelyn</b> -- CALENDAR / TRENDING / HOROSCOPE  <br>
+<b>Alvin</b> -- MAPS + GOOGLE SEARCH BAR + UI(?) <br>
+<b>Elvis</b> -- STOCKS + WEATHER <br>
+<b>Madelyn</b> -- CALENDAR + TODO  <br>
 
 
 
