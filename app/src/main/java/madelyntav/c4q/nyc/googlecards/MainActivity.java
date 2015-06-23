@@ -2,6 +2,8 @@ package madelyntav.c4q.nyc.googlecards;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.SearchManager;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +14,8 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.HorizontalScrollView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.Toast;
@@ -43,6 +47,7 @@ public class MainActivity extends FragmentActivity {
     private ArrayList<String> list;
     private ListView listView;
     private EditText listEnter;
+    private EditText searchBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +57,17 @@ public class MainActivity extends FragmentActivity {
         listEnter = (EditText) findViewById(R.id.enterList);
         Button listButton = (Button) findViewById(R.id.listButton);
         ScrollView scroll = (ScrollView) findViewById(R.id.scroll);
-        scroll.setVerticalScrollBarEnabled(false);
+
+
+        searchBar = (EditText) findViewById(R.id.searchText);
+        ImageButton searchButton = (ImageButton) findViewById(R.id.searchButton);
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onSearchClick(view);
+            }
+        });
+
 
 
 
@@ -130,6 +145,17 @@ public class MainActivity extends FragmentActivity {
         });
     }
 
+    public void onSearchClick(View v) {
+        try {
+            Intent searchIntent = new Intent(Intent.ACTION_WEB_SEARCH);
+            String searchTerm = searchBar.getText().toString();
+            searchIntent.putExtra(SearchManager.QUERY, searchTerm);
+            startActivity(searchIntent);
+        } catch (Exception e) {
+            Toast.makeText(this, "Search Error, please try again", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     private String downloadUrl(String strUrl) throws IOException {
         String data = "";
         InputStream iStream = null;
@@ -158,7 +184,7 @@ public class MainActivity extends FragmentActivity {
             br.close();
 
         }catch(Exception e){
-            Log.d("Exception while downloading url", e.toString());
+            Log.d("Exception with url", e.toString());
         }finally{
             iStream.close();
             urlConnection.disconnect();
