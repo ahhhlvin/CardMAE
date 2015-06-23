@@ -62,7 +62,9 @@ Infinite scrolling
 Swipe to remove a card
 Pull to refresh
 Click for more info i.e. when a card is selcted, show more information, open another app, or do a Google search
-Submission
+
+
+<b>Submission</b>
 
 Submit your projects by July 1st at 10:00pm. Submit your projects by adding a link to your repo below. Include in your README instructions for getting your app set up and some basics of navigating your project.
 
@@ -70,7 +72,7 @@ We will have demos in class on Thursday July 2nd. I will probably ask your team 
 
 We will also have demo rehearsals in class on Thursday June 30th. These are not optional, so prepare to be code complete by this date at the latest.
 
-<b>Submissions</b>
+<b>Submission format</b>
 
 Team Names - github.com/repository
 
