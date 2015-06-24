@@ -3,26 +3,33 @@ package madelyntav.c4q.nyc.googlecards;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.SearchManager;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import org.json.JSONObject;
 import java.io.BufferedReader;
@@ -38,25 +45,48 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private Button mBtnFind;
     private GoogleMap mMap;
     private EditText etPlace;
-    private SupportMapFragment mapFragment;
+    private MapFragment mapFragment;
     private ArrayList<String> list;
     private ListView listView;
-    private EditText listEnter;
+    private EditText listEnter, enterAddress;
     private EditText searchBar;
+    private Button homeButton, workButton;
+    private String homeAddress = "", workAddress = "";
+    private LinearLayout addressLayout;
+    private Button saveAddress;
+    private SwipeRefreshLayout swipeLayout;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        saveAddress = (Button) findViewById(R.id.homeWorkButton);
+        enterAddress = (EditText) findViewById(R.id.enterAddress);
+        addressLayout = (LinearLayout) findViewById(R.id.addressLayout);
+
+        swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
+        swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                new Handler().postDelayed(new Runnable() {
+                    @Override public void run() {
+                        swipeLayout.setRefreshing(false);
+                    }
+                }, 5000);
+            }
+        });
+
+
         listEnter = (EditText) findViewById(R.id.enterList);
         Button listButton = (Button) findViewById(R.id.listButton);
-        ScrollView scroll = (ScrollView) findViewById(R.id.scroll);
 
 
         searchBar = (EditText) findViewById(R.id.searchText);
@@ -91,15 +121,14 @@ public class MainActivity extends FragmentActivity {
         mBtnFind = (Button) findViewById(R.id.btn_show);
 
         // Getting reference to the SupportMapFragment
-         mapFragment = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
 
         // TODO: Getting reference to the Google Map
-//        new Handler().postDelayed(new Runnable() {
-//            @Override
-//            public void run() {
-//                mMap = mapFragment.getMap();
-//            }
-//        }, 10000);
+
+        mMap = mapFragment.getMap();
+
 
 
 
@@ -113,38 +142,55 @@ public class MainActivity extends FragmentActivity {
             public void onClick(View v) {
                 // Getting the place entered
                 String location = etPlace.getText().toString();
-
-                if (location == null || location.equals("")) {
-                    Toast.makeText(getBaseContext(), "No Place is entered", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                String url = "https://maps.googleapis.com/maps/api/geocode/json?";
-
-                try {
-                    // encoding special characters like space in the user input place
-                    location = URLEncoder.encode(location, "utf-8");
-                } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
-                }
-
-                String address = "address=" + location;
-
-                String sensor = "sensor=false";
-
-                // url , from where the geocoding data is fetched
-                url = url + address + "&" + sensor;
-
-                // Instantiating DownloadTask to get places from Google Geocoding service
-                // in a non-ui thread
-                DownloadTask downloadTask = new DownloadTask();
-
-                // Start downloading the geocoding places
-                downloadTask.execute(url);
+                findLocation(location);
             }
         });
+
+
+                saveAddress.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        addressLayout.setVisibility(View.GONE);
+                    }
+                });
+
+                homeButton = (Button) findViewById(R.id.homeButton);
+                homeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (homeAddress.equals("")) {
+                            addressLayout.setVisibility(View.VISIBLE);
+                            saveAddress.setText("SAVE HOME");
+                            homeAddress = enterAddress.getText().toString();
+                        } else {
+                            findLocation(homeAddress);
+                        }
+                    }
+                });
+                workButton = (Button) findViewById(R.id.workButton);
+                workButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (workAddress.equals("")) {
+                            addressLayout.setVisibility(View.VISIBLE);
+                            saveAddress.setText("SAVE WORK");
+                            workAddress = enterAddress.getText().toString();
+                        } else {
+                            findLocation(workAddress);
+                        }
+                    }
+                });
+
+
+
     }
 
+
+
+
+
+
+    // GOOGLE SEARCH BAR CARD
     public void onSearchClick(View v) {
         try {
             Intent searchIntent = new Intent(Intent.ACTION_WEB_SEARCH);
@@ -191,7 +237,46 @@ public class MainActivity extends FragmentActivity {
         }
 
         return data;
+
+
+
+
+
+
+
     }
+
+    @Override
+    public void onMapReady(final GoogleMap googleMap) {
+        googleMap.setMyLocationEnabled(true);
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
+        googleMap.getUiSettings().setCompassEnabled(true);
+        googleMap.getUiSettings().setScrollGesturesEnabled(true);
+        googleMap.getUiSettings().setIndoorLevelPickerEnabled(true);
+
+
+
+        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                marker.remove();
+                return false;
+            }
+        });
+
+        googleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+            @Override
+            public void onMapLongClick(LatLng latLng) {
+                googleMap.addMarker(new MarkerOptions()
+                        .position(latLng)
+                        .draggable(true));
+                Toast.makeText(getApplicationContext(), "Marker has been added", Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
+    }
+
     /** A class, to download Places from Geocoding webservice */
     private class DownloadTask extends AsyncTask<String, Integer, String> {
 
@@ -289,6 +374,37 @@ public class MainActivity extends FragmentActivity {
     }
 
 
+    public void findLocation(String location) {
+        if (location == null || location.equals("")) {
+            Toast.makeText(getBaseContext(), "No Place is entered", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String url = "https://maps.googleapis.com/maps/api/geocode/json?";
+
+        try {
+            // encoding special characters like space in the user input place
+            location = URLEncoder.encode(location, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        String address = "address=" + location;
+
+        String sensor = "sensor=false";
+
+        // url , from where the geocoding data is fetched
+        url = url + address + "&" + sensor;
+
+        // Instantiating DownloadTask to get places from Google Geocoding service
+        // in a non-ui thread
+        DownloadTask downloadTask = new DownloadTask();
+
+        // Start downloading the geocoding places
+        downloadTask.execute(url);
+    }
+
+
 
 
     @Override
@@ -305,4 +421,29 @@ public class MainActivity extends FragmentActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public class ConnectionChangeReceiver extends BroadcastReceiver
+    {
+        @Override
+        public void onReceive( Context context, Intent intent )
+        {
+            ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService( Context.CONNECTIVITY_SERVICE );
+            NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
+            NetworkInfo mobNetInfo = connectivityManager.getNetworkInfo(     ConnectivityManager.TYPE_MOBILE );
+            if ( activeNetInfo != null )
+            {
+                Toast.makeText( context, "Active Network Type : " + activeNetInfo.getTypeName(), Toast.LENGTH_SHORT ).show();
+            }
+            if( mobNetInfo != null )
+            {
+                Toast.makeText( context, "Mobile Network Type : " + mobNetInfo.getTypeName(), Toast.LENGTH_SHORT ).show();
+            }
+        }
+    }
+
+
+
+
 }
+
+
