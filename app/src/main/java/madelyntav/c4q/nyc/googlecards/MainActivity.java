@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -15,6 +16,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -62,8 +64,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private Button saveAddress;
     private SwipeRefreshLayout swipeLayout;
     private TextView nameView;
+    private boolean homeSelected = true;
     GridView mGridView;
     ImageAdapter adapter;
+
 
 
 
@@ -81,7 +85,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         addressLayout = (LinearLayout) findViewById(R.id.addressLayout);
 
         swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
-        // TODO: PUT CODE IN HERE THAT WILL BE REFRESHED WITH SWIPE REFRESH LAYOUT 
+        // TODO: PUT CODE IN HERE THAT WILL BE REFRESHED WITH SWIPE REFRESH LAYOUT
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -113,11 +117,20 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
 
+//        // Clicking on the flickrCard will open up the browser to Flickr's "explore" page
 //        mGridView = (GridView) findViewById(R.id.gridView);
-//        mGridView.setOnClickListener(new View.OnClickListener() {
+//        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //            @Override
-//            public void onClick(View view) {
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 //
+//            }
+//
+//            @Override
+//            public void OnItemClick(View view) {
+//                String url = " https://www.flickr.com/explore";
+//                Intent flickrIntent = new Intent(Intent.ACTION_VIEW);
+//                flickrIntent.setData(Uri.parse(url));
+//                startActivity(flickrIntent);
 //            }
 //        });
 
@@ -198,10 +211,35 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
 
+
+
+                // TODO: SAVE OR CANCEL BUTTONS IMPLEMENT / change 'saveAddress' button to IMAGEBUTTON of check and put cancel button next to it!
+                // TODO: double check that code below works properly !!!
+
                 saveAddress.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        if (homeSelected = true && !homeAddress.equals("")) {
+                            Toast.makeText(getApplicationContext(), "Home address is already set as: " + homeAddress + ", continuing will overwrite.", Toast.LENGTH_SHORT).show();
+                            homeAddress = enterAddress.getText().toString();
+                            Toast.makeText(getApplicationContext(), "Home address saved", Toast.LENGTH_SHORT).show();
+
+                        } else if (homeSelected = true && homeAddress.equals("")) {
+                            homeAddress = enterAddress.getText().toString();
+                            Toast.makeText(getApplicationContext(), "Home address saved", Toast.LENGTH_SHORT).show();
+                        }
+                        else if (homeSelected = false && !workAddress.equals("")) {
+                            Toast.makeText(getApplicationContext(), "Work address is already set as: " + workAddress + ", continuing will overwrite.", Toast.LENGTH_SHORT).show();
+                            workAddress = enterAddress.getText().toString();
+                            Toast.makeText(getApplicationContext(), "Work address saved", Toast.LENGTH_SHORT).show();
+
+                        } else if (homeSelected = false && workAddress.equals("")) {
+                            workAddress = enterAddress.getText().toString();
+                            Toast.makeText(getApplicationContext(), "Work address saved", Toast.LENGTH_SHORT).show();
+                        }
+
                         addressLayout.setVisibility(View.GONE);
+
                     }
                 });
 
@@ -209,26 +247,28 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 homeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (homeAddress.equals("")) {
-                            addressLayout.setVisibility(View.VISIBLE);
-                            saveAddress.setText("SAVE HOME");
-                            homeAddress = enterAddress.getText().toString();
-                        } else {
-                            findLocation(homeAddress);
-                        }
+                            if (homeAddress.equals("")) {
+                                addressLayout.setVisibility(View.VISIBLE);
+                                saveAddress.setText("SAVE HOME");
+                            } else {
+                                findLocation(homeAddress);
+                            }
+
                     }
                 });
+
                 workButton = (Button) findViewById(R.id.workButton);
                 workButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        if (workAddress.equals("")) {
-                            addressLayout.setVisibility(View.VISIBLE);
-                            saveAddress.setText("SAVE WORK");
-                            workAddress = enterAddress.getText().toString();
-                        } else {
-                            findLocation(workAddress);
-                        }
+                         homeSelected = false;
+                            if (workAddress.equals("")) {
+                                addressLayout.setVisibility(View.VISIBLE);
+                                saveAddress.setText("SAVE WORK");
+                            } else {
+                                findLocation(workAddress);
+                            }
+
                     }
                 });
 

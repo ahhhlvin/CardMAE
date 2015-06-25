@@ -62,7 +62,7 @@ public class FlickrGetter {
         }
     }
 
-    // TODO : Step 2 - by using Step 1's result, get 20 images' url addresses and save into ArrayList in String.
+    // TODO : Step 2 - by using Step 1's result, get 4 images' url addresses and save into ArrayList in String.
     public List<String> getBitmapList() throws JSONException, IOException {
 
         List<String> imageUrlList = new ArrayList<String>();
