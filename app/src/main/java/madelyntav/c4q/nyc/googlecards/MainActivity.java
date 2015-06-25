@@ -81,6 +81,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         addressLayout = (LinearLayout) findViewById(R.id.addressLayout);
 
         swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
+        // TODO: PUT CODE IN HERE THAT WILL BE REFRESHED WITH SWIPE REFRESH LAYOUT 
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
