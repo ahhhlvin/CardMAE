@@ -1,7 +1,6 @@
 package madelyntav.c4q.nyc.googlecards;
 
-import android.app.Activity;
-import android.app.Fragment;
+
 import android.app.SearchManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -19,18 +18,20 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -47,19 +48,25 @@ import java.util.List;
 
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private Button mBtnFind;
+    private ImageButton mBtnFind, nameButton;
     private GoogleMap mMap;
     private EditText etPlace;
     private MapFragment mapFragment;
     private ArrayList<String> list;
     private ListView listView;
     private EditText listEnter, enterAddress;
-    private EditText searchBar;
+    private EditText searchBar, nameText;
     private Button homeButton, workButton;
     private String homeAddress = "", workAddress = "";
     private LinearLayout addressLayout;
     private Button saveAddress;
     private SwipeRefreshLayout swipeLayout;
+    private TextView nameView;
+    GridView mGridView;
+    ImageAdapter adapter;
+
+
+
 
 
 
@@ -67,6 +74,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         saveAddress = (Button) findViewById(R.id.homeWorkButton);
         enterAddress = (EditText) findViewById(R.id.enterAddress);
@@ -76,8 +84,17 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        new AsyncLoading().execute();
+
+                    }
+                });
+
                 new Handler().postDelayed(new Runnable() {
-                    @Override public void run() {
+                    @Override
+                    public void run() {
                         swipeLayout.setRefreshing(false);
                     }
                 }, 5000);
@@ -85,8 +102,41 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
 
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                initializeViews();
+                new AsyncLoading().execute();
+
+            }
+        });
+
+
+//        mGridView = (GridView) findViewById(R.id.gridView);
+//        mGridView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
+
+
+        nameText = (EditText) findViewById(R.id.nameText);
+        nameView = (TextView) findViewById(R.id.nameView);
+        nameButton = (ImageButton) findViewById(R.id.nameButton);
+        nameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nameText.setVisibility(View.GONE);
+                nameButton.setVisibility(View.GONE);
+                nameView.setVisibility(View.VISIBLE);
+                nameView.setText("Hello, " + nameText.getText().toString() + "!");
+            }
+        });
+
+
         listEnter = (EditText) findViewById(R.id.enterList);
-        Button listButton = (Button) findViewById(R.id.listButton);
+        ImageButton listButton = (ImageButton) findViewById(R.id.listButton);
 
 
         searchBar = (EditText) findViewById(R.id.searchText);
@@ -118,7 +168,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         // Getting reference to the find button
-        mBtnFind = (Button) findViewById(R.id.btn_show);
+        mBtnFind = (ImageButton) findViewById(R.id.btn_show);
 
         // Getting reference to the SupportMapFragment
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
@@ -438,6 +488,38 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             {
                 Toast.makeText( context, "Mobile Network Type : " + mobNetInfo.getTypeName(), Toast.LENGTH_SHORT ).show();
             }
+        }
+    }
+
+    private void initializeViews() {
+        mGridView = (GridView) findViewById(R.id.gridView);
+    }
+
+
+    private class AsyncLoading extends AsyncTask<Void, Void, List<String>> {
+
+        @Override
+        protected List<String> doInBackground(Void... params) {
+            // TODO : Step 3 - by using FlickrGetter.java, get latest 20 images' Urls from Flickr and return the result.
+
+
+            try {
+                return new FlickrGetter().getBitmapList();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(List<String> imageList) {
+            // TODO : Step 5 - Now we have ImageAdapter and the data(list), post the picture!
+
+            adapter = new ImageAdapter(MainActivity.this, imageList);
+            mGridView.setAdapter(adapter);
+
         }
     }
 
