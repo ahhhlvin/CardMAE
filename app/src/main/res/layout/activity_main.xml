@@ -286,7 +286,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
                             android:padding="5dp"
-                            android:text="TO UPDATE ADDRESS HOLD DOWN ON DESIRED BUTTON"
+                            android:text="HOLD DOWN ON DESIRED BUTTON TO UPDATE ADDRESS "
                             android:textSize="25px" />
 
 

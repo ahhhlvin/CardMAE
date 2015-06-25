@@ -2,7 +2,11 @@ package madelyntav.c4q.nyc.googlecards;
 
 
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
+import android.location.Criteria;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,6 +26,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -61,8 +66,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private LinearLayout addressLayout;
     private Button saveAddress;
     private SwipeRefreshLayout swipeLayout;
-    private TextView nameView, holdText;
-    private boolean homeSelected;
+    private TextView nameView;
     GridView mGridView;
     ImageAdapter adapter;
 
@@ -201,34 +205,30 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 
-        holdText = (TextView) findViewById(R.id.holdText);
         saveAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (homeSelected = true && !homeAddress.equals("")) {
-                    Toast.makeText(getApplicationContext(), "Home address is already set as: " + homeAddress + ", continuing will overwrite.", Toast.LENGTH_LONG).show();
+                if (saveAddress.getText().toString().equals("save home")) {
+                    if (!homeAddress.equals("")) {
+                        Toast.makeText(getApplicationContext(), "Home address is already set as: " + homeAddress + ", continuing will overwrite.", Toast.LENGTH_LONG).show();
+                    }
+
                     homeAddress = enterAddress.getText().toString();
                     Toast.makeText(getApplicationContext(), "Home address saved", Toast.LENGTH_SHORT).show();
-                    enterAddress.setHint("Enter Home Address");
 
-                } else if (homeSelected = true && homeAddress.equals("")) {
-                    homeAddress = enterAddress.getText().toString();
-                    Toast.makeText(getApplicationContext(), "Home address saved", Toast.LENGTH_SHORT).show();
-                    enterAddress.setHint("Enter Home Address");
-                } else if (homeSelected = false && !workAddress.equals("")) {
-                    Toast.makeText(getApplicationContext(), "Work address is already set as: " + workAddress + ", continuing will overwrite.", Toast.LENGTH_LONG).show();
+                }
+
+                if (saveAddress.getText().toString().equals("save work")){
+                    if (!workAddress.equals("")) {
+                        Toast.makeText(getApplicationContext(), "Work address is already set as: " + workAddress + ", continuing will overwrite.", Toast.LENGTH_LONG).show();
+                    }
+
                     workAddress = enterAddress.getText().toString();
                     Toast.makeText(getApplicationContext(), "Work address saved", Toast.LENGTH_SHORT).show();
-                    enterAddress.setHint("Enter Work Address");
 
-                } else if (homeSelected = false && workAddress.equals("")) {
-                    workAddress = enterAddress.getText().toString();
-                    Toast.makeText(getApplicationContext(), "Work address saved", Toast.LENGTH_SHORT).show();
-                    enterAddress.setHint("Enter Work Address");
                 }
 
                 addressLayout.setVisibility(View.GONE);
-                holdText.setVisibility(View.VISIBLE);
             }
         });
 
@@ -239,6 +239,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 if (homeAddress.equals("")) {
                     addressLayout.setVisibility(View.VISIBLE);
                     saveAddress.setText("save home");
+                    enterAddress.setHint("Enter Home Address");
+                    enterAddress.setText("");
+
                 } else {
                     findLocation(homeAddress);
                 }
@@ -265,10 +268,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         workButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                homeSelected = false;
                 if (workAddress.equals("")) {
                     addressLayout.setVisibility(View.VISIBLE);
                     saveAddress.setText("save work");
+                    enterAddress.setHint("Enter Work Address");
+                    enterAddress.setText("");
                 } else {
                     findLocation(workAddress);
                 }
