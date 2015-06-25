@@ -2,12 +2,7 @@ package madelyntav.c4q.nyc.googlecards;
 
 
 import android.app.SearchManager;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -26,6 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -33,8 +29,10 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -63,15 +61,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private LinearLayout addressLayout;
     private Button saveAddress;
     private SwipeRefreshLayout swipeLayout;
-    private TextView nameView;
-    private boolean homeSelected = true;
+    private TextView nameView, holdText;
+    private boolean homeSelected;
     GridView mGridView;
     ImageAdapter adapter;
-
-
-
-
-
 
 
     @Override
@@ -163,8 +156,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
 
-
-
         listView = (ListView) findViewById(R.id.listView);
         list = new ArrayList<>();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
@@ -194,8 +185,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         mMap = mapFragment.getMap();
 
 
-
-
         // Getting reference to EditText
         etPlace = (EditText) findViewById(R.id.et_place);
 
@@ -212,73 +201,98 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 
+        holdText = (TextView) findViewById(R.id.holdText);
+        saveAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (homeSelected = true && !homeAddress.equals("")) {
+                    Toast.makeText(getApplicationContext(), "Home address is already set as: " + homeAddress + ", continuing will overwrite.", Toast.LENGTH_LONG).show();
+                    homeAddress = enterAddress.getText().toString();
+                    Toast.makeText(getApplicationContext(), "Home address saved", Toast.LENGTH_SHORT).show();
+                    enterAddress.setHint("Enter Home Address");
 
-                // TODO: SAVE OR CANCEL BUTTONS IMPLEMENT / change 'saveAddress' button to IMAGEBUTTON of check and put cancel button next to it!
-                // TODO: double check that code below works properly !!!
+                } else if (homeSelected = true && homeAddress.equals("")) {
+                    homeAddress = enterAddress.getText().toString();
+                    Toast.makeText(getApplicationContext(), "Home address saved", Toast.LENGTH_SHORT).show();
+                    enterAddress.setHint("Enter Home Address");
+                } else if (homeSelected = false && !workAddress.equals("")) {
+                    Toast.makeText(getApplicationContext(), "Work address is already set as: " + workAddress + ", continuing will overwrite.", Toast.LENGTH_LONG).show();
+                    workAddress = enterAddress.getText().toString();
+                    Toast.makeText(getApplicationContext(), "Work address saved", Toast.LENGTH_SHORT).show();
+                    enterAddress.setHint("Enter Work Address");
 
-                saveAddress.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (homeSelected = true && !homeAddress.equals("")) {
-                            Toast.makeText(getApplicationContext(), "Home address is already set as: " + homeAddress + ", continuing will overwrite.", Toast.LENGTH_SHORT).show();
-                            homeAddress = enterAddress.getText().toString();
-                            Toast.makeText(getApplicationContext(), "Home address saved", Toast.LENGTH_SHORT).show();
+                } else if (homeSelected = false && workAddress.equals("")) {
+                    workAddress = enterAddress.getText().toString();
+                    Toast.makeText(getApplicationContext(), "Work address saved", Toast.LENGTH_SHORT).show();
+                    enterAddress.setHint("Enter Work Address");
+                }
 
-                        } else if (homeSelected = true && homeAddress.equals("")) {
-                            homeAddress = enterAddress.getText().toString();
-                            Toast.makeText(getApplicationContext(), "Home address saved", Toast.LENGTH_SHORT).show();
-                        }
-                        else if (homeSelected = false && !workAddress.equals("")) {
-                            Toast.makeText(getApplicationContext(), "Work address is already set as: " + workAddress + ", continuing will overwrite.", Toast.LENGTH_SHORT).show();
-                            workAddress = enterAddress.getText().toString();
-                            Toast.makeText(getApplicationContext(), "Work address saved", Toast.LENGTH_SHORT).show();
+                addressLayout.setVisibility(View.GONE);
+                holdText.setVisibility(View.VISIBLE);
+            }
+        });
 
-                        } else if (homeSelected = false && workAddress.equals("")) {
-                            workAddress = enterAddress.getText().toString();
-                            Toast.makeText(getApplicationContext(), "Work address saved", Toast.LENGTH_SHORT).show();
-                        }
+        homeButton = (Button) findViewById(R.id.homeButton);
+        homeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (homeAddress.equals("")) {
+                    addressLayout.setVisibility(View.VISIBLE);
+                    saveAddress.setText("save home");
+                } else {
+                    findLocation(homeAddress);
+                }
 
-                        addressLayout.setVisibility(View.GONE);
+            }
+        });
 
-                    }
-                });
+        homeButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                addressLayout.setVisibility(View.VISIBLE);
+                enterAddress.setText("");
+                saveAddress.setText("save home");
+                if (homeAddress.equals("")) {
+                    enterAddress.setHint("Enter Home Address");
+                } else {
+                    enterAddress.setHint(homeAddress);
+                }
+                return false;
+            }
+        });
 
-                homeButton = (Button) findViewById(R.id.homeButton);
-                homeButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                            if (homeAddress.equals("")) {
-                                addressLayout.setVisibility(View.VISIBLE);
-                                saveAddress.setText("SAVE HOME");
-                            } else {
-                                findLocation(homeAddress);
-                            }
+        workButton = (Button) findViewById(R.id.workButton);
+        workButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                homeSelected = false;
+                if (workAddress.equals("")) {
+                    addressLayout.setVisibility(View.VISIBLE);
+                    saveAddress.setText("save work");
+                } else {
+                    findLocation(workAddress);
+                }
 
-                    }
-                });
+            }
+        });
 
-                workButton = (Button) findViewById(R.id.workButton);
-                workButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                         homeSelected = false;
-                            if (workAddress.equals("")) {
-                                addressLayout.setVisibility(View.VISIBLE);
-                                saveAddress.setText("SAVE WORK");
-                            } else {
-                                findLocation(workAddress);
-                            }
-
-                    }
-                });
-
+        workButton.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                addressLayout.setVisibility(View.VISIBLE);
+                enterAddress.setText("");
+                saveAddress.setText("save work");
+                if (homeAddress.equals("")) {
+                    enterAddress.setHint("Enter Work Address");
+                } else {
+                    enterAddress.setHint(workAddress);
+                }
+                return false;
+            }
+        });
 
 
     }
-
-
-
-
 
 
     // GOOGLE SEARCH BAR CARD
@@ -297,7 +311,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         String data = "";
         InputStream iStream = null;
         HttpURLConnection urlConnection = null;
-        try{
+        try {
             URL url = new URL(strUrl);
             // Creating an http connection to communicate with url
             urlConnection = (HttpURLConnection) url.openConnection();
@@ -313,26 +327,21 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             StringBuffer sb = new StringBuffer();
 
             String line = "";
-            while( ( line = br.readLine()) != null){
+            while ((line = br.readLine()) != null) {
                 sb.append(line);
             }
 
             data = sb.toString();
             br.close();
 
-        }catch(Exception e){
+        } catch (Exception e) {
             Log.d("Exception with url", e.toString());
-        }finally{
+        } finally {
             iStream.close();
             urlConnection.disconnect();
         }
 
         return data;
-
-
-
-
-
 
 
     }
@@ -344,7 +353,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         googleMap.getUiSettings().setCompassEnabled(true);
         googleMap.getUiSettings().setScrollGesturesEnabled(true);
         googleMap.getUiSettings().setIndoorLevelPickerEnabled(true);
-
 
 
         googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
@@ -368,7 +376,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    /** A class, to download Places from Geocoding webservice */
+    /**
+     * A class, to download Places from Geocoding webservice
+     */
     private class DownloadTask extends AsyncTask<String, Integer, String> {
 
         String data = null;
@@ -376,17 +386,17 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         // Invoked by execute() method of this object
         @Override
         protected String doInBackground(String... url) {
-            try{
+            try {
                 data = downloadUrl(url[0]);
-            }catch(Exception e){
-                Log.d("Background Task",e.toString());
+            } catch (Exception e) {
+                Log.d("Background Task", e.toString());
             }
             return data;
         }
 
         // Executed after the complete execution of doInBackground() method
         @Override
-        protected void onPostExecute(String result){
+        protected void onPostExecute(String result) {
 
             // Instantiating ParserTask which parses the json data from Geocoding webservice
             // in a non-ui thread
@@ -398,38 +408,40 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    /** A class to parse the Geocoding Places in non-ui thread */
-    class ParserTask extends AsyncTask<String, Integer, List<HashMap<String,String>>>{
+    /**
+     * A class to parse the Geocoding Places in non-ui thread
+     */
+    class ParserTask extends AsyncTask<String, Integer, List<HashMap<String, String>>> {
 
         JSONObject jObject;
 
         // Invoked by execute() method of this object
         @Override
-        protected List<HashMap<String,String>> doInBackground(String... jsonData) {
+        protected List<HashMap<String, String>> doInBackground(String... jsonData) {
 
             List<HashMap<String, String>> places = null;
             GeocodeJSONParser parser = new GeocodeJSONParser();
 
-            try{
+            try {
                 jObject = new JSONObject(jsonData[0]);
 
                 /** Getting the parsed data as a an ArrayList */
                 places = parser.parse(jObject);
 
-            }catch(Exception e){
-                Log.d("Exception",e.toString());
+            } catch (Exception e) {
+                Log.d("Exception", e.toString());
             }
             return places;
         }
 
         // Executed after the complete execution of doInBackground() method
         @Override
-        protected void onPostExecute(List<HashMap<String,String>> list){
+        protected void onPostExecute(List<HashMap<String, String>> list) {
 
             // Clears all the existing markers
             mMap.clear();
 
-            for(int i=0;i<list.size();i++){
+            for (int i = 0; i < list.size(); i++) {
 
                 // Creating a marker
                 MarkerOptions markerOptions = new MarkerOptions();
@@ -458,7 +470,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 mMap.addMarker(markerOptions);
 
                 // Locate the first location
-                if(i==0)
+                if (i == 0)
                     mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
             }
         }
@@ -496,8 +508,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -513,24 +523,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         return super.onOptionsItemSelected(item);
     }
 
-    public class ConnectionChangeReceiver extends BroadcastReceiver
-    {
-        @Override
-        public void onReceive( Context context, Intent intent )
-        {
-            ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService( Context.CONNECTIVITY_SERVICE );
-            NetworkInfo activeNetInfo = connectivityManager.getActiveNetworkInfo();
-            NetworkInfo mobNetInfo = connectivityManager.getNetworkInfo(     ConnectivityManager.TYPE_MOBILE );
-            if ( activeNetInfo != null )
-            {
-                Toast.makeText( context, "Active Network Type : " + activeNetInfo.getTypeName(), Toast.LENGTH_SHORT ).show();
-            }
-            if( mobNetInfo != null )
-            {
-                Toast.makeText( context, "Mobile Network Type : " + mobNetInfo.getTypeName(), Toast.LENGTH_SHORT ).show();
-            }
-        }
-    }
+
 
     private void initializeViews() {
         mGridView = (GridView) findViewById(R.id.gridView);
@@ -563,8 +556,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
     }
-
-
 
 
 }

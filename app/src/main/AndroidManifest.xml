@@ -42,12 +42,6 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name="com.blackboard.androidtest.receiver.ConnectionChangeReceiver"
-            android:label="NetworkConnection">
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
-            </intent-filter>
-        </receiver>
 
 
     </application>
