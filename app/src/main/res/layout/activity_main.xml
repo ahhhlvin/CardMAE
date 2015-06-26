@@ -19,7 +19,7 @@
         <ScrollView
             android:id="@+id/scroll"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:scrollbars="none">
 
             <LinearLayout
@@ -156,7 +156,7 @@
                         <ListView
                             android:id="@+id/listView"
                             android:layout_width="match_parent"
-                            android:layout_height="230dp" />
+                            android:layout_height="180dp" />
 
 
                     </LinearLayout>

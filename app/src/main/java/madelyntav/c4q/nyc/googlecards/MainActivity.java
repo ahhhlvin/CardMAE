@@ -24,6 +24,7 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,6 +33,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -69,7 +71,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private Button saveAddress;
     private SwipeRefreshLayout swipeLayout;
     private TextView nameView;
-    private boolean hasMarker = false;
     GridView mGridView;
     ArrayAdapter<String> listAdapter;
     ImageAdapter adapter;
@@ -84,6 +85,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         saveAddress = (Button) findViewById(R.id.homeWorkButton);
         enterAddress = (EditText) findViewById(R.id.enterAddress);
         addressLayout = (LinearLayout) findViewById(R.id.addressLayout);
+
 
         swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
         // TODO: PUT CODE IN HERE THAT WILL BE REFRESHED WITH SWIPE REFRESH LAYOUT
@@ -118,22 +120,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
 
-//        // Clicking on the flickrCard will open up the browser to Flickr's "explore" page
-//        mGridView = (GridView) findViewById(R.id.gridView);
-//        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 //
-//            }
-//
-//            @Override
-//            public void OnItemClick(View view) {
-//                String url = " https://www.flickr.com/explore";
-//                Intent flickrIntent = new Intent(Intent.ACTION_VIEW);
-//                flickrIntent.setData(Uri.parse(url));
-//                startActivity(flickrIntent);
-//            }
-//        });
 
 
         nameText = (EditText) findViewById(R.id.nameText);
@@ -217,6 +204,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         // TODO: Getting reference to the Google Map
 
         mMap = mapFragment.getMap();
+
+
 
 
         // Getting reference to EditText
