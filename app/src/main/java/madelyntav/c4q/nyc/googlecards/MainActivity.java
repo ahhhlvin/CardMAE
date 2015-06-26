@@ -2,11 +2,7 @@ package madelyntav.c4q.nyc.googlecards;
 
 
 import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
-import android.location.Criteria;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,7 +12,6 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,19 +19,18 @@ import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.SharedPreferences;
 
-import com.google.android.gms.maps.CameraUpdate;
+
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.UiSettings;
+
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONException;
@@ -57,7 +51,7 @@ import java.util.List;
 
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private ImageButton mBtnFind, nameButton, listButton;
+    private ImageButton mBtnFind, nameButton, largeNameButton, listButton;
     private GoogleMap mMap;
     private EditText etPlace;
     private MapFragment mapFragment;
@@ -66,8 +60,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private EditText listEnter, enterAddress;
     private EditText searchBar, nameText;
     private Button homeButton, workButton;
-    private String homeAddress = "", workAddress = "";
-    private LinearLayout addressLayout;
+    private String homeAddress = "", workAddress = "", name = "";
+    private LinearLayout addressLayout, nameLayout, enterNameLayout;
     private Button saveAddress;
     private SwipeRefreshLayout swipeLayout;
     private TextView nameView;
@@ -82,9 +76,19 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_main);
 
 
+        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+        name = prefs.getString("name", null);
+        homeAddress = prefs.getString("home", "newHome");
+        workAddress = prefs.getString("work", "newWork");
+
+
+
+
         saveAddress = (Button) findViewById(R.id.homeWorkButton);
         enterAddress = (EditText) findViewById(R.id.enterAddress);
         addressLayout = (LinearLayout) findViewById(R.id.addressLayout);
+        nameLayout = (LinearLayout) findViewById(R.id.nameLayout);
+        enterNameLayout = (LinearLayout) findViewById(R.id.enterNameLayout);
 
 
         swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
@@ -125,14 +129,29 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         nameText = (EditText) findViewById(R.id.nameText);
         nameView = (TextView) findViewById(R.id.nameView);
+        if (!name.equals("")) {
+            nameLayout.setVisibility(View.VISIBLE);
+            nameView.setText(name);
+            enterNameLayout.setVisibility(View.GONE);
+        }
+
         nameButton = (ImageButton) findViewById(R.id.nameButton);
         nameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                nameText.setVisibility(View.GONE);
-                nameButton.setVisibility(View.GONE);
-                nameView.setVisibility(View.VISIBLE);
-                nameView.setText("Hello, " + nameText.getText().toString() + "!");
+                name = nameText.getText().toString();
+                enterNameLayout.setVisibility(View.GONE);
+                nameLayout.setVisibility(View.VISIBLE);
+                nameView.setText("Hello, " + name + "!");
+            }
+        });
+
+        largeNameButton = (ImageButton) findViewById(R.id.largeNameButton);
+        largeNameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                nameLayout.setVisibility(View.GONE);
+                enterNameLayout.setVisibility(View.VISIBLE);
             }
         });
 
@@ -151,30 +170,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
         listView = (ListView) findViewById(R.id.listView);
-
-        //Makes to-do list scrollable from main scrollview
-        listView.setOnTouchListener(new ListView.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                int action = event.getAction();
-                switch (action) {
-                    case MotionEvent.ACTION_DOWN:
-                        // Disallow ScrollView to intercept touch events.
-                        v.getParent().requestDisallowInterceptTouchEvent(true);
-                        break;
-
-                    case MotionEvent.ACTION_UP:
-                        // Allow ScrollView to intercept touch events.
-                        v.getParent().requestDisallowInterceptTouchEvent(false);
-                        break;
-                }
-
-                // Handle ListView touch events.
-                v.onTouchEvent(event);
-                return true;
-            }
-        });
-
         list = new ArrayList<>();
         listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
 
@@ -192,6 +187,34 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+        //Makes to-do list scrollable from main scrollview
+        listView.setOnTouchListener(new ListView.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (list.size() > 3) {
+                    int action = event.getAction();
+                    switch (action) {
+                        case MotionEvent.ACTION_DOWN:
+                            // Disallow ScrollView to intercept touch events.
+                            v.getParent().requestDisallowInterceptTouchEvent(true);
+                            break;
+
+                        case MotionEvent.ACTION_UP:
+                            // Allow ScrollView to intercept touch events.
+                            v.getParent().requestDisallowInterceptTouchEvent(false);
+                            break;
+                    }
+
+                    // Handle ListView touch events.
+                    v.onTouchEvent(event);
+                }
+                return true;
+
+            }
+
+        });
+
 
         // Getting reference to the find button
         mBtnFind = (ImageButton) findViewById(R.id.btn_show);
@@ -204,8 +227,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         // TODO: Getting reference to the Google Map
 
         mMap = mapFragment.getMap();
-
-
 
 
         // Getting reference to EditText
@@ -313,6 +334,13 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+
+        SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
+        editor.putString("name", nameText.getText().toString());
+        editor.putString("home", homeAddress);
+        editor.putString("work", workAddress);
+        editor.commit();
+        // TODO: add the list items !!
 
     }
 

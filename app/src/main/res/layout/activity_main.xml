@@ -5,10 +5,8 @@
     android:layout_height="match_parent"
     android:background="#BBB"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="madelyntav.c4q.nyc.googlecards.MainActivity">
 
     <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -28,6 +26,7 @@
                 android:orientation="vertical">
 
                 <ImageView
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:adjustViewBounds="true"
@@ -43,7 +42,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:id="@+id/enterNameLayout">
 
                         <EditText
                             android:id="@+id/nameText"
@@ -62,6 +62,14 @@
                             android:paddingTop="10dp"
                             android:src="@drawable/user" />
 
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:visibility="gone"
+                            android:id="@+id/nameLayout">
 
                         <TextView
                             android:id="@+id/nameView"
@@ -70,12 +78,21 @@
                             android:gravity="center"
                             android:padding="15dp"
                             android:textColor="#2196f3"
-                            android:textSize="80px"
-                            android:visibility="gone" />
+                            android:textSize="80px"/>
 
-                    </LinearLayout>
+                        <ImageButton
+                            android:id="@+id/largeNameButton"
+                            style="@style/button"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingBottom="10dp"
+                            android:paddingTop="10dp"
+                            android:src="@drawable/user" />
 
-                </android.support.v7.widget.CardView>
+                        </LinearLayout>
+
+
+                    </android.support.v7.widget.CardView>
 
 
                 <android.support.v7.widget.CardView
@@ -304,7 +321,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
                             android:padding="5dp"
-                            android:text="TAP TO DROP PIN AND SHOW DIRECTION OPTIONS"
+                            android:text="TAP TO DROP PIN"
                             android:textSize="25px"/>
 
                         <TextView
