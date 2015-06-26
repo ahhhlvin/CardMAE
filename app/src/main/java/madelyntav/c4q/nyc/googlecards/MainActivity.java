@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -31,6 +32,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -53,7 +55,7 @@ import java.util.List;
 
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private ImageButton mBtnFind, nameButton;
+    private ImageButton mBtnFind, nameButton, listButton;
     private GoogleMap mMap;
     private EditText etPlace;
     private MapFragment mapFragment;
@@ -67,7 +69,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private Button saveAddress;
     private SwipeRefreshLayout swipeLayout;
     private TextView nameView;
+    private boolean hasMarker = false;
     GridView mGridView;
+    ArrayAdapter<String> listAdapter;
     ImageAdapter adapter;
 
 
@@ -147,7 +151,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         listEnter = (EditText) findViewById(R.id.enterList);
-        ImageButton listButton = (ImageButton) findViewById(R.id.listButton);
+        listButton = (ImageButton) findViewById(R.id.listButton);
 
 
         searchBar = (EditText) findViewById(R.id.searchText);
@@ -159,19 +163,45 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-
         listView = (ListView) findViewById(R.id.listView);
-        list = new ArrayList<>();
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
-        listView.setAdapter(adapter);
 
-
-        listButton.setOnClickListener(new View.OnClickListener() {
+        //Makes to-do list scrollable from main scrollview
+        listView.setOnTouchListener(new ListView.OnTouchListener() {
             @Override
-            public void onClick(View view) {
-                list.add(listEnter.getText().toString());
-                listEnter.setText("");
-                listView.refreshDrawableState();
+            public boolean onTouch(View v, MotionEvent event) {
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Disallow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        // Allow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+
+                // Handle ListView touch events.
+                v.onTouchEvent(event);
+                return true;
+            }
+        });
+
+        list = new ArrayList<>();
+        listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
+
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                listButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        list.add(listEnter.getText().toString());
+                        listEnter.setText("");
+                        listView.setAdapter(listAdapter);
+                    }
+                });
             }
         });
 
@@ -204,7 +234,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
 
-
         saveAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -218,7 +247,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
                 }
 
-                if (saveAddress.getText().toString().equals("save work")){
+                if (saveAddress.getText().toString().equals("save work")) {
                     if (!workAddress.equals("")) {
                         Toast.makeText(getApplicationContext(), "Work address is already set as: " + workAddress + ", continuing will overwrite.", Toast.LENGTH_LONG).show();
                     }
@@ -359,24 +388,16 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         googleMap.getUiSettings().setIndoorLevelPickerEnabled(true);
 
 
-        googleMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+        googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
             @Override
-            public boolean onMarkerClick(Marker marker) {
-                marker.remove();
-                return false;
-            }
-        });
-
-        googleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
-            @Override
-            public void onMapLongClick(LatLng latLng) {
+            public void onMapClick(LatLng latLng) {
+                googleMap.clear();
                 googleMap.addMarker(new MarkerOptions()
-                        .position(latLng)
-                        .draggable(true));
+                        .position(latLng));
                 Toast.makeText(getApplicationContext(), "Marker has been added", Toast.LENGTH_SHORT).show();
             }
-
         });
+
 
     }
 
@@ -526,7 +547,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         return super.onOptionsItemSelected(item);
     }
-
 
 
     private void initializeViews() {

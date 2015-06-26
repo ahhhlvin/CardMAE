@@ -69,6 +69,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:padding="15dp"
+                            android:textColor="#2196f3"
                             android:textSize="80px"
                             android:visibility="gone" />
 
@@ -134,6 +135,7 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_margin="5dp"
+                                android:hint="Enter To-do"
                                 android:layout_weight="4" />
 
 
@@ -154,8 +156,8 @@
                         <ListView
                             android:id="@+id/listView"
                             android:layout_width="match_parent"
-                            android:layout_height="300dp"
-                            android:layout_weight="1" />
+                            android:layout_height="230dp" />
+
 
                     </LinearLayout>
 
@@ -185,9 +187,9 @@
                             android:layout_width="match_parent"
                             android:layout_height="300dp"
                             android:layout_gravity="center"
-                            android:layout_margin="2dp"
+                            android:layout_margin="4dp"
                             android:numColumns="2"
-                            android:padding="1dp" />
+                            android:padding="4dp" />
 
 
                     </LinearLayout>
@@ -216,7 +218,7 @@
                                 android:layout_height="match_parent"
                                 android:layout_margin="5dp"
                                 android:layout_weight="4"
-                                android:hint="Enter Address or Keyword" />
+                                android:hint="Enter Address or Keywords" />
 
                             <ImageButton
                                 android:id="@+id/btn_show"
@@ -294,7 +296,7 @@
                             android:id="@+id/map"
                             android:name="com.google.android.gms.maps.MapFragment"
                             android:layout_width="match_parent"
-                            android:layout_height="400dp" />
+                            android:layout_height="400dp"/>
 
 
                         <TextView
@@ -302,7 +304,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
                             android:padding="5dp"
-                            android:text="HOLD TO DROP PIN"
+                            android:text="TAP TO DROP PIN AND SHOW DIRECTION OPTIONS"
                             android:textSize="25px"/>
 
                         <TextView
@@ -310,8 +312,10 @@
                             android:layout_height="wrap_content"
                             android:gravity="center_horizontal"
                             android:padding="5dp"
-                            android:text="TAP PIN FOR DIRECTIONS OPTIONS"
+                            android:text="TAP PIN TO SHOW DIRECTION OPTIONS"
                             android:textSize="25px"/>
+
+
 
                     </LinearLayout>
 
