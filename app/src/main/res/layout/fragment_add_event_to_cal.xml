@@ -1,0 +1,56 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="madelyntav.c4q.nyc.googlecards.AddEventToCal">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/newTitle"
+        android:layout_gravity="center_horizontal|top"
+        android:hint="New Event Title"
+        android:background="@null"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/newLocation"
+        android:layout_gravity="center_horizontal|top"
+        android:hint="Location"
+        android:textSize="30dp"
+        android:layout_below="@+id/newTitle"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/newDescription"
+        android:layout_gravity="center_horizontal|top"
+        android:background="@null"
+        android:textStyle="italic"
+        android:textSize="20dp"
+        android:hint="Description"
+        android:gravity="center_horizontal"
+        android:layout_below="@+id/newLocation"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="time"
+        android:ems="10"
+        android:id="@+id/editText"
+        android:layout_below="@+id/newDescription"
+        android:layout_alignLeft="@+id/newTitle"
+        android:layout_alignStart="@+id/newTitle"
+        android:hint="Start Time"
+        android:background="@null"
+        android:gravity="center_horizontal" />
+
+</RelativeLayout>
