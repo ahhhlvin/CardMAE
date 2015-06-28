@@ -8,8 +8,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.CardView;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -21,14 +23,12 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.content.SharedPreferences;
 
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -51,12 +51,11 @@ import java.util.List;
 
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
 
-    private ImageButton mBtnFind, nameButton, largeNameButton, listButton;
+    private ImageButton mBtnFind, nameButton, largeNameButton, listButton, addCardButton;
     private GoogleMap mMap;
     private EditText etPlace;
     private MapFragment mapFragment;
     private ArrayList<String> list;
-    private ListView listView;
     private EditText listEnter, enterAddress;
     private EditText searchBar, nameText;
     private Button homeButton, workButton;
@@ -65,9 +64,22 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private Button saveAddress;
     private SwipeRefreshLayout swipeLayout;
     private TextView nameView;
+    private ListView listView;
     GridView mGridView;
     ArrayAdapter<String> listAdapter;
     ImageAdapter adapter;
+    protected static CardView flickrCard;
+    protected static CardView weatherCard;
+    protected static CardView stocksCard;
+    protected static CardView mapCard;
+    protected static CardView calendarCard;
+    protected static CardView todoCard;
+    protected static boolean flickrChecked = true;
+    protected static boolean weatherChecked = true;
+    protected static boolean stocksChecked = true;
+    protected static boolean mapChecked = true;
+    protected static boolean calendarChecked = true;
+    protected static boolean todoChecked = true;
 
 
     @Override
@@ -76,12 +88,44 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         setContentView(R.layout.activity_main);
 
 
-        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
-        name = prefs.getString("name", null);
-        homeAddress = prefs.getString("home", "newHome");
-        workAddress = prefs.getString("work", "newWork");
 
+        flickrCard = (CardView) findViewById(R.id.flickrCard);
+//        weatherCard = (CardView) findViewById(R.id.weatherCard);
+//        stocksCard = (CardView) findViewById(R.id.stocksCard);
+        mapCard = (CardView) findViewById(R.id.mapCard);
+//        calendarCard = (CardView) findViewById(R.id.calendarCard);
+        todoCard = (CardView) findViewById(R.id.todoCard);
 
+        if (flickrChecked) {
+            flickrCard.setVisibility(View.VISIBLE);
+        } else {
+            flickrCard.setVisibility(View.GONE);
+        }
+//        if (weatherChecked) {
+//            weatherCard.setVisibility(View.VISIBLE);
+//        } else {
+//            weatherCard.setVisibility(View.GONE);
+//        }
+//        if (stocksChecked) {
+//            stocksCard.setVisibility(View.VISIBLE);
+//        } else {
+//            stocksCard.setVisibility(View.GONE);
+//        }
+        if (mapChecked) {
+            mapCard.setVisibility(View.VISIBLE);
+        } else {
+            mapCard.setVisibility(View.GONE);
+        }
+//        if (calendarChecked) {
+//            calendarCard.setVisibility(View.VISIBLE);
+//        } else {
+//            calendarCard.setVisibility(View.GONE);
+//        }
+        if (todoChecked) {
+            todoCard.setVisibility(View.VISIBLE);
+        } else {
+            todoCard.setVisibility(View.GONE);
+        }
 
 
         saveAddress = (Button) findViewById(R.id.homeWorkButton);
@@ -91,6 +135,25 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         enterNameLayout = (LinearLayout) findViewById(R.id.enterNameLayout);
 
 
+        // WRITING INFORMATION TO FILE
+//        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
+//        name = prefs.getString("name", null);
+//        homeAddress = prefs.getString("home", "newHome");
+//        workAddress = prefs.getString("work", "newWork");
+//
+//        SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
+//        editor.putString("name", nameText.getText().toString());
+//        editor.putString("home", homeAddress);
+//        editor.putString("work", workAddress);
+        // TODO: IS THIS CORRECT OR CAN I SAVE ENTIRE ARRAYLIST??
+//        for (int i = 0; i < list.size(); i++) {
+//            editor.putString("listItem" + i, list.get(i));
+//        }
+//        editor.commit();
+        // TODO: add the list items !!
+
+
+        // FOR REFRESH ON SWIPE DOWN
         swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
         // TODO: PUT CODE IN HERE THAT WILL BE REFRESHED WITH SWIPE REFRESH LAYOUT
         swipeLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -113,7 +176,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-
+        // HANDLES THE METHODS THAT WILL REFRESH UPON SWIPE
         new Handler().post(new Runnable() {
             @Override
             public void run() {
@@ -126,7 +189,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
 //
 
-
+        // NAME CARD
         nameText = (EditText) findViewById(R.id.nameText);
         nameView = (TextView) findViewById(R.id.nameView);
         if (!name.equals("")) {
@@ -156,10 +219,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
 
-        listEnter = (EditText) findViewById(R.id.enterList);
-        listButton = (ImageButton) findViewById(R.id.listButton);
 
 
+
+        // GOOOGLE SEARCH BAR
         searchBar = (EditText) findViewById(R.id.searchText);
         ImageButton searchButton = (ImageButton) findViewById(R.id.searchButton);
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -169,9 +232,17 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
+
+
+
+        // TO-DO LIST
+        listEnter = (EditText) findViewById(R.id.enterList);
+        listButton = (ImageButton) findViewById(R.id.listButton);
+
+
         listView = (ListView) findViewById(R.id.listView);
         list = new ArrayList<>();
-        listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
+        listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_checked, list);
 
         new Handler().post(new Runnable() {
             @Override
@@ -179,9 +250,12 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 listButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        list.add(listEnter.getText().toString());
-                        listEnter.setText("");
-                        listView.setAdapter(listAdapter);
+                        if (!listEnter.equals("")) {
+                            list.add(listEnter.getText().toString());
+                            listView.setAdapter(listAdapter);
+                        }
+                            listEnter.setText("");
+
                     }
                 });
             }
@@ -216,23 +290,16 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
 
-        // Getting reference to the find button
+        // MAP CARD
         mBtnFind = (ImageButton) findViewById(R.id.btn_show);
-
-        // Getting reference to the SupportMapFragment
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
 
         // TODO: Getting reference to the Google Map
-
         mMap = mapFragment.getMap();
 
-
-        // Getting reference to EditText
         etPlace = (EditText) findViewById(R.id.et_place);
-
-        // Setting click event listener for the find button
         mBtnFind.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -335,17 +402,23 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
 
-        SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
-        editor.putString("name", nameText.getText().toString());
-        editor.putString("home", homeAddress);
-        editor.putString("work", workAddress);
-        editor.commit();
-        // TODO: add the list items !!
+//         CHECKABLE CARD LIST
+        addCardButton = (ImageButton) findViewById(R.id.addCardButton);
+        addCardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent selectCardIntent = new Intent(getApplicationContext(), SelectCardActivity.class);
+                startActivity(selectCardIntent);
+            }
+        });
+
+
+
 
     }
 
 
-    // GOOGLE SEARCH BAR CARD
+    // GOOGLE SEARCH BAR CODE
     public void onSearchClick(View v) {
         try {
             Intent searchIntent = new Intent(Intent.ACTION_WEB_SEARCH);
@@ -357,6 +430,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
+
+    // GOOGLE MAP CODE
     private String downloadUrl(String strUrl) throws IOException {
         String data = "";
         InputStream iStream = null;
@@ -395,6 +470,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     }
+
 
     @Override
     public void onMapReady(final GoogleMap googleMap) {
@@ -550,22 +626,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-
+    // FLICKR CARD CODE
     private void initializeViews() {
         mGridView = (GridView) findViewById(R.id.gridView);
     }

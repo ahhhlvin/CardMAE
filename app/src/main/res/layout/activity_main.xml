@@ -25,105 +25,71 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <ImageView
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:focusable="true"
-                    android:src="@drawable/mae_logo" />
-
                 <android.support.v7.widget.CardView
                     android:id="@+id/nameCard"
+                    android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:id="@+id/enterNameLayout">
+                        android:orientation="vertical">
 
-                        <EditText
-                            android:id="@+id/nameText"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="4"
-                            android:hint="Tell us your name!" />
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:adjustViewBounds="true"
+                            android:focusable="true"
+                            android:src="@drawable/mae_logo" />
 
-                        <ImageButton
-                            android:id="@+id/nameButton"
-                            style="@style/button"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:paddingBottom="10dp"
-                            android:paddingTop="10dp"
-                            android:src="@drawable/user" />
+                        <LinearLayout
+                            android:id="@+id/enterNameLayout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <EditText
+                                android:id="@+id/nameText"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="4"
+                                android:hint="Tell us your name!" />
+
+                            <ImageButton
+                                android:id="@+id/nameButton"
+                                style="@style/button"
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:src="@drawable/user" />
 
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/nameLayout"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
-                            android:visibility="gone"
-                            android:id="@+id/nameLayout">
+                            android:visibility="gone">
 
-                        <TextView
-                            android:id="@+id/nameView"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:padding="15dp"
-                            android:textColor="#2196f3"
-                            android:textSize="80px"/>
+                            <TextView
+                                android:id="@+id/nameView"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center"
+                                android:padding="15dp"
+                                android:textColor="#2196f3"
+                                android:textSize="80px" />
 
-                        <ImageButton
-                            android:id="@+id/largeNameButton"
-                            style="@style/button"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:paddingBottom="10dp"
-                            android:paddingTop="10dp"
-                            android:src="@drawable/user" />
+                            <ImageButton
+                                android:id="@+id/largeNameButton"
+                                style="@style/button"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/user" />
 
                         </LinearLayout>
-
-
-                    </android.support.v7.widget.CardView>
-
-
-                <android.support.v7.widget.CardView
-                    android:id="@+id/searchBar"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <EditText
-                            android:id="@+id/searchText"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="4"
-                            android:focusable="true"
-                            android:focusableInTouchMode="true"
-                            android:hint="Google Search" />
-
-                        <ImageButton
-                            android:id="@+id/searchButton"
-                            style="@style/button"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:paddingBottom="10dp"
-                            android:paddingTop="10dp"
-                            android:src="@drawable/search" />
-
 
                     </LinearLayout>
 
@@ -131,7 +97,39 @@
 
 
                 <android.support.v7.widget.CardView
-                    android:id="@+id/listCard"
+                    android:id="@+id/searchCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:id="@+id/searchText"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="4"
+                        android:focusable="true"
+                        android:focusableInTouchMode="true"
+                        android:hint="Google Search" />
+
+                    <ImageButton
+                        android:id="@+id/searchButton"
+                        style="@style/button"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:src="@drawable/search" />
+
+                </LinearLayout>
+
+                </android.support.v7.widget.CardView>
+
+
+                <android.support.v7.widget.CardView
+                    android:id="@+id/todoCard"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -152,8 +150,8 @@
                                 android:layout_width="0dp"
                                 android:layout_height="match_parent"
                                 android:layout_margin="5dp"
-                                android:hint="Enter To-do"
-                                android:layout_weight="4" />
+                                android:layout_weight="4"
+                                android:hint="Enter To-do" />
 
 
                             <ImageButton
@@ -162,8 +160,6 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:paddingBottom="10dp"
-                                android:paddingTop="10dp"
                                 android:src="@drawable/add" />
 
 
@@ -173,7 +169,7 @@
                         <ListView
                             android:id="@+id/listView"
                             android:layout_width="match_parent"
-                            android:layout_height="180dp" />
+                            android:layout_height="180dp"/>
 
 
                     </LinearLayout>
@@ -243,8 +239,6 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:paddingBottom="10dp"
-                                android:paddingTop="10dp"
                                 android:src="@drawable/search" />
 
                         </LinearLayout>
@@ -286,8 +280,8 @@
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="5dp"
-                                android:hint="Enter Address"
-                                android:layout_weight="4" />
+                                android:layout_weight="4"
+                                android:hint="Enter Address" />
 
                             <Button
                                 android:id="@+id/homeWorkButton"
@@ -313,7 +307,7 @@
                             android:id="@+id/map"
                             android:name="com.google.android.gms.maps.MapFragment"
                             android:layout_width="match_parent"
-                            android:layout_height="400dp"/>
+                            android:layout_height="400dp" />
 
 
                         <TextView
@@ -322,7 +316,7 @@
                             android:gravity="center_horizontal"
                             android:padding="5dp"
                             android:text="TAP TO DROP PIN"
-                            android:textSize="25px"/>
+                            android:textSize="25px" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -330,13 +324,20 @@
                             android:gravity="center_horizontal"
                             android:padding="5dp"
                             android:text="TAP PIN TO SHOW DIRECTION OPTIONS"
-                            android:textSize="25px"/>
-
+                            android:textSize="25px" />
 
 
                     </LinearLayout>
 
                 </android.support.v7.widget.CardView>
+
+
+                <ImageButton
+                    android:id="@+id/addCardButton"
+                    style="@style/button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/add" />
 
 
             </LinearLayout>
