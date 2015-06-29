@@ -15,7 +15,6 @@ import android.os.Parcelable;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
-import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -52,6 +51,9 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
     public List<String> eventStrings;
     final HttpTransport transport = AndroidHttp.newCompatibleTransport();
     final JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
+    CardFragment mCardFragment;
+    TomorrowFragment mTomorrowFragment;
+    AddEventToCal mAddEventToCal;
 
     static final int REQUEST_ACCOUNT_PICKER = 1000;
     static final int REQUEST_AUTHORIZATION = 1001;
@@ -70,26 +72,35 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
 
-        mPagesAdapter = new PagesAdapter(getSupportFragmentManager());
+        if (savedInstanceState != null) {
+            //Restore the fragment's instance
+            mCardFragment = (CardFragment) getSupportFragmentManager().getFragment(
+                    savedInstanceState, "mCardFragment");
+            mTomorrowFragment = (TomorrowFragment) getSupportFragmentManager().getFragment(savedInstanceState, "mTomorrowFragment");
 
-        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-        viewPager.setAdapter(mPagesAdapter);
+            mAddEventToCal = (AddEventToCal) getSupportFragmentManager().getFragment(savedInstanceState, "mAddEventToCal");
+        }
 
-        mStatusText = (TextView) findViewById(R.id.mStatusText);
-        mResultsText = (TextView) findViewById(R.id.mResultsText);
+            mPagesAdapter = new PagesAdapter(getSupportFragmentManager());
 
-        // Initialize credentials and service object.
-        SharedPreferences settings = getPreferences(Context.MODE_PRIVATE);
-        credential = GoogleAccountCredential.usingOAuth2(
-                getApplicationContext(), Arrays.asList(SCOPES))
-                .setBackOff(new ExponentialBackOff())
-                .setSelectedAccountName(settings.getString(PREF_ACCOUNT_NAME, null));
+            ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+            viewPager.setAdapter(mPagesAdapter);
 
-        mService = new com.google.api.services.calendar.Calendar.Builder(
-                transport, jsonFactory, credential)
-                .setApplicationName("Google Calendar API Android Quickstart")
-                .build();
-    }
+            mStatusText = (TextView) findViewById(R.id.mStatusText);
+
+            // Initialize credentials and service object.
+            SharedPreferences settings = getPreferences(Context.MODE_PRIVATE);
+            credential = GoogleAccountCredential.usingOAuth2(
+                    getApplicationContext(), Arrays.asList(SCOPES))
+                    .setBackOff(new ExponentialBackOff())
+                    .setSelectedAccountName(settings.getString(PREF_ACCOUNT_NAME, null));
+
+            mService = new com.google.api.services.calendar.Calendar.Builder(
+                    transport, jsonFactory, credential)
+                    .setApplicationName("Google Calendar API Android Quickstart")
+                    .build();
+        }
+
 
     /**
      * Called whenever this activity is pushed to the foreground, such as after
@@ -104,8 +115,8 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
         if (isGooglePlayServicesAvailable()) {
             refreshResults();
         } else {
-            mStatusText.setText("Google Play Services required: " +
-                    "after installing, close and relaunch this app.");
+            //mStatusText.setText("Google Play Services required: " +
+                    //"after installing, close and relaunch this app.");
         }
     }
 
@@ -160,6 +171,15 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
         }
 
         super.onActivityResult(requestCode, resultCode, data);
+        }
+
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        getSupportFragmentManager().putFragment(outState, "mCardFragment", mCardFragment);
+        getSupportFragmentManager().putFragment(outState,"mTomorrowFragment", mTomorrowFragment);
+        getSupportFragmentManager().putFragment(outState,"mAddEventToCal", mAddEventToCal);
+
+
     }
 
     /**
@@ -174,7 +194,7 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
             if (isDeviceOnline()) {
                 new ApiAsyncTask(this).execute();
             } else {
-                mStatusText.setText("No network connection available.");
+                //mStatusText.setText("No network connection available.");
             }
         }
     }
@@ -188,8 +208,8 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                mStatusText.setText("Retrieving data…");
-                mResultsText.setText("");
+                //mStatusText.setText("Retrieving data…");
+
             }
         });
     }
@@ -205,13 +225,11 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (dataStrings == null) {
-                    mStatusText.setText("Error retrieving data!");
+                if (dataStrings == null) {mStatusText.setText("Error retrieving data!");
                 } else if (dataStrings.size() == 0) {
                     mStatusText.setText("No data found.");
                 } else {
-                    mStatusText.setText("Upcoming Events");
-                    mResultsText.setText(TextUtils.join("\n\n", dataStrings));
+                    mStatusText.setText("");
                 }
             }
         });
@@ -376,12 +394,19 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
                     .setOrderBy("startTime")
                     .setSingleEvents(true)
                     .execute();
+
+
             List<Event> items = events.getItems();
 
             for (Event event : items) {
                 DateTime start = event.getStart().getDateTime();
 
                 DateTime end = event.getEnd().getDateTime();
+
+                String location=event.getLocation();
+                if(location== null){
+                    location="";
+                }
                 if (start == null) {
                     // All-day events don't have start times, so just use
                     // the start date.
@@ -391,7 +416,7 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
                     }
                 }
                 eventStrings.add(
-                        String.format("%s (%s) (%s)", event.getSummary(), start, end));
+                        String.format(event.getSummary() + " /" + location+ " /" + start + " /"+ end));
             }
 
             return eventStrings;
@@ -412,9 +437,9 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
 
     public class PagesAdapter extends FragmentPagerAdapter {
 
-        CardFragment mCardFragment;
-        TomorrowFragment mTomorrowFragment;
-        AddEventToCal mAddEventToCal;
+//        CardFragment mCardFragment;
+//        TomorrowFragment mTomorrowFragment;
+//        AddEventToCal mAddEventToCal;
 
         public PagesAdapter(android.support.v4.app.FragmentManager fragmentManager) {
             super(fragmentManager);

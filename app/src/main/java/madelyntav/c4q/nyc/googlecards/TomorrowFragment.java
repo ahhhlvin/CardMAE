@@ -50,7 +50,7 @@ public class TomorrowFragment extends android.support.v4.app.Fragment {
             // Inflate the layout for this fragment
             final View fragmentView= inflater.inflate(R.layout.fragment_tomorrow, container, false);
             rowView=getActivity().getLayoutInflater().inflate(R.layout.row, null);
-            viewFull=(Button) rowView.findViewById(R.id.button);
+            //viewFull=(Button) rowView.findViewById(R.id.button);
             location=(TextView) rowView.findViewById(R.id.location);
             TextView tv = (TextView) rowView.findViewById(R.id.title);
 
@@ -95,7 +95,7 @@ public class TomorrowFragment extends android.support.v4.app.Fragment {
                 rowView=getActivity().getLayoutInflater().inflate(R.layout.row,null);
                 TextView title=(TextView)rowView.findViewById(R.id.title);
                 TextView location=(TextView) rowView.findViewById(R.id.location);
-                TextView times=(TextView) rowView.findViewById(R.id.times);
+                TextView times=(TextView) rowView.findViewById(R.id.timeStart);
 
                 title.setText(mNewsList.get(position));
                 //location.setText(transfer.get(position));
