@@ -25,6 +25,34 @@ public class WeatherInf {
         return mIcon;
     }
 
+    public int getIconId() {
+
+        int iconId = R.mipmap.clear_day;
+
+        if (mIcon.equals("clear-day")) {
+            iconId = R.mipmap.clear_day;
+        }else if (mIcon.equals("clear-night")) {
+            iconId = R.mipmap.clear_night;
+        }else if (mIcon.equals("rain")) {
+            iconId = R.mipmap.rain;
+        }else if (mIcon.equals("snow")) {
+            iconId = R.mipmap.snow;
+        }else if (mIcon.equals("sleet")) {
+            iconId = R.mipmap.sleet;
+        }else if (mIcon.equals("wind")) {
+            iconId = R.mipmap.wind;
+        }else if (mIcon.equals("fog")) {
+            iconId = R.mipmap.fog;
+        }else if (mIcon.equals("cloudy")) {
+            iconId = R.mipmap.cloudy;
+        }else if (mIcon.equals("partly-cloudy-day")) {
+            iconId = R.mipmap.partly_cloudy;
+        }else if (mIcon.equals("partly-cloudy-night")) {
+            iconId = R.mipmap.cloudy_night;
+        }
+        return iconId;
+    }
+
     public void setIcon(String icon) {
         mIcon = icon;
     }
