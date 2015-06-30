@@ -31,7 +31,7 @@
             android:id="@+id/locationLabel"
             android:textColor="#000000"
             android:textSize="24sp"
-            android:layout_marginBottom="22dp"
+            android:layout_marginBottom="5dp"
             android:layout_above="@+id/summaryLabel"
             android:layout_centerHorizontal="true"/>
 
@@ -40,7 +40,7 @@
             android:layout_height="75dp"
             android:id="@+id/icon_image_view"
             android:src="@mipmap/cloudy_night"
-            android:layout_marginLeft="50dp"
+            android:layout_marginLeft="68dp"
             android:background="@null"
             android:layout_marginStart="63dp"
             android:layout_alignTop="@+id/degree_image_view"
@@ -120,7 +120,7 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="For full forecast go to --> www.weather.com"
+        android:text="@string/button_weather"
         android:background="@null"
         android:textColor="#d3d3d3"
         android:id="@+id/bt_website"
@@ -133,6 +133,8 @@
         android:layout_height="wrap_content"
         android:text="WIND"
         android:id="@+id/tv_wind"
+        android:layout_marginLeft="-20dp"
+        android:layout_marginBottom="10dp"
         android:layout_above="@+id/temperatureLabel"
         android:layout_alignStart="@+id/locationLabel"/>
 
