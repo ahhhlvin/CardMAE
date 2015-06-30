@@ -7,5 +7,9 @@
     <string name="network_unavailable">Network is unavailable!</string>
     <string name="error_message">There was an error. Please try again.</string>
     <string name="button_weather"><![CDATA[For full forecast go to --> www.weather.com]]></string>
+    <string name="title_activity_share_note">ShareNote</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="share_with_friends">Share thoughts With Friends:</string>
 
 </resources>

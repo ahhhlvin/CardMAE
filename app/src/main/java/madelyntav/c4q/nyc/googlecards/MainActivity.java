@@ -49,7 +49,6 @@ public class MainActivity extends ActionBarActivity {
     @Bind(R.id.icon_image_view) ImageView mIconImageView;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -113,6 +112,9 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
+        new SendEmail();
+        new ShareNote();
+
 
     }
 
@@ -163,6 +165,12 @@ public class MainActivity extends ActionBarActivity {
     private void alertUseraboutError() {
         HandlerError dialofFragment = new HandlerError();
         dialofFragment.show(getFragmentManager(), "error_dialog");
+    }
+
+    private void sendEmail () {
+
+
+
     }
 
 }
