@@ -27,6 +27,9 @@
         android:glEsVersion="0x00020000"
         android:required="true" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -52,6 +55,8 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ShareNote"
+            android:label="@string/title_activity_share_note" >
             android:name=".CalendarQuickstart"
             android:label="@string/title_activity_calendar_quickstart" >
         </activity>
