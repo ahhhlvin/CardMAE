@@ -1,8 +1,13 @@
 package madelyntav.c4q.nyc.googlecards;
 
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,6 +21,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,6 +33,11 @@ import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.squareup.okhttp.Call;
+import com.squareup.okhttp.Callback;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,6 +58,9 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 
 
@@ -69,7 +83,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private ListView listView;
     GridView mGridView;
     ArrayAdapter<String> listAdapter;
-    ImageAdapter adapter;
+    public ImageAdapter adapter;
     protected static CardView flickrCard;
     protected static CardView weatherCard;
     protected static CardView stocksCard;
@@ -84,23 +98,99 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     protected static boolean todoChecked = true;
 
 
+    public static final String TAG = MainActivity.class.getSimpleName();
+    private WeatherInf mCurrentWeather;
+
+    @Bind(R.id.bt_website)
+    Button mButton;
+    @Bind(R.id.temperatureLabel)
+    TextView mTemperatureLabel;
+    @Bind(R.id.humidityValue)
+    TextView mHumidityValue;
+    @Bind(R.id.precipValue)
+    TextView mPrecipValue;
+    @Bind(R.id.summaryLabel)
+    TextView mSummaryLabel;
+    @Bind(R.id.windValue)
+    TextView mWindValue;
+    @Bind(R.id.icon_image_view)
+    ImageView mIconImageView;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ButterKnife.bind(this);
+
+
+        String apiKey = "4bdd5c74892f3ce180e1c291279ce444";
+        double latitude = 40.748817;
+        double longitude = -73.985428;
+        String forcastURL = "https://api.forecast.io/forecast/" + apiKey + "/" + latitude + "," + longitude;
+
+        if (isNetworkAvailable()) {
+
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder().url(forcastURL).build();
+
+            Call call = client.newCall(request);
+            call.enqueue(new Callback() {
+                @Override
+                public void onFailure(Request request, IOException e) {
+
+                }
+
+                @Override
+                public void onResponse(Response response) throws IOException {
+
+                    try {
+                        String jsonData = response.body().string();
+                        Log.v(TAG, jsonData);
+                        if (response.isSuccessful()) {
+                            mCurrentWeather = getCurrentDetails(jsonData);
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    updateDisplay();
+                                }
+                            });
+
+                        } else {
+                            alertUseraboutError();
+                        }
+                    } catch (IOException e) {
+                    } catch (JSONException e) {
+                    }
+                }
+            });
+        } else {
+            Toast.makeText(this, getString(R.string.network_unavailable), Toast.LENGTH_LONG).show();
+        }
+
+        mButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Uri uri = Uri.parse("http://m.weather.com/weather/tenday/USGA0028");
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
+
+        new ShareNote();
 
         nameText = (EditText) findViewById(R.id.nameText);
         nameView = (TextView) findViewById(R.id.nameView);
 
-        SharedPreferences sharedPreferences=getSharedPreferences("Name",MODE_PRIVATE);
-        name=sharedPreferences.getString("UserName","").toUpperCase();
-        homeAddress=sharedPreferences.getString("homeAddress","");
-        workAddress=sharedPreferences.getString("workAddress","");
-        if(!nameView.equals("")) {
+        SharedPreferences sharedPreferences = getSharedPreferences("Name", MODE_PRIVATE);
+        name = sharedPreferences.getString("UserName", "").toUpperCase();
+        homeAddress = sharedPreferences.getString("homeAddress", "");
+        workAddress = sharedPreferences.getString("workAddress", "");
+        if (!nameView.equals("")) {
             nameView.setText("Hello, " + name + "!");
         }
 
-        Handler handler= new Handler();
+        Handler handler = new Handler();
         handler.post(new Runnable() {
             @Override
             public void run() {
@@ -109,15 +199,16 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 try {
                     input = openFileInput("ToDo.txt");
 
-                DataInputStream din = new DataInputStream(input);
-                int sz = din.readInt(); // Read line count
-                for (int i=0;i<sz;i++) { // Read lines
-                    String line = din.readUTF();
-                    if(line.equals("")||line.equals(null)){}
-                    else{
-                    list.add(line);}
-                }
-                din.close();
+                    DataInputStream din = new DataInputStream(input);
+                    int sz = din.readInt(); // Read line count
+                    for (int i = 0; i < sz; i++) { // Read lines
+                        String line = din.readUTF();
+                        if (line.equals("") || line.equals(null)) {
+                        } else {
+                            list.add(line);
+                        }
+                    }
+                    din.close();
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
@@ -127,7 +218,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             }
 
         });
-
 
 
         flickrCard = (CardView) findViewById(R.id.flickrCard);
@@ -184,7 +274,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 new Handler().post(new Runnable() {
                     @Override
                     public void run() {
-                        new AsyncLoading().execute();
+                        //new ParserTask.AsyncLoading().execute();
 
                     }
                 });
@@ -203,7 +293,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void run() {
                 initializeViews();
-                new AsyncLoading().execute();
+                //new ParserTask.AsyncLoading().execute();
 
             }
         });
@@ -251,8 +341,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
 
-
-
         // TO-DO LIST
         listEnter = (EditText) findViewById(R.id.enterList);
         listButton = (ImageButton) findViewById(R.id.listButton);
@@ -281,25 +369,25 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
         //Swipe to dismiss for ToDoList
-         SwipeDismissListViewTouchListener touchListener =
+        SwipeDismissListViewTouchListener touchListener =
                 new SwipeDismissListViewTouchListener(
-                                 listView, new SwipeDismissListViewTouchListener.DismissCallbacks() {
+                        listView, new SwipeDismissListViewTouchListener.DismissCallbacks() {
                     @Override
                     public boolean canDismiss(int position) {
                         return true;
                     }
 
                     public void onDismiss(ListView listView, int[] reverseSortedPositions) {
-                                         for (int position : reverseSortedPositions) {
-                                                 listAdapter.remove(listAdapter.getItem(position));
-                                                  //TODO remove space leftover after removing
+                        for (int position : reverseSortedPositions) {
+                            listAdapter.remove(listAdapter.getItem(position));
+                            //TODO remove space leftover after removing
 
-                                            }
+                        }
                         listAdapter.notifyDataSetChanged();
 
 
-                                     }
-                            });
+                    }
+                });
         listView.setOnTouchListener(touchListener);
         listView.setOnScrollListener(touchListener.makeScrollListener());
 
@@ -336,7 +424,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         mBtnFind = (ImageButton) findViewById(R.id.btn_show);
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-
 
         // TODO: Getting reference to the Google Map
         mMap = mapFragment.getMap();
@@ -455,8 +542,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
 
-
-
     }
 
 
@@ -513,6 +598,88 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    private void initializeViews() {
+        mGridView = (GridView) findViewById(R.id.gridView);
+    }
+
+    private void alertUseraboutError() {
+        HandlerError dialofFragment = new HandlerError();
+        dialofFragment.show(getFragmentManager(), "error_dialog");
+    }
+
+    private void updateDisplay() {
+        mTemperatureLabel.setText(mCurrentWeather.getTemperature() + "");
+        mHumidityValue.setText(mCurrentWeather.getHumidity() + "%");
+        mPrecipValue.setText(mCurrentWeather.getPrecipChance() + "%");
+        mSummaryLabel.setText(mCurrentWeather.getSummary());
+        mWindValue.setText(mCurrentWeather.getWind() + "mph");
+
+
+        Drawable drawable = getResources().getDrawable(mCurrentWeather.getIconId());
+        mIconImageView.setImageDrawable(drawable);
+    }
+
+    private WeatherInf getCurrentDetails(String jsonData) throws JSONException {
+
+        JSONObject forecast = new JSONObject(jsonData);
+        String timeZone = forecast.getString("timezone");
+        JSONObject currently = forecast.getJSONObject("currently");
+
+        WeatherInf currentWeather = new WeatherInf();
+        currentWeather.setHumidity(currently.getDouble("humidity"));
+        currentWeather.setIcon(currently.getString("icon"));
+        currentWeather.setPrecipChance(currently.getDouble("precipProbability"));
+        currentWeather.setSummary(currently.getString("summary"));
+        currentWeather.setTemperature(currently.getDouble("temperature"));
+        currentWeather.setWind(currently.getDouble("windSpeed"));
+        currentWeather.setState(timeZone);
+
+        return currentWeather;
+
+    }
+
+    public void findLocation(String location) {
+        if (location == null || location.equals("")) {
+            Toast.makeText(getBaseContext(), "No Place is entered", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String url = "https://maps.googleapis.com/maps/api/geocode/json?";
+
+        try {
+            // encoding special characters like space in the user input place
+            location = URLEncoder.encode(location, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        String address = "address=" + location;
+
+        String sensor = "sensor=false";
+
+        // url , from where the geocoding data is fetched
+        url = url + address + "&" + sensor;
+
+        // Instantiating DownloadTask to get places from Google Geocoding service
+        // in a non-ui thread
+        DownloadTask downloadTask = new DownloadTask();
+
+        // Start downloading the geocoding places
+        downloadTask.execute(url);
+    }
+
+    private boolean isNetworkAvailable() {
+
+        ConnectivityManager manager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+        boolean isAvailable = false;
+
+        if (networkInfo != null && networkInfo.isConnected()) {
+            isAvailable = true;
+        }
+        return isAvailable;
+    }
 
     @Override
     public void onMapReady(final GoogleMap googleMap) {
@@ -535,6 +702,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     }
+
 
     @Override
     protected void onPause() {
@@ -560,14 +728,15 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-        SharedPreferences namePref= getSharedPreferences("Name", MODE_PRIVATE);
-        SharedPreferences.Editor editor=namePref.edit();
-        editor.putString("UserName",nameText.getText().toString());
+        SharedPreferences namePref = getSharedPreferences("Name", MODE_PRIVATE);
+        SharedPreferences.Editor editor = namePref.edit();
+        editor.putString("UserName", nameText.getText().toString());
         editor.putString("homeAddress", homeAddress);
         editor.putString("workAddress", workAddress);
         editor.apply();
 
     }
+
     /**
      * A class, to download Places from Geocoding webservice
      */
@@ -666,75 +835,41 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
             }
         }
-    }
+
+        public final class AsyncLoading extends AsyncTask<Void, Void, List<String>> {
+
+            @Override
+            protected List<String> doInBackground(Void... params) {
+                // TODO : Step 3 - by using FlickrGetter.java, get latest 20 images' Urls from Flickr and return the result.
 
 
-    public void findLocation(String location) {
-        if (location == null || location.equals("")) {
-            Toast.makeText(getBaseContext(), "No Place is entered", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        String url = "https://maps.googleapis.com/maps/api/geocode/json?";
-
-        try {
-            // encoding special characters like space in the user input place
-            location = URLEncoder.encode(location, "utf-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
-
-        String address = "address=" + location;
-
-        String sensor = "sensor=false";
-
-        // url , from where the geocoding data is fetched
-        url = url + address + "&" + sensor;
-
-        // Instantiating DownloadTask to get places from Google Geocoding service
-        // in a non-ui thread
-        DownloadTask downloadTask = new DownloadTask();
-
-        // Start downloading the geocoding places
-        downloadTask.execute(url);
-    }
-
-
-    // FLICKR CARD CODE
-    private void initializeViews() {
-        mGridView = (GridView) findViewById(R.id.gridView);
-    }
-
-
-    private class AsyncLoading extends AsyncTask<Void, Void, List<String>> {
-
-        @Override
-        protected List<String> doInBackground(Void... params) {
-            // TODO : Step 3 - by using FlickrGetter.java, get latest 20 images' Urls from Flickr and return the result.
-
-
-            try {
-                return new FlickrGetter().getBitmapList();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
+                try {
+                    return new FlickrGetter().getBitmapList();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return null;
             }
-            return null;
+
+            @Override
+            protected void onPostExecute(List<String> imageList) {
+                // TODO : Step 5 - Now we have ImageAdapter and the data(list), post the picture!
+
+                adapter = new ImageAdapter(MainActivity.this, imageList);
+                mGridView.setAdapter(adapter);
+
+            }
         }
-
-        @Override
-        protected void onPostExecute(List<String> imageList) {
-            // TODO : Step 5 - Now we have ImageAdapter and the data(list), post the picture!
-
-            adapter = new ImageAdapter(MainActivity.this, imageList);
-            mGridView.setAdapter(adapter);
-
-        }
-
-
-
     }
-
-
 }
+
+
+
+
+
+
+
+
+
