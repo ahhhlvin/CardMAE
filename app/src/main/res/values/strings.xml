@@ -4,6 +4,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <string name="title_activity_calendar_quickstart">CalendarQuickstart</string>
     <string name="title_activity_calendar">Calendar</string>
 
@@ -11,4 +12,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 =======
 >>>>>>> madelyn
+=======
+    <string name="title_activity_map_card">MapCard</string>
+    <string name="title_activity_maps">Maps</string>
+    <string name="title_activity_card_select">CardSelect</string>
+>>>>>>> b5f1a0e0cc243088dddeed5160f5328a09da9d9f
 </resources>
