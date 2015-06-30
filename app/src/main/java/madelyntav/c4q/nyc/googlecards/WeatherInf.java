@@ -27,7 +27,7 @@ public class WeatherInf {
 
     public int getIconId() {
 
-        int iconId = R.mipmap.clear_day;
+        int iconId = R.mipmap.cloudy_final;
 
         if (mIcon.equals("clear-day")) {
             iconId = R.mipmap.clear_day;
@@ -44,7 +44,7 @@ public class WeatherInf {
         }else if (mIcon.equals("fog")) {
             iconId = R.mipmap.fog;
         }else if (mIcon.equals("cloudy")) {
-            iconId = R.mipmap.cloudy;
+            iconId = R.mipmap.cloudy_final;
         }else if (mIcon.equals("partly-cloudy-day")) {
             iconId = R.mipmap.partly_cloudy;
         }else if (mIcon.equals("partly-cloudy-night")) {
@@ -65,7 +65,7 @@ public class WeatherInf {
         mState = state;
     }
 
-    public double getTemperature() {
+    public int getTemperature() {
         return (int) Math.round(mTemperature);
     }
 
@@ -83,16 +83,19 @@ public class WeatherInf {
         mPrecipChance = precipChance;
     }
 
-    public double getHumidity() {
-        return mHumidity;
+    public int getHumidity() {
+
+        double humidityValue = mHumidity * 100;
+        return (int) Math.round(humidityValue);
     }
 
     public void setHumidity(double humidity) {
         mHumidity = humidity;
     }
 
-    public double getWind() {
-        return mWind;
+    public int getWind() {
+        double windValue = mWind * 100;
+        return (int) Math.round(windValue);
     }
 
     public void setWind(double wind) {
