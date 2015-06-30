@@ -9,10 +9,7 @@ import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -24,12 +21,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -244,6 +239,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         list = new ArrayList<>();
         listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_checked, list);
 
+
+
+
         new Handler().post(new Runnable() {
             @Override
             public void run() {
@@ -254,40 +252,59 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                             list.add(listEnter.getText().toString());
                             listView.setAdapter(listAdapter);
                         }
-                            listEnter.setText("");
+                        listEnter.setText("");
 
                     }
                 });
             }
         });
 
-        //Makes to-do list scrollable from main scrollview
-        listView.setOnTouchListener(new ListView.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (list.size() > 3) {
-                    int action = event.getAction();
-                    switch (action) {
-                        case MotionEvent.ACTION_DOWN:
-                            // Disallow ScrollView to intercept touch events.
-                            v.getParent().requestDisallowInterceptTouchEvent(true);
-                            break;
-
-                        case MotionEvent.ACTION_UP:
-                            // Allow ScrollView to intercept touch events.
-                            v.getParent().requestDisallowInterceptTouchEvent(false);
-                            break;
+        //Swipe to dismiss for ToDoList
+         SwipeDismissListViewTouchListener touchListener =
+                new SwipeDismissListViewTouchListener(
+                                 listView, new SwipeDismissListViewTouchListener.DismissCallbacks() {
+                    @Override
+                    public boolean canDismiss(int position) {
+                        return true;
                     }
 
-                    // Handle ListView touch events.
-                    v.onTouchEvent(event);
-                }
-                return true;
+                    public void onDismiss(ListView listView, int[] reverseSortedPositions) {
+                                         for (int position : reverseSortedPositions) {
+                                                 listAdapter.remove(listAdapter.getItem(position));
+                                            }
+                                        listAdapter.notifyDataSetChanged();
+                                     }
+                            });
+        listView.setOnTouchListener(touchListener);
+        listView.setOnScrollListener(touchListener.makeScrollListener());
 
-            }
-
-        });
+//        //Makes to-do list scrollable from main scrollview
+//        listView.setOnTouchListener(new ListView.OnTouchListener() {
+//
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                if (list.size() > 3) {
+//                    int action = event.getAction();
+//                    switch (action) {
+//                        case MotionEvent.ACTION_DOWN:
+//                            // Disallow ScrollView to intercept touch events.
+//                            v.getParent().requestDisallowInterceptTouchEvent(true);
+//                            break;
+//
+//                        case MotionEvent.ACTION_UP:
+//                            // Allow ScrollView to intercept touch events.
+//                            v.getParent().requestDisallowInterceptTouchEvent(false);
+//                            break;
+//                    }
+//
+//                    // Handle ListView touch events.
+//                    v.onTouchEvent(event);
+//                }
+//                return true;
+//
+//            }
+//
+//        });
 
 
         // MAP CARD
