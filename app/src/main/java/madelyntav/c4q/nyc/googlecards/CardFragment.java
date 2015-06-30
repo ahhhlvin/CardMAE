@@ -5,7 +5,6 @@ import android.app.Fragment;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,12 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,7 +76,6 @@ public class CardFragment extends android.support.v4.app.Fragment {
 
     public void updateEventData(List<String> eventDataList) {
         mEventAdapter.clear();
-        //mEventAdapter.addAll(eventDataList);
         mEvents.addAll(eventDataList);
         mEventAdapter.notifyDataSetChanged();
     }
@@ -96,42 +88,6 @@ public class CardFragment extends android.support.v4.app.Fragment {
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             View rowView = getActivity().getLayoutInflater().inflate(R.layout.row, null);
-            Handler handler= new Handler();
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    if(mEvents==null){
-                        FileInputStream input = null; // Open input stream
-                        try {
-                            input = getActivity().openFileInput("lines.txt");
-                        } catch (FileNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                        DataInputStream din = new DataInputStream(input);
-                        int sz = 0; // Read line count
-                        try {
-                            sz = din.readInt();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        for (int i=0;i<sz;i++) { // Read lines
-                            String line = null;
-                            try {
-                                line = din.readUTF();
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                            mEvents.add(line);
-                        }
-                        try {
-                            din.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                }
-            });
 
 
             String [] div=mEvents.get(position).split("/");
@@ -197,25 +153,6 @@ public class CardFragment extends android.support.v4.app.Fragment {
                 if(timeEventEnd!=""&& concatTimeBegin!=""){
                     to.setText(" until ");}
                 else{ to.setText("");}
-
-            Handler handler2= new Handler();
-            handler2.post(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        //Modes: MODE_PRIVATE, MODE_WORLD_READABLE, MODE_WORLD_WRITABLE
-                        FileOutputStream output = getActivity().openFileOutput("lines.txt", Context.MODE_WORLD_READABLE);
-                        DataOutputStream dout = new DataOutputStream(output);
-                        dout.writeInt(mEvents.size()); // Save line count
-                        for(String line : mEvents) // Save lines
-                            dout.writeUTF(line);
-                        dout.flush(); // Flush stream ...
-                        dout.close(); // ... and close.
-                    }
-                    catch (IOException exc) { exc.printStackTrace(); }
-
-                }
-            });
 
 
                 return rowView;

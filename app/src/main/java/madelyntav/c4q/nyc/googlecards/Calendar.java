@@ -14,7 +14,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.TextView;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -28,7 +27,10 @@ import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -47,7 +49,6 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
 
     public GoogleAccountCredential credential;
     TextView mStatusText;
-    TextView mResultsText;
     public List<String> eventStrings;
     final HttpTransport transport = AndroidHttp.newCompatibleTransport();
     final JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
@@ -118,26 +119,6 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
     @Override
     protected void onPause() {
         super.onPause();
-        android.os.Handler handler = new android.os.Handler();
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-
-                try {
-                    FileOutputStream output = openFileOutput("lines.txt", MODE_WORLD_READABLE);
-                    DataOutputStream dout = new DataOutputStream(output);
-                    dout.writeInt(eventStrings.size()); // Save line count
-                    for (String line : eventStrings) // Save lines
-                        dout.writeUTF(line);
-                    dout.flush(); // Flush stream ...
-                    dout.close(); // ... and close.
-                } catch (IOException exc) {
-                    exc.printStackTrace();
-                }
-
-
-            }
-        });
     }
 
 
@@ -387,12 +368,11 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
         protected  void onPostExecute(final ArrayList<String> eventStrings) {
             if (eventStrings.size() > 0) {
                 mActivity.clearResultsText();
-                mAllEventsFragment.updateEventData(eventStrings);
 
             } else {
 
-                mStatusText.setText("No Events Found");
             }
+            mAllEventsFragment.updateEventData(eventStrings);
 
             if(todayEventstrings.size() > 0) {
                 mCardFragment.updateEventData(todayEventstrings);
@@ -426,7 +406,56 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
                     .setSingleEvents(true)
                     .execute();
 
-                List<Event> items = events.getItems();
+            final List<Event> items = events.getItems();
+
+
+                    try {
+                        FileOutputStream output = openFileOutput("lines.txt", MODE_WORLD_READABLE);
+                        DataOutputStream dout = new DataOutputStream(output);
+                        dout.writeInt(items.size()); // Save line count
+                        for (Event line : items) // Save lines
+                            dout.writeUTF(String.valueOf(line));
+                        dout.flush(); // Flush stream ...
+                        dout.close(); // ... and close.
+                    } catch (IOException exc) {
+                        exc.printStackTrace();
+                    }
+
+            if(items.size()==0){
+
+                FileInputStream input = null; // Open input stream
+                try {
+                    input = openFileInput("lines.txt");
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                DataInputStream din = new DataInputStream(input);
+                int sz = 0; // Read line count
+                try {
+                    sz = din.readInt();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                for (int i = 0; i < sz; i++) { // Read lines
+                    String line = null;
+                    try {
+                        line = din.readUTF();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    eventStrings.add(line);
+                }
+                try {
+                    din.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
+
+
+
                 for (Event event : items) {
                     DateTime start = event.getStart().getDateTime();
 
@@ -447,7 +476,6 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
                     eventStrings.add(
                             String.format(event.getSummary() + " /" + location + " /" + start + " /" + end));
                 }
-
             //Get all of the events of the primary calendar for the next 24 hours
             Events events1=mActivity.mService.events().list("primary")
                     .setTimeMin(now)
@@ -497,9 +525,7 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
             } else if (position == 1) {
                 return mAllEventsFragment;
             } else if (position == 2) {
-
                 return mAddEventToCal;
-
             }
             return null;
         }
