@@ -33,14 +33,20 @@ public class CardFragment extends android.support.v4.app.Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        onRestoreInstanceState(savedInstanceState);
+//        if (savedInstanceState!=null){
+//           mEvents=new ArrayList<>();
+//            mEvents=savedInstanceState.getStringArrayList("Event Array");
+//        }
     }
 
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState!=null){
+            mEvents=new ArrayList<>();
+            mEvents=savedInstanceState.getStringArrayList("Event Array");
+        }
         super.onCreateView(inflater, container, savedInstanceState);
 
         // Inflate the layout for this fragment
@@ -51,11 +57,15 @@ public class CardFragment extends android.support.v4.app.Fragment {
         return mCardFragmentView;
     }
     //Here you can restore saved data in onSaveInstanceState Bundle
-    private void onRestoreInstanceState(Bundle savedInstanceState){
-        if(savedInstanceState!=null){
-            //String SomeText = savedInstanceState.getString("title");
-            mEvents=savedInstanceState.getStringArrayList("Event Array");
-        }
+//    private void onRestoreInstanceState(Bundle savedInstanceState){
+//        if(savedInstanceState!=null){
+//            mEvents=savedInstanceState.getStringArrayList("Event Array");
+//        }
+//    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 
     @Override
@@ -66,7 +76,6 @@ public class CardFragment extends android.support.v4.app.Fragment {
 
     public void updateEventData(List<String> eventDataList) {
         mEventAdapter.clear();
-        mEventAdapter.addAll(eventDataList);
         mEvents.addAll(eventDataList);
         mEventAdapter.notifyDataSetChanged();
     }
@@ -79,9 +88,10 @@ public class CardFragment extends android.support.v4.app.Fragment {
         @Override
         public View getView(final int position, View convertView, ViewGroup parent) {
             View rowView = getActivity().getLayoutInflater().inflate(R.layout.row, null);
+
+
             String [] div=mEvents.get(position).split("/");
 
-                //String[] div = event1.split("/");
                 String eventTitle = div[0].toString();
                 String eventLocation = div[1].toString();
                 String timeBegin = div[2].toString();
@@ -143,6 +153,7 @@ public class CardFragment extends android.support.v4.app.Fragment {
                 if(timeEventEnd!=""&& concatTimeBegin!=""){
                     to.setText(" until ");}
                 else{ to.setText("");}
+
 
                 return rowView;
 

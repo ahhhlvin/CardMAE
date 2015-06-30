@@ -14,7 +14,6 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.widget.TextView;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -28,6 +27,11 @@ import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.Events;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,7 +49,6 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
 
     public GoogleAccountCredential credential;
     TextView mStatusText;
-    TextView mResultsText;
     public List<String> eventStrings;
     final HttpTransport transport = AndroidHttp.newCompatibleTransport();
     final JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
@@ -69,6 +72,7 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
 
+
         if (savedInstanceState != null) {
             //Restore the fragment's instance
             mCardFragment = (CardFragment) getSupportFragmentManager().getFragment(
@@ -78,33 +82,30 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
             mAddEventToCal = (AddEventToCal) getSupportFragmentManager().getFragment(savedInstanceState, "mAddEventToCal");
         }
 
-            mPagesAdapter = new PagesAdapter(getSupportFragmentManager());
+        mPagesAdapter = new PagesAdapter(getSupportFragmentManager());
 
-            ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
-            viewPager.setAdapter(mPagesAdapter);
+        ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
+        viewPager.setAdapter(mPagesAdapter);
 
-            mStatusText = (TextView) findViewById(R.id.mStatusText);
+        mStatusText = (TextView) findViewById(R.id.mStatusText);
 
-            // Initialize credentials and service object.
-            SharedPreferences settings = getPreferences(Context.MODE_PRIVATE);
-            credential = GoogleAccountCredential.usingOAuth2(
-                    getApplicationContext(), Arrays.asList(SCOPES))
-                    .setBackOff(new ExponentialBackOff())
-                    .setSelectedAccountName(settings.getString(PREF_ACCOUNT_NAME, null));
+        // Initialize credentials and service object.
+        SharedPreferences settings = getPreferences(Context.MODE_PRIVATE);
+        credential = GoogleAccountCredential.usingOAuth2(
+                getApplicationContext(), Arrays.asList(SCOPES))
+                .setBackOff(new ExponentialBackOff())
+                .setSelectedAccountName(settings.getString(PREF_ACCOUNT_NAME, null));
 
-            mService = new com.google.api.services.calendar.Calendar.Builder(
-                    transport, jsonFactory, credential)
-                    .setApplicationName("Google Calendar API Android Quickstart")
-                    .build();
-        }
-
+        mService = new com.google.api.services.calendar.Calendar.Builder(
+                transport, jsonFactory, credential)
+                .setApplicationName("Google Calendar API Android Quickstart")
+                .build();
+    }
 
     /**
      * Called whenever this activity is pushed to the foreground, such as after
      * a call to onCreate().
      */
-
-
     //if googlePlay is on... refresh activity and show events, otherwise app has to be restarted
     @Override
     protected void onResume() {
@@ -112,10 +113,14 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
         if (isGooglePlayServicesAvailable()) {
             refreshResults();
         } else {
-            //mStatusText.setText("Google Play Services required: " +
-                    //"after installing, close and relaunch this app.");
         }
     }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
 
     /**
      * Called when an activity launched here (specifically, AccountPicker
@@ -173,8 +178,9 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         getSupportFragmentManager().putFragment(outState, "mCardFragment", mCardFragment);
-        getSupportFragmentManager().putFragment(outState,"mTomorrowFragment", mAllEventsFragment);
+        getSupportFragmentManager().putFragment(outState, "mTomorrowFragment", mAllEventsFragment);
 //        getSupportFragmentManager().putFragment(outState,"mAddEventToCal", mAddEventToCal);
+//        outState.putStringArrayList("eventStrings",);
     }
 
     /**
@@ -307,6 +313,8 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
         });
     }
 
+
+
     @Override
     public void onTaskCompleted(Boolean success) {
         mPagesAdapter.notifyDataSetChanged();
@@ -360,13 +368,11 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
         protected  void onPostExecute(final ArrayList<String> eventStrings) {
             if (eventStrings.size() > 0) {
                 mActivity.clearResultsText();
-               // CardFragment cardFragment = (CardFragment) mPagesAdapter.getItem(0);
-                mAllEventsFragment.updateEventData(eventStrings);
 
             } else {
 
-                mStatusText.setText("No Events Found");
             }
+            mAllEventsFragment.updateEventData(eventStrings);
 
             if(todayEventstrings.size() > 0) {
                 mCardFragment.updateEventData(todayEventstrings);
@@ -399,30 +405,77 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
                     .setOrderBy("startTime")
                     .setSingleEvents(true)
                     .execute();
-            List<Event> items = events.getItems();
-            for (Event event : items) {
-                DateTime start = event.getStart().getDateTime();
 
-                DateTime end = event.getEnd().getDateTime();
+            final List<Event> items = events.getItems();
 
-                String location=event.getLocation();
-                if(location== null){
-                    location="";
-                }
-                if (start == null) {
-                    // All-day events don't have start times, so just use
-                    // the start date.
-                    start = event.getStart().getDate();
-                    if (end == null) {
-                        end = event.getEnd().getDate();
+
+                    try {
+                        FileOutputStream output = openFileOutput("lines.txt", MODE_WORLD_READABLE);
+                        DataOutputStream dout = new DataOutputStream(output);
+                        dout.writeInt(items.size()); // Save line count
+                        for (Event line : items) // Save lines
+                            dout.writeUTF(String.valueOf(line));
+                        dout.flush(); // Flush stream ...
+                        dout.close(); // ... and close.
+                    } catch (IOException exc) {
+                        exc.printStackTrace();
                     }
+
+            if(items.size()==0){
+
+                FileInputStream input = null; // Open input stream
+                try {
+                    input = openFileInput("lines.txt");
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
                 }
-                eventStrings.add(
-                        String.format(event.getSummary() + " /" + location+ " /" + start + " /"+ end));
-
-
+                DataInputStream din = new DataInputStream(input);
+                int sz = 0; // Read line count
+                try {
+                    sz = din.readInt();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                for (int i = 0; i < sz; i++) { // Read lines
+                    String line = null;
+                    try {
+                        line = din.readUTF();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    eventStrings.add(line);
+                }
+                try {
+                    din.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
+
+
+
+
+                for (Event event : items) {
+                    DateTime start = event.getStart().getDateTime();
+
+                    DateTime end = event.getEnd().getDateTime();
+
+                    String location = event.getLocation();
+                    if (location == null) {
+                        location = "";
+                    }
+                    if (start == null) {
+                        // All-day events don't have start times, so just use
+                        // the start date.
+                        start = event.getStart().getDate();
+                        if (end == null) {
+                            end = event.getEnd().getDate();
+                        }
+                    }
+                    eventStrings.add(
+                            String.format(event.getSummary() + " /" + location + " /" + start + " /" + end));
+                }
             //Get all of the events of the primary calendar for the next 24 hours
             Events events1=mActivity.mService.events().list("primary")
                     .setTimeMin(now)
@@ -472,9 +525,7 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
             } else if (position == 1) {
                 return mAllEventsFragment;
             } else if (position == 2) {
-
                 return mAddEventToCal;
-
             }
             return null;
         }
