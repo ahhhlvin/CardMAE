@@ -3,6 +3,7 @@ package madelyntav.c4q.nyc.googlecards;
 
 import android.app.SearchManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,6 +33,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -47,6 +53,7 @@ import java.util.List;
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private ImageButton mBtnFind, nameButton, largeNameButton, listButton, addCardButton;
+    SharedPreferences toDoListSharedPreferences;
     private GoogleMap mMap;
     private EditText etPlace;
     private MapFragment mapFragment;
@@ -82,7 +89,41 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        nameText = (EditText) findViewById(R.id.nameText);
+        nameView = (TextView) findViewById(R.id.nameView);
 
+        SharedPreferences sharedPreferences=getSharedPreferences("Name",MODE_PRIVATE);
+        name=sharedPreferences.getString("UserName","").toUpperCase();
+        homeAddress=sharedPreferences.getString("homeAddress","");
+        workAddress=sharedPreferences.getString("workAddress","");
+        nameView.setText("Hello"+name);
+        nameText.setText(name);
+
+        Handler handler= new Handler();
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+
+                FileInputStream input = null; // Open input stream
+                try {
+                    input = openFileInput("lines.txt");
+
+                DataInputStream din = new DataInputStream(input);
+                int sz = din.readInt(); // Read line count
+                for (int i=0;i<sz;i++) { // Read lines
+                    String line = din.readUTF();
+                    list.add(line);
+                }
+                din.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
+        });
 
         flickrCard = (CardView) findViewById(R.id.flickrCard);
 //        weatherCard = (CardView) findViewById(R.id.weatherCard);
@@ -128,26 +169,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         addressLayout = (LinearLayout) findViewById(R.id.addressLayout);
         nameLayout = (LinearLayout) findViewById(R.id.nameLayout);
         enterNameLayout = (LinearLayout) findViewById(R.id.enterNameLayout);
-
-
-        // WRITING INFORMATION TO FILE
-//        SharedPreferences prefs = getPreferences(MODE_PRIVATE);
-//        name = prefs.getString("name", null);
-//        homeAddress = prefs.getString("home", "newHome");
-//        workAddress = prefs.getString("work", "newWork");
-//
-//        SharedPreferences.Editor editor = getPreferences(MODE_PRIVATE).edit();
-//        editor.putString("name", nameText.getText().toString());
-//        editor.putString("home", homeAddress);
-//        editor.putString("work", workAddress);
-        // TODO: IS THIS CORRECT OR CAN I SAVE ENTIRE ARRAYLIST??
-//        for (int i = 0; i < list.size(); i++) {
-//            editor.putString("listItem" + i, list.get(i));
-//        }
-//        editor.commit();
-        // TODO: add the list items !!
-
-
+        
         // FOR REFRESH ON SWIPE DOWN
         swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
         // TODO: PUT CODE IN HERE THAT WILL BE REFRESHED WITH SWIPE REFRESH LAYOUT
@@ -213,10 +235,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
 
-
-
-
-
         // GOOOGLE SEARCH BAR
         searchBar = (EditText) findViewById(R.id.searchText);
         ImageButton searchButton = (ImageButton) findViewById(R.id.searchButton);
@@ -237,9 +255,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         listView = (ListView) findViewById(R.id.listView);
         list = new ArrayList<>();
-        listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_checked, list);
-
-
+        listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
 
 
         new Handler().post(new Runnable() {
@@ -272,7 +288,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                                          for (int position : reverseSortedPositions) {
                                                  listAdapter.remove(listAdapter.getItem(position));
                                             }
-                                        listAdapter.notifyDataSetChanged();
+                        listAdapter.notifyDataSetChanged();
+
+
                                      }
                             });
         listView.setOnTouchListener(touchListener);
@@ -306,7 +324,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 //
 //        });
 
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // MAP CARD
         mBtnFind = (ImageButton) findViewById(R.id.btn_show);
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
@@ -511,6 +529,38 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        Handler handler = new Handler();
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    //Modes: MODE_PRIVATE, MODE_WORLD_READABLE, MODE_WORLD_WRITABLE
+                    FileOutputStream output = openFileOutput("lines.txt", MODE_WORLD_READABLE);
+                    DataOutputStream dout = new DataOutputStream(output);
+                    dout.writeInt(list.size()); // Save line count
+                    for (String line : list) // Save lines
+                        dout.writeUTF(line);
+                    dout.flush(); // Flush stream ...
+                    dout.close(); // ... and close.
+                } catch (IOException exc) {
+                    exc.printStackTrace();
+                }
+
+            }
+        });
+
+        SharedPreferences namePref= getSharedPreferences("Name", MODE_PRIVATE);
+        SharedPreferences.Editor editor=namePref.edit();
+        editor.putString("UserName",nameText.getText().toString());
+        editor.putString("homeAddress", homeAddress);
+        editor.putString("workAddress", workAddress);
+        editor.apply();
+
+    }
     /**
      * A class, to download Places from Geocoding webservice
      */
@@ -674,6 +724,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             mGridView.setAdapter(adapter);
 
         }
+
+
+
     }
 
 
