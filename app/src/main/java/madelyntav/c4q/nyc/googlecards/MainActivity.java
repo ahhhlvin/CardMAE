@@ -112,7 +112,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 int sz = din.readInt(); // Read line count
                 for (int i=0;i<sz;i++) { // Read lines
                     String line = din.readUTF();
-                    list.add(line);
+                    if(line.equals("")||line.equals(null)){}
+                    else{
+                    list.add(line);}
                 }
                 din.close();
                 } catch (FileNotFoundException e) {
@@ -124,6 +126,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             }
 
         });
+
+        
 
         flickrCard = (CardView) findViewById(R.id.flickrCard);
 //        weatherCard = (CardView) findViewById(R.id.weatherCard);
@@ -169,7 +173,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         addressLayout = (LinearLayout) findViewById(R.id.addressLayout);
         nameLayout = (LinearLayout) findViewById(R.id.nameLayout);
         enterNameLayout = (LinearLayout) findViewById(R.id.enterNameLayout);
-        
+
         // FOR REFRESH ON SWIPE DOWN
         swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
         // TODO: PUT CODE IN HERE THAT WILL BE REFRESHED WITH SWIPE REFRESH LAYOUT
@@ -287,6 +291,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     public void onDismiss(ListView listView, int[] reverseSortedPositions) {
                                          for (int position : reverseSortedPositions) {
                                                  listAdapter.remove(listAdapter.getItem(position));
+                                                  //TODO remove space leftover after removing
+
                                             }
                         listAdapter.notifyDataSetChanged();
 
