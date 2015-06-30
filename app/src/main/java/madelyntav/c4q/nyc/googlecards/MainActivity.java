@@ -1,23 +1,9 @@
 package madelyntav.c4q.nyc.googlecards;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-import android.app.Activity;
-import android.content.Intent;
-import android.os.Bundle;
-import android.provider.Settings;
-
-public class MainActivity extends Activity {
-=======
-import android.support.v7.app.ActionBarActivity;
-=======
-
 import android.app.SearchManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
->>>>>>> b5f1a0e0cc243088dddeed5160f5328a09da9d9f
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
@@ -63,6 +49,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
+
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private ImageButton mBtnFind, nameButton, largeNameButton, listButton, addCardButton;
@@ -96,23 +83,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     protected static boolean calendarChecked = true;
     protected static boolean todoChecked = true;
 
-<<<<<<< HEAD
-public class MainActivity extends ActionBarActivity {
->>>>>>> madelyn
-=======
->>>>>>> b5f1a0e0cc243088dddeed5160f5328a09da9d9f
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-<<<<<<< HEAD
-        setContentView(R.layout.activity_calendar_quickstart);
-
-        Intent i= new Intent(this, Calendar.class);
-        startActivity(i);
-    }
-}
-=======
         setContentView(R.layout.activity_main);
 
         nameText = (EditText) findViewById(R.id.nameText);
@@ -764,9 +738,3 @@ public class MainActivity extends ActionBarActivity {
 
 
 }
-<<<<<<< HEAD
->>>>>>> madelyn
-=======
-
-
->>>>>>> b5f1a0e0cc243088dddeed5160f5328a09da9d9f

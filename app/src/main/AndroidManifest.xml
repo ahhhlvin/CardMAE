@@ -52,7 +52,6 @@
             </intent-filter>
         </activity>
         <activity
-<<<<<<< HEAD
             android:name=".CalendarQuickstart"
             android:label="@string/title_activity_calendar_quickstart" >
         </activity>
@@ -64,12 +63,7 @@
         <activity
             android:name=".Calendar"
             android:label="@string/title_activity_calendar" >
-=======
-            android:name=".SelectCardActivity"
-            android:label="@string/title_activity_card_select"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden" >
->>>>>>> b5f1a0e0cc243088dddeed5160f5328a09da9d9f
+
         </activity>
     </application>
 
