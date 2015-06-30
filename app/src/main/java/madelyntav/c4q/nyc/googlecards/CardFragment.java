@@ -64,8 +64,6 @@ public class CardFragment extends android.support.v4.app.Fragment {
         outState.putStringArrayList("Event Array" , (ArrayList<String>) mEvents);
     }
 
-
-
     public void updateEventData(List<String> eventDataList) {
         mEventAdapter.clear();
         mEventAdapter.addAll(eventDataList);
@@ -119,13 +117,17 @@ public class CardFragment extends android.support.v4.app.Fragment {
                     concatEndTime+=timeEventEnd.charAt(i);
                 }
             } else{
-                dateEndFix+= Character.toString(eventTimeEnd.charAt(5))+Character.toString(eventTimeEnd.charAt(6))+Character.toString(eventTimeEnd.charAt(7))+Character.toString(eventTimeEnd.charAt(8))+Character.toString(eventTimeEnd.charAt(9))+Character.toString(eventTimeEnd.charAt(4))+Character.toString(eventTimeEnd.charAt(0))+Character.toString(eventTimeEnd.charAt(1))+Character.toString(eventTimeEnd.charAt(2))+Character.toString(eventTimeEnd.charAt(3));
+                dateEndFix+= " - "+Character.toString(eventTimeEnd.charAt(5))+Character.toString(eventTimeEnd.charAt(6))+Character.toString(eventTimeEnd.charAt(7))+Character.toString(eventTimeEnd.charAt(8))+Character.toString(eventTimeEnd.charAt(9))+Character.toString(eventTimeEnd.charAt(4))+Character.toString(eventTimeEnd.charAt(0))+Character.toString(eventTimeEnd.charAt(1))+Character.toString(eventTimeEnd.charAt(2))+Character.toString(eventTimeEnd.charAt(3));
                 timeEventEnd="";
             }
 
+            if(dateEndFix.toString().equals(dateBeginFix.toString())){
+                dateEndFix="";
+
+            }
 
                 TextView date= (TextView) rowView.findViewById(R.id.date);
-                date.setText(dateBeginFix + " - ");
+                date.setText(dateBeginFix);
                 TextView endDate=(TextView) rowView.findViewById(R.id.endDate);
                 endDate.setText(dateEndFix);
                 TextView title = (TextView) rowView.findViewById(R.id.title);

@@ -10,8 +10,6 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Parcel;
-import android.os.Parcelable;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
@@ -45,16 +43,15 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
      */
     com.google.api.services.calendar.Calendar mService;
 
-    GoogleAccountCredential credential;
+    public GoogleAccountCredential credential;
     TextView mStatusText;
     TextView mResultsText;
     public List<String> eventStrings;
     final HttpTransport transport = AndroidHttp.newCompatibleTransport();
     final JsonFactory jsonFactory = GsonFactory.getDefaultInstance();
     CardFragment mCardFragment;
-    TomorrowFragment mTomorrowFragment;
+    AllEventsFragment mAllEventsFragment;
     AddEventToCal mAddEventToCal;
-
     static final int REQUEST_ACCOUNT_PICKER = 1000;
     static final int REQUEST_AUTHORIZATION = 1001;
     static final int REQUEST_GOOGLE_PLAY_SERVICES = 1002;
@@ -76,7 +73,7 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
             //Restore the fragment's instance
             mCardFragment = (CardFragment) getSupportFragmentManager().getFragment(
                     savedInstanceState, "mCardFragment");
-            mTomorrowFragment = (TomorrowFragment) getSupportFragmentManager().getFragment(savedInstanceState, "mTomorrowFragment");
+            mAllEventsFragment = (AllEventsFragment) getSupportFragmentManager().getFragment(savedInstanceState, "mTomorrowFragment");
 
             mAddEventToCal = (AddEventToCal) getSupportFragmentManager().getFragment(savedInstanceState, "mAddEventToCal");
         }
@@ -176,10 +173,8 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         getSupportFragmentManager().putFragment(outState, "mCardFragment", mCardFragment);
-        getSupportFragmentManager().putFragment(outState,"mTomorrowFragment", mTomorrowFragment);
-        getSupportFragmentManager().putFragment(outState,"mAddEventToCal", mAddEventToCal);
-
-
+        getSupportFragmentManager().putFragment(outState,"mTomorrowFragment", mAllEventsFragment);
+//        getSupportFragmentManager().putFragment(outState,"mAddEventToCal", mAddEventToCal);
     }
 
     /**
@@ -208,7 +203,7 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                //mStatusText.setText("Retrieving data…");
+                mStatusText.setText("Retrieving data…");
 
             }
         });
@@ -318,12 +313,13 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
     }
 
 
-    public class ApiAsyncTask extends AsyncTask<Void, Void, ArrayList<String>> implements Parcelable {
+    public class ApiAsyncTask extends AsyncTask<Void, Void, ArrayList<String>>  {
         public Calendar mActivity;
         private OnTaskCompleted listener;
         private Context contxt;
         private Activity activity;
         private ArrayList<String> eventStrings;
+        private ArrayList<String> todayEventstrings;
 
         /**
          * Constructor.
@@ -362,17 +358,26 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
 
         @Override
         protected  void onPostExecute(final ArrayList<String> eventStrings) {
-            //eventStrings=new ArrayList<>();
             if (eventStrings.size() > 0) {
                 mActivity.clearResultsText();
-                mActivity.updateResultsText(eventStrings);
-                CardFragment cardFragment = (CardFragment) mPagesAdapter.getItem(0);
-
-                cardFragment.updateEventData(eventStrings);
+               // CardFragment cardFragment = (CardFragment) mPagesAdapter.getItem(0);
+                mAllEventsFragment.updateEventData(eventStrings);
 
             } else {
-                // log an error
+
+                mStatusText.setText("No Events Found");
             }
+
+            if(todayEventstrings.size() > 0) {
+                mCardFragment.updateEventData(todayEventstrings);
+            }
+            else{
+
+                mStatusText.setText("No Events Found");
+            }
+
+            mStatusText.setText("");
+
         }
 
         /**
@@ -387,17 +392,14 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
             DateTime tomorrow = new DateTime(System.currentTimeMillis() + 86400000);
 
             eventStrings = new ArrayList<String>();
+            todayEventstrings= new ArrayList<>();
 
-            //Get all of the events of the primary calendar for the next 24 hours
             Events events = mActivity.mService.events().list("primary")
                     .setTimeMin(now)
                     .setOrderBy("startTime")
                     .setSingleEvents(true)
                     .execute();
-
-
             List<Event> items = events.getItems();
-
             for (Event event : items) {
                 DateTime start = event.getStart().getDateTime();
 
@@ -417,46 +419,64 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
                 }
                 eventStrings.add(
                         String.format(event.getSummary() + " /" + location+ " /" + start + " /"+ end));
+
+
+            }
+
+            //Get all of the events of the primary calendar for the next 24 hours
+            Events events1=mActivity.mService.events().list("primary")
+                    .setTimeMin(now)
+                    .setTimeMax(tomorrow)
+                    .setSingleEvents(true)
+                    .execute();
+
+
+            List<Event> items1 = events1.getItems();
+            for (Event event : items1) {
+                DateTime start1 = event.getStart().getDateTime();
+
+                DateTime end1 = event.getEnd().getDateTime();
+
+                String location = event.getLocation();
+                if (location == null) {
+                    location = "";
+                }
+                if (start1 == null) {
+                    // All-day events don't have start times, so just use
+                    // the start date.
+                    start1 = event.getStart().getDate();
+                    if (end1 == null) {
+                        end1 = event.getEnd().getDate();
+                    }
+                }
+                todayEventstrings.add(event.getSummary()+"/"+location+"/"+start1+"/"+end1);
             }
 
             return eventStrings;
         }
 
-        @Override
-        public int describeContents() {
-            return 0;
-        }
-
-        @Override
-        public void writeToParcel(Parcel dest, int flags) {
-            dest.writeList(eventStrings);
-
-
-        }
     }
 
     public class PagesAdapter extends FragmentPagerAdapter {
-
-//        CardFragment mCardFragment;
-//        TomorrowFragment mTomorrowFragment;
-//        AddEventToCal mAddEventToCal;
-
         public PagesAdapter(android.support.v4.app.FragmentManager fragmentManager) {
             super(fragmentManager);
             mCardFragment = new CardFragment();
-            mTomorrowFragment = new TomorrowFragment();
+            mAllEventsFragment = new AllEventsFragment();
             mAddEventToCal = new AddEventToCal();
         }
 
         @Override
         public android.support.v4.app.Fragment getItem(int position) {
-            if(position == 0){
+            if (position == 0) {
                 return mCardFragment;
-            } else if (position == 1){
-                return mTomorrowFragment;
-            } else {
+            } else if (position == 1) {
+                return mAllEventsFragment;
+            } else if (position == 2) {
+
                 return mAddEventToCal;
+
             }
+            return null;
         }
 
         @Override
@@ -467,14 +487,15 @@ public class Calendar extends ActionBarActivity implements OnTaskCompleted {
         @Override
         public CharSequence getPageTitle(int position) {
             if(position ==0){
-                return "Events In The Next 24 Hours";
+                return "Today's Events";
             }
             else if(position==1){
-                return "This Weeks Events";
+                return "All Upcoming Events";
             }
-            else {
+            else if(position==2){
                 return "Create New Event";
             }
+            return null;
         }
     }
 }

@@ -6,10 +6,10 @@
     <!-- TODO: Update blank fragment layout -->
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/newTitle"
-        android:layout_gravity="center_horizontal|top"
+        android:gravity="center"
         android:hint="New Event Title"
         android:background="@null"
         android:textSize="30dp"
@@ -18,20 +18,20 @@
         android:layout_centerHorizontal="true" />
 
     <EditText
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/newLocation"
-        android:layout_gravity="center_horizontal|top"
+        android:gravity="center"
         android:hint="Location"
         android:textSize="30dp"
         android:layout_below="@+id/newTitle"
         android:layout_centerHorizontal="true" />
 
     <EditText
-        android:layout_width="350dp"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/newDescription"
-        android:layout_gravity="center_horizontal|top"
+        android:layout_gravity="center"
         android:background="@null"
         android:textStyle="italic"
         android:textSize="20dp"
@@ -40,17 +40,34 @@
         android:layout_below="@+id/newLocation"
         android:layout_centerHorizontal="true" />
 
-    <EditText
-        android:layout_width="wrap_content"
+    <!--<EditText-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:inputType="time"-->
+        <!--android:ems="10"-->
+        <!--android:id="@+id/startTime"-->
+        <!--android:layout_below="@+id/newDescription"-->
+        <!--android:layout_alignLeft="@+id/newTitle"-->
+        <!--android:layout_alignStart="@+id/newTitle"-->
+        <!--android:hint="Start Time"-->
+        <!--android:background="@null"-->
+        <!--android:gravity="center_horizontal" />-->
+    <!--<EditText-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/endTime"-->
+        <!--android:layout_below="@+id/startTime"-->
+        <!--android:gravity="center"-->
+        <!--android:hint="End Time"/>-->
+
+
+    <Button
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:inputType="time"
-        android:ems="10"
-        android:id="@+id/editText"
         android:layout_below="@+id/newDescription"
-        android:layout_alignLeft="@+id/newTitle"
-        android:layout_alignStart="@+id/newTitle"
-        android:hint="Start Time"
-        android:background="@null"
-        android:gravity="center_horizontal" />
+        android:id="@+id/submit"
+        android:layout_marginTop="10dp"
+        android:onClick="submitEvent"
+        android:text="Create Event"/>
 
 </RelativeLayout>
