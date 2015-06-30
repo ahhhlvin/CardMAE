@@ -94,7 +94,7 @@ public class WeatherInf {
     }
 
     public int getWind() {
-        double windValue = mWind * 100;
+        double windValue = mWind / 0.6;
         return (int) Math.round(windValue);
     }
 

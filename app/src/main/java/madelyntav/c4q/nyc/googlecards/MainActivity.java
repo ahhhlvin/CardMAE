@@ -112,9 +112,7 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        new SendEmail();
         new ShareNote();
-
 
     }
 
@@ -123,7 +121,7 @@ public class MainActivity extends ActionBarActivity {
         mHumidityValue.setText(mCurrentWeather.getHumidity() + "%");
         mPrecipValue.setText(mCurrentWeather.getPrecipChance() + "%");
         mSummaryLabel.setText(mCurrentWeather.getSummary());
-        mWindValue.setText(mCurrentWeather.getWind() + "");
+        mWindValue.setText(mCurrentWeather.getWind() + "mph");
 
 
         Drawable drawable = getResources().getDrawable(mCurrentWeather.getIconId());
@@ -142,7 +140,7 @@ public class MainActivity extends ActionBarActivity {
         currentWeather.setPrecipChance(currently.getDouble("precipProbability"));
         currentWeather.setSummary(currently.getString("summary"));
         currentWeather.setTemperature(currently.getDouble("temperature"));
-        currentWeather.setWind(currently.getDouble("windBearing"));
+        currentWeather.setWind(currently.getDouble("windSpeed"));
         currentWeather.setState(timeZone);
 
         return currentWeather;
@@ -167,10 +165,6 @@ public class MainActivity extends ActionBarActivity {
         dialofFragment.show(getFragmentManager(), "error_dialog");
     }
 
-    private void sendEmail () {
 
-
-
-    }
 
 }
