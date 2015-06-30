@@ -96,8 +96,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         name=sharedPreferences.getString("UserName","").toUpperCase();
         homeAddress=sharedPreferences.getString("homeAddress","");
         workAddress=sharedPreferences.getString("workAddress","");
-        nameView.setText("Hello"+name);
-        nameText.setText(name);
+        if(!nameView.equals("")) {
+            nameView.setText("Hello, " + name + "!");
+        }
 
         Handler handler= new Handler();
         handler.post(new Runnable() {
@@ -106,7 +107,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
                 FileInputStream input = null; // Open input stream
                 try {
-                    input = openFileInput("lines.txt");
+                    input = openFileInput("ToDo.txt");
 
                 DataInputStream din = new DataInputStream(input);
                 int sz = din.readInt(); // Read line count
@@ -127,7 +128,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         });
 
-        
+
 
         flickrCard = (CardView) findViewById(R.id.flickrCard);
 //        weatherCard = (CardView) findViewById(R.id.weatherCard);
@@ -545,7 +546,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             public void run() {
                 try {
                     //Modes: MODE_PRIVATE, MODE_WORLD_READABLE, MODE_WORLD_WRITABLE
-                    FileOutputStream output = openFileOutput("lines.txt", MODE_WORLD_READABLE);
+                    FileOutputStream output = openFileOutput("ToDo.txt", MODE_WORLD_READABLE);
                     DataOutputStream dout = new DataOutputStream(output);
                     dout.writeInt(list.size()); // Save line count
                     for (String line : list) // Save lines
