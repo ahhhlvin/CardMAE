@@ -5,8 +5,6 @@
     android:id="@+id/cardFragment"
     tools:context="madelyntav.c4q.nyc.googlecards.CardFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <ListView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"

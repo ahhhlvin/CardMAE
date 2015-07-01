@@ -3,8 +3,6 @@
     android:layout_height="match_parent"
     tools:context="madelyntav.c4q.nyc.googlecards.AddEventToCal">
 
-    <!-- TODO: Update blank fragment layout -->
-
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

@@ -3,7 +3,7 @@
 
 <b>Alvin</b> -- MAPS + GOOGLE SEARCH BAR + UI(?) <br>
 <b>Elvis</b> -- STOCKS + WEATHER <br>
-<b>Madelyn</b> -- CALENDAR + TODO  <br>
+<b>Madelyn</b> -- CALENDAR + Task List  <br>
 
 
 
