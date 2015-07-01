@@ -3,6 +3,8 @@ package madelyntav.c4q.nyc.googlecards;
 import android.accounts.AccountManager;
 import android.app.Activity;
 import android.app.Dialog;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +18,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
@@ -93,7 +96,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private EditText listEnter, enterAddress;
     private EditText searchBar, nameText;
     private Button homeButton, workButton;
-    private String homeAddress = "", workAddress = "", name = "";
+    private String homeAddress = "", workAddress = "", name = "", storedName = null;
     private LinearLayout addressLayout, nameLayout, enterNameLayout;
     private Button saveAddress;
     private SwipeRefreshLayout swipeLayout;
@@ -152,6 +155,42 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        nameText = (EditText) findViewById(R.id.nameText);
+        nameView = (TextView) findViewById(R.id.nameView);
+        nameLayout = (LinearLayout) findViewById(R.id.nameLayout);
+        enterNameLayout = (LinearLayout) findViewById(R.id.enterNameLayout);
+
+        SharedPreferences sharedPreferences = getSharedPreferences("Name", MODE_PRIVATE);
+        storedName = sharedPreferences.getString("UserName", null);
+        homeAddress = sharedPreferences.getString("homeAddress", "");
+        workAddress = sharedPreferences.getString("workAddress", "");
+        if (name.equals("") && storedName != null) {
+            nameLayout.setVisibility(View.VISIBLE);
+            enterNameLayout.setVisibility(View.GONE);
+            nameView.setText("Hello, " + storedName + "!");
+        } else if (name.equals("") || storedName == null) {
+            enterNameLayout.setVisibility(View.VISIBLE);
+            nameLayout.setVisibility(View.GONE);
+        } else {
+                enterNameLayout.setVisibility(View.VISIBLE);
+            nameLayout.setVisibility(View.GONE);
+
+        }
+
+
+
+        // NOTIFICATION CODE
+        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(getApplicationContext())
+                        .setSmallIcon(R.drawable.mae_icon)
+                        .setContentTitle("Welcome to MAE")
+                        .setContentText("Thank you for using our product! \n Have an amazing day!");
+
+        mBuilder.setAutoCancel(true);
+        Notification notification = mBuilder.build();
+        notificationManager.notify(1234, notification);
 
 
 
@@ -214,20 +253,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         new ShareNote();
 
-        nameText = (EditText) findViewById(R.id.nameText);
-        nameView = (TextView) findViewById(R.id.nameView);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("Name", MODE_PRIVATE);
-        String storedName = sharedPreferences.getString("UserName", null);
-        homeAddress = sharedPreferences.getString("homeAddress", "");
-        workAddress = sharedPreferences.getString("workAddress", "");
-        if (name.equals("")) {
-            nameView.setText("Hello, " + storedName + "!");
-        } else {
-            nameLayout.setVisibility(View.VISIBLE);
-            nameView.setText(name);
-            enterNameLayout.setVisibility(View.GONE);
-        }
+
 
         Handler handler = new Handler();
         handler.post(new Runnable() {
@@ -296,8 +323,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         saveAddress = (Button) findViewById(R.id.homeWorkButton);
         enterAddress = (EditText) findViewById(R.id.enterAddress);
         addressLayout = (LinearLayout) findViewById(R.id.addressLayout);
-        nameLayout = (LinearLayout) findViewById(R.id.nameLayout);
-        enterNameLayout = (LinearLayout) findViewById(R.id.enterNameLayout);
+
 
         // FOR REFRESH ON SWIPE DOWN
         swipeLayout = (SwipeRefreshLayout) findViewById(R.id.swipeRefresh);
@@ -584,8 +610,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(mPagesAdapter);
-
         mStatusText = (TextView) findViewById(R.id.mStatusText);
+
 
         // Initialize credentials and service object.
         SharedPreferences settings = getPreferences(Context.MODE_PRIVATE);
@@ -1051,12 +1077,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
 
-        /**
-         * Fetch a list of the next 10 events from the primary calendar.
-         *
-         * @return List of Strings describing returned events.
-         * @throws IOException
-         */
+
+         // Fetch a list of events from the primary calendar.
+
         private ArrayList<String> getDataFromApi() throws IOException {
 
             DateTime now = new DateTime(System.currentTimeMillis());
@@ -1116,9 +1139,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     e.printStackTrace();
                 }
             }
-
-
-
 
 
             for (Event event : items) {
@@ -1215,10 +1235,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-
-/**
-     * A class, to download Places from Geocoding webservice
-     */
     private class DownloadTask extends AsyncTask<String, Integer, String> {
 
         String data = null;
@@ -1341,6 +1357,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
             }
         }
+
+
     }
 }
 
