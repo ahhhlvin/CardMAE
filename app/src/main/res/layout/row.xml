@@ -44,7 +44,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:id="@+id/thumbail"
-        android:src="@drawable/logo"
+        android:src="@drawable/calendar"
         android:layout_marginTop="30dp" />
 
         <RelativeLayout
