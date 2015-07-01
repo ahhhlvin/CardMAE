@@ -186,7 +186,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 new NotificationCompat.Builder(getApplicationContext())
                         .setSmallIcon(R.drawable.mae_icon)
                         .setContentTitle("Welcome to MAE")
-                        .setContentText("Thank you for using our product! \n Have an amazing day!");
+                        .setContentText("Thank you for using our product!");
 
         mBuilder.setAutoCancel(true);
         Notification notification = mBuilder.build();
@@ -1359,6 +1359,14 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
 
+    }
+
+
+    @Override
+    public void onBackPressed()
+    {
+
+        // super.onBackPressed(); // Comment this super call to avoid calling finish()
     }
 }
 
