@@ -66,6 +66,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/newDescription"
         android:id="@+id/submit"
+        style="@style/button"
         android:layout_marginTop="10dp"
         android:onClick="submitEvent"
         android:text="Create Event"/>

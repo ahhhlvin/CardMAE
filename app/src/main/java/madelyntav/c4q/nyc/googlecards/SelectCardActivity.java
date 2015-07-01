@@ -28,6 +28,8 @@ public class SelectCardActivity extends ActionBarActivity {
         setContentView(R.layout.activity_select_card);
 
 
+
+
             if (MainActivity.flickrChecked) {
                 new Handler().post(new Runnable() {
                     @Override
@@ -41,42 +43,67 @@ public class SelectCardActivity extends ActionBarActivity {
                 MainActivity.flickrChecked = false;
             } else {
             }
+
+
         if (MainActivity.weatherChecked) {
-
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    checkableList.performItemClick(
+                            checkableList.getChildAt(1),
+                            1,
+                            checkableList.getAdapter().getItemId(1));
+                }
+            });
+            MainActivity.weatherChecked = false;
         } else {
-
         }
+
+
             if (MainActivity.mapChecked) {
                 new Handler().post(new Runnable() {
                     @Override
                     public void run() {
                         checkableList.performItemClick(
-                                checkableList.getChildAt(3),
-                                3,
-                                checkableList.getAdapter().getItemId(3));
+                                checkableList.getChildAt(2),
+                                2,
+                                checkableList.getAdapter().getItemId(2));
                     }
                 });
                 MainActivity.mapChecked = false;
             } else {
             }
+
+
+
         if (MainActivity.calendarChecked) {
-
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    checkableList.performItemClick(
+                            checkableList.getChildAt(3),
+                            3,
+                            checkableList.getAdapter().getItemId(3));
+                }
+            });
+            MainActivity.calendarChecked = false;
         } else {
-
         }
-            if (MainActivity.todoChecked) {
-                new Handler().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        checkableList.performItemClick(
-                                checkableList.getChildAt(5),
-                                5,
-                                checkableList.getAdapter().getItemId(5));
-                    }
-                });
-                MainActivity.todoChecked = false;
-            } else {
-            }
+
+
+        if (MainActivity.todoChecked) {
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    checkableList.performItemClick(
+                            checkableList.getChildAt(4),
+                            4,
+                            checkableList.getAdapter().getItemId(4));
+                }
+            });
+            MainActivity.todoChecked = false;
+        } else {
+        }
 
 
         updateButton = (Button) findViewById(R.id.updateButton);
@@ -136,6 +163,13 @@ public class SelectCardActivity extends ActionBarActivity {
             }
 
         });
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+
+        // super.onBackPressed(); // Comment this super call to avoid calling finish()
     }
 
     public void showSelectedItems(View view){

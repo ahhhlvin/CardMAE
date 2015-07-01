@@ -4,13 +4,6 @@
     android:screenOrientation="portrait"
     >
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.READ_CALENDAR"/>
-    <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
-
-
     <permission
         android:name="in.wptrafficanalyzer.locationgeocodingv2.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
@@ -22,6 +15,10 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_CALENDAR"/>
+    <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
+
 
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -66,8 +63,9 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".Calendar"
-            android:label="@string/title_activity_calendar" >
+            android:name=".SelectCardActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden">
 
         </activity>
     </application>
