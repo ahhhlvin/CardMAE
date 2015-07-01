@@ -508,13 +508,8 @@
                 <android.support.v7.widget.CardView
                     android:id="@+id/calendarCard"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="match_parent">
 
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical">
 
 
                         <TextView
@@ -522,7 +517,9 @@
                             android:layout_width="fill_parent"
                             android:layout_height="300dp"
                             android:gravity="center"
-                            android:textStyle="bold" />
+                            android:textStyle="bold"/>
+
+
                         <!-- activity_screen_slide.xml -->
                         <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
                             android:id="@+id/pager"
@@ -536,9 +533,6 @@
                             </android.support.v4.view.PagerTabStrip>
 
                         </android.support.v4.view.ViewPager>
-
-
-                    </LinearLayout>
 
 
                 </android.support.v7.widget.CardView>

@@ -218,13 +218,15 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         nameView = (TextView) findViewById(R.id.nameView);
 
         SharedPreferences sharedPreferences = getSharedPreferences("Name", MODE_PRIVATE);
-        name = sharedPreferences.getString("UserName", null);
+        String storedName = sharedPreferences.getString("UserName", null);
         homeAddress = sharedPreferences.getString("homeAddress", "");
         workAddress = sharedPreferences.getString("workAddress", "");
-        if (name != null) {
-            nameView.setText("Hello, " + name + "!");
+        if (name.equals("")) {
+            nameView.setText("Hello, " + storedName + "!");
         } else {
-
+            nameLayout.setVisibility(View.VISIBLE);
+            nameView.setText(name);
+            enterNameLayout.setVisibility(View.GONE);
         }
 
         Handler handler = new Handler();
@@ -336,11 +338,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         // NAME CARD
         nameText = (EditText) findViewById(R.id.nameText);
         nameView = (TextView) findViewById(R.id.nameView);
-        if (name!=null) {
-            nameLayout.setVisibility(View.VISIBLE);
-            nameView.setText(name);
-            enterNameLayout.setVisibility(View.GONE);
-        } else{}
 
         nameButton = (ImageButton) findViewById(R.id.nameButton);
         nameButton.setOnClickListener(new View.OnClickListener() {
