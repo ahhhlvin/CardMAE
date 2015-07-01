@@ -587,8 +587,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         ViewPager viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(mPagesAdapter);
-
         mStatusText = (TextView) findViewById(R.id.mStatusText);
+
 
         // Initialize credentials and service object.
         SharedPreferences settings = getPreferences(Context.MODE_PRIVATE);
