@@ -9,10 +9,7 @@
     <option name="TOOL_WINDOW_LOG_LEVEL" value="ERROR" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="277d9309-ac26-4189-bc07-5a587e2261e2" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-    </list>
+    <list default="true" id="277d9309-ac26-4189-bc07-5a587e2261e2" name="Default" comment="" />
     <ignored path="GoogleCards2.iws" />
     <ignored path=".idea/workspace.xml" />
     <ignored path="$PROJECT_DIR$/build/classes/" />
