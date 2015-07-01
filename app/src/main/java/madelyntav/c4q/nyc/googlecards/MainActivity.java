@@ -1054,12 +1054,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         }
 
-        /**
-         * Fetch a list of the next 10 events from the primary calendar.
-         *
-         * @return List of Strings describing returned events.
-         * @throws IOException
-         */
+
+         // Fetch a list of events from the primary calendar.
+
         private ArrayList<String> getDataFromApi() throws IOException {
 
             DateTime now = new DateTime(System.currentTimeMillis());
@@ -1119,9 +1116,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     e.printStackTrace();
                 }
             }
-
-
-
 
 
             for (Event event : items) {
@@ -1218,10 +1212,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-
-/**
-     * A class, to download Places from Geocoding webservice
-     */
     private class DownloadTask extends AsyncTask<String, Integer, String> {
 
         String data = null;

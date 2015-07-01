@@ -11,7 +11,6 @@
   <component name="ChangeListManager">
     <list default="true" id="277d9309-ac26-4189-bc07-5a587e2261e2" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/MainActivity.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="GoogleCards2.iws" />
@@ -41,11 +40,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-11.258064">
-              <caret line="273" column="29" selection-start-line="273" selection-start-column="29" selection-end-line="273" selection-end-column="29" />
+            <state vertical-scroll-proportion="0.75206614">
+              <caret line="1211" column="9" selection-start-line="1211" selection-start-column="9" selection-end-line="1211" selection-end-column="9" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#7395#7434#0" expanded="true" />
@@ -54,6 +53,8 @@
                 <element signature="e#8435#9348#0" expanded="true" />
                 <element signature="e#9347#9348#0" expanded="true" />
                 <element signature="e#11035#11631#0" expanded="true" />
+                <element signature="e#11175#11369#0" expanded="true" />
+                <element signature="e#11368#11369#0" expanded="true" />
                 <element signature="e#11630#11631#0" expanded="true" />
                 <element signature="e#11722#11911#0" expanded="true" />
                 <element signature="e#11910#11911#0" expanded="true" />
@@ -96,19 +97,9 @@
                 <element signature="e#37289#37297#0" expanded="true" />
                 <element signature="e#37545#37546#0" expanded="true" />
                 <element signature="e#37605#37606#0" expanded="true" />
-                <element signature="e#43384#43385#0" expanded="true" />
-                <element signature="e#43416#43417#0" expanded="true" />
+                <element signature="e#43243#43244#0" expanded="true" />
+                <element signature="e#43275#43276#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Calendar.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/Calendar.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-4.451613">
-              <caret line="60" column="6" selection-start-line="60" selection-start-column="6" selection-end-line="60" selection-end-column="68" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -126,13 +117,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="activity_main.xml" pinned="false" current-in-tab="true">
+      <file leaf-file-name="activity_main.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
           <provider editor-type-id="android-designer">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.17211328">
+            <state vertical-scroll-proportion="-1.4107143">
               <caret line="510" column="55" selection-start-line="510" selection-start-column="55" selection-end-line="510" selection-end-column="55" />
               <folding>
                 <element signature="e#335#368#0" expanded="true" />
@@ -1576,8 +1567,8 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_card.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/SelectCardActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/Calendar.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/MainActivity.java" />
       </list>
     </option>
   </component>
@@ -1948,7 +1939,7 @@
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286119" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23087819" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23087819" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -2022,6 +2013,8 @@
             <element signature="e#8435#9348#0" expanded="true" />
             <element signature="e#9347#9348#0" expanded="true" />
             <element signature="e#11035#11631#0" expanded="true" />
+            <element signature="e#11175#11369#0" expanded="true" />
+            <element signature="e#11368#11369#0" expanded="true" />
             <element signature="e#11630#11631#0" expanded="true" />
             <element signature="e#11722#11911#0" expanded="true" />
             <element signature="e#11910#11911#0" expanded="true" />
@@ -2064,8 +2057,8 @@
             <element signature="e#37289#37297#0" expanded="true" />
             <element signature="e#37545#37546#0" expanded="true" />
             <element signature="e#37605#37606#0" expanded="true" />
-            <element signature="e#43384#43385#0" expanded="true" />
-            <element signature="e#43416#43417#0" expanded="true" />
+            <element signature="e#43243#43244#0" expanded="true" />
+            <element signature="e#43275#43276#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2156,10 +2149,57 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/Calendar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.451613">
+          <caret line="60" column="6" selection-start-line="60" selection-start-column="6" selection-end-line="60" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_tomorrow.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.4107143">
+          <caret line="510" column="55" selection-start-line="510" selection-start-column="55" selection-end-line="510" selection-end-column="55" />
+          <folding>
+            <element signature="e#335#368#0" expanded="true" />
+            <element signature="e#393#428#0" expanded="true" />
+            <element signature="e#454#489#0" expanded="true" />
+            <element signature="e#513#546#0" expanded="true" />
+            <element signature="e#14473#14497#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_card.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.724138">
+          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.258064">
-          <caret line="273" column="29" selection-start-line="273" selection-start-column="29" selection-end-line="273" selection-end-column="29" />
+        <state vertical-scroll-proportion="0.75206614">
+          <caret line="1211" column="9" selection-start-line="1211" selection-start-column="9" selection-end-line="1211" selection-end-column="9" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#7395#7434#0" expanded="true" />
@@ -2168,6 +2208,8 @@
             <element signature="e#8435#9348#0" expanded="true" />
             <element signature="e#9347#9348#0" expanded="true" />
             <element signature="e#11035#11631#0" expanded="true" />
+            <element signature="e#11175#11369#0" expanded="true" />
+            <element signature="e#11368#11369#0" expanded="true" />
             <element signature="e#11630#11631#0" expanded="true" />
             <element signature="e#11722#11911#0" expanded="true" />
             <element signature="e#11910#11911#0" expanded="true" />
@@ -2210,55 +2252,8 @@
             <element signature="e#37289#37297#0" expanded="true" />
             <element signature="e#37545#37546#0" expanded="true" />
             <element signature="e#37605#37606#0" expanded="true" />
-            <element signature="e#43384#43385#0" expanded="true" />
-            <element signature="e#43416#43417#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/Calendar.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-4.451613">
-          <caret line="60" column="6" selection-start-line="60" selection-start-column="6" selection-end-line="60" selection-end-column="68" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_tomorrow.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_card.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.724138">
-          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17211328">
-          <caret line="510" column="55" selection-start-line="510" selection-start-column="55" selection-end-line="510" selection-end-column="55" />
-          <folding>
-            <element signature="e#335#368#0" expanded="true" />
-            <element signature="e#393#428#0" expanded="true" />
-            <element signature="e#454#489#0" expanded="true" />
-            <element signature="e#513#546#0" expanded="true" />
-            <element signature="e#14473#14497#0" expanded="true" />
+            <element signature="e#43243#43244#0" expanded="true" />
+            <element signature="e#43275#43276#0" expanded="true" />
           </folding>
         </state>
       </provider>
