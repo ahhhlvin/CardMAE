@@ -5,89 +5,19 @@
       <config />
     </shared>
   </component>
+  <component name="AndroidLogFilters">
+    <option name="TOOL_WINDOW_LOG_LEVEL" value="ERROR" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="277d9309-ac26-4189-bc07-5a587e2261e2" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/add.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/flickr.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/ic_launcher-web.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/logo.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/mae_icon.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/mae_logo.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/search.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/user.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/AddEventToCal.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/AllEventsFragment.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/ApiAsyncTask.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/Calendar.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/CalendarQuickstart.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/CardFragment.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/FlickrGetter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/GeocodeJSONParser.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/ImageAdapter.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/MyAdap.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/OnTaskCompleted.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/SelectCardActivity.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/SwipeDismissListViewTouchListener.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_calendar.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_calendar_quickstart.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_select_card.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_22_2_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/button.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/checkable_list_layout.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_add_event_to_cal.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_card.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_tomorrow.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/google_api_client_1_20_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/google_api_client_android_1_20_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/google_api_client_gson_1_20_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/google_api_services_calendar_v3_rev125_1_20_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/google_http_client_1_20_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/google_http_client_android_1_20_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/google_http_client_gson_1_20_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/google_http_client_jackson2_1_20_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/google_oauth_client_1_20_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/gson_2_1.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/guava_jdk5_13_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/jackson_core_2_1_3.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/jsr305_1_3_9.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/license_fragment_support_v4_1_1_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/menu/menu_calendar.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/menu/menu_calendar_quickstart.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/menu/menu_card_select.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/menu/menu_map_card.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/menu/menu_maps.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/picasso_2_3_2.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_base_7_5_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/play_services_maps_7_5_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/res/layout/row.xml" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/libraries/appcompat_v7_22_1_1.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.idea/scopes/scope_settings.xml" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_launcher.png" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-hdpi/ic_launcher.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/ic_launcher.png" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-mdpi/ic_launcher.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/ic_launcher.png" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xhdpi/ic_launcher.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" afterPath="$PROJECT_DIR$/app/src/main/res/mipmap-xxhdpi/ic_launcher.png" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/.name" afterPath="$PROJECT_DIR$/.idea/.name" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/GoogleCards2.iml" afterPath="$PROJECT_DIR$/GoogleCards2.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/Calendar.java" afterPath="$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/Calendar.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/MainActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/SelectCardActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/SelectCardActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/build.gradle" afterPath="$PROJECT_DIR$/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/build.gradle" afterPath="$PROJECT_DIR$/app/build.gradle" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/cardview_v7_22_2_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/cardview_v7_22_2_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/compiler.xml" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/gradle.xml" afterPath="$PROJECT_DIR$/.idea/gradle.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/modules.xml" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/recyclerview_v7_22_2_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/recyclerview_v7_22_2_0.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/app.iml" afterPath="$PROJECT_DIR$/app/app.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_card.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_card.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" afterPath="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/support_v4_22_2_0.xml" afterPath="$PROJECT_DIR$/.idea/libraries/support_v4_22_2_0.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="GoogleCards2.iws" />
@@ -117,57 +47,97 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="strings.xml" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.022970904">
-              <caret line="1" column="48" selection-start-line="1" selection-start-column="48" selection-end-line="1" selection-end-column="48" />
+            <state vertical-scroll-proportion="0.51626015">
+              <caret line="588" column="23" selection-start-line="588" selection-start-column="23" selection-end-line="588" selection-end-column="23" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#7395#7434#0" expanded="true" />
+                <element signature="e#7509#7821#0" expanded="true" />
+                <element signature="e#7820#7821#0" expanded="true" />
+                <element signature="e#8435#9348#0" expanded="true" />
+                <element signature="e#9347#9348#0" expanded="true" />
+                <element signature="e#11035#11631#0" expanded="true" />
+                <element signature="e#11630#11631#0" expanded="true" />
+                <element signature="e#11722#11911#0" expanded="true" />
+                <element signature="e#11910#11911#0" expanded="true" />
+                <element signature="e#12349#12694#0" expanded="true" />
+                <element signature="e#12693#12694#0" expanded="true" />
+                <element signature="e#12817#13050#0" expanded="true" />
+                <element signature="e#13049#13050#0" expanded="true" />
+                <element signature="e#13268#13424#0" expanded="true" />
+                <element signature="e#13423#13424#0" expanded="true" />
+                <element signature="e#13793#14346#0" expanded="true" />
+                <element signature="e#14345#14346#0" expanded="true" />
+                <element signature="e#16928#17194#0" expanded="true" />
+                <element signature="e#17193#17194#0" expanded="true" />
+                <element signature="e#17238#18459#0" expanded="true" />
+                <element signature="e#18458#18459#0" expanded="true" />
+                <element signature="e#18562#19046#0" expanded="true" />
+                <element signature="e#19045#19046#0" expanded="true" />
+                <element signature="e#19092#19611#0" expanded="true" />
+                <element signature="e#19610#19611#0" expanded="true" />
+                <element signature="e#19714#20197#0" expanded="true" />
+                <element signature="e#20196#20197#0" expanded="true" />
+                <element signature="e#20243#20762#0" expanded="true" />
+                <element signature="e#20761#20762#0" expanded="true" />
+                <element signature="e#20911#21184#0" expanded="true" />
+                <element signature="e#21183#21184#0" expanded="true" />
+                <element signature="e#25843#25995#0" expanded="true" />
+                <element signature="e#25994#25995#0" expanded="true" />
+                <element signature="e#27088#27228#0" expanded="true" />
+                <element signature="e#27227#27228#0" expanded="true" />
+                <element signature="e#31123#31124#0" expanded="true" />
+                <element signature="e#31189#31190#0" expanded="true" />
+                <element signature="e#34527#34905#0" expanded="true" />
+                <element signature="e#34904#34905#0" expanded="true" />
+                <element signature="e#35051#35803#0" expanded="true" />
+                <element signature="e#35802#35803#0" expanded="true" />
+                <element signature="e#36655#36656#0" expanded="true" />
+                <element signature="e#36704#36705#0" expanded="true" />
+                <element signature="e#36760#36761#0" expanded="true" />
+                <element signature="e#36808#36809#0" expanded="true" />
+                <element signature="e#37289#37297#0" expanded="true" />
+                <element signature="e#37545#37546#0" expanded="true" />
+                <element signature="e#37605#37606#0" expanded="true" />
+                <element signature="e#43384#43385#0" expanded="true" />
+                <element signature="e#43416#43417#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SelectCardActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/SelectCardActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="120" column="45" selection-start-line="120" selection-start-column="45" selection-end-line="120" selection-end-column="45" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/MainActivity.java">
+      <file leaf-file-name="Calendar.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/Calendar.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.2222223">
-              <caret line="843" column="0" selection-start-line="843" selection-start-column="0" selection-end-line="843" selection-end-column="0" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#5736#5775#0" expanded="true" />
-                <element signature="e#5850#6162#0" expanded="true" />
-                <element signature="e#6161#6162#0" expanded="true" />
-                <element signature="e#9633#10229#0" expanded="true" />
-                <element signature="e#10228#10229#0" expanded="true" />
-                <element signature="e#10946#11291#0" expanded="true" />
-                <element signature="e#11290#11291#0" expanded="true" />
-                <element signature="e#11414#11647#0" expanded="true" />
-                <element signature="e#11646#11647#0" expanded="true" />
-                <element signature="e#11865#12021#0" expanded="true" />
-                <element signature="e#12020#12021#0" expanded="true" />
-                <element signature="e#12507#12917#0" expanded="true" />
-                <element signature="e#12916#12917#0" expanded="true" />
-                <element signature="e#15525#15791#0" expanded="true" />
-                <element signature="e#15790#15791#0" expanded="true" />
-                <element signature="e#15835#17056#0" expanded="true" />
-                <element signature="e#17055#17056#0" expanded="true" />
-                <element signature="e#17159#17643#0" expanded="true" />
-                <element signature="e#17642#17643#0" expanded="true" />
-                <element signature="e#17689#18208#0" expanded="true" />
-                <element signature="e#18207#18208#0" expanded="true" />
-                <element signature="e#18311#18794#0" expanded="true" />
-                <element signature="e#18793#18794#0" expanded="true" />
-                <element signature="e#18840#19359#0" expanded="true" />
-                <element signature="e#19358#19359#0" expanded="true" />
-                <element signature="e#19508#19781#0" expanded="true" />
-                <element signature="e#19780#19781#0" expanded="true" />
-                <element signature="e#21400#21401#0" expanded="true" />
-                <element signature="e#21466#21467#0" expanded="true" />
-                <element signature="e#24804#25182#0" expanded="true" />
-                <element signature="e#25181#25182#0" expanded="true" />
-                <element signature="e#25328#26080#0" expanded="true" />
-                <element signature="e#26079#26080#0" expanded="true" />
-              </folding>
+            <state vertical-scroll-proportion="-4.451613">
+              <caret line="60" column="6" selection-start-line="60" selection-start-column="6" selection-end-line="60" selection-end-column="68" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="fragment_card.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_card.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-7.7586207">
+              <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -175,7 +145,7 @@
       <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-12.222222">
+            <state vertical-scroll-proportion="0.0">
               <caret line="22" column="1" selection-start-line="22" selection-start-column="1" selection-end-line="22" selection-end-column="1" />
               <folding />
             </state>
@@ -188,15 +158,28 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-105.51724">
-              <caret line="204" column="0" selection-start-line="204" selection-start-column="0" selection-end-line="204" selection-end-column="0" />
+            <state vertical-scroll-proportion="-36.42857">
+              <caret line="136" column="55" selection-start-line="136" selection-start-column="55" selection-end-line="136" selection-end-column="55" />
               <folding>
-                <element signature="e#335#370#0" expanded="true" />
-                <element signature="e#396#431#0" expanded="true" />
-                <element signature="e#455#488#0" expanded="true" />
-                <element signature="e#515#548#0" expanded="true" />
-                <element signature="e#5950#5974#0" expanded="true" />
+                <element signature="e#335#368#0" expanded="true" />
+                <element signature="e#393#428#0" expanded="true" />
+                <element signature="e#454#489#0" expanded="true" />
+                <element signature="e#513#546#0" expanded="true" />
+                <element signature="e#14473#14497#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="activity_calendar.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_calendar.xml">
+          <provider editor-type-id="android-designer">
+            <state />
+          </provider>
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-9.724138">
+              <caret line="29" column="40" selection-start-line="9" selection-start-column="4" selection-end-line="29" selection-end-column="40" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -1289,7 +1272,7 @@
     </option>
     <option name="modificationStamps">
       <map>
-        <entry key="$PROJECT_DIR$" value="4306308635000" />
+        <entry key="$PROJECT_DIR$" value="4306311675000" />
       </map>
     </option>
     <option name="projectBuildClasspath">
@@ -1615,9 +1598,12 @@
       <list>
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/fragment_card.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/SelectCardActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/Calendar.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/MainActivity.java" />
       </list>
     </option>
   </component>
@@ -1651,9 +1637,9 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
       <pane id="Scratches" />
       <pane id="ProjectPane" />
-      <pane id="PackagesPane" />
       <pane id="AndroidView">
         <subPane>
           <PATH>
@@ -1675,6 +1661,10 @@
               <option name="myItemId" value="res" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="values" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -1688,10 +1678,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="res" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="mipmap" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -1709,24 +1695,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="layout" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="GoogleCards2" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="res" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="drawable" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidResFolderTypeNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1771,10 +1739,6 @@
               <option name="myItemId" value="app" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="manifests" />
-              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidManifestsGroupNode" />
-            </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
@@ -1794,6 +1758,8 @@
     <property name="options.searchVisible" value="true" />
     <property name="recentsLimit" value="5" />
     <property name="FullScreen" value="true" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="TA96516KT5" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Nexus_4_API_21" />
   </component>
   <component name="RunManager" selected="Android Application.app">
     <configuration default="true" type="AndroidRunConfigurationType" factoryName="Android Application">
@@ -1802,6 +1768,31 @@
       <option name="MODE" value="default_activity" />
       <option name="DEPLOY" value="true" />
       <option name="ARTIFACT_NAME" value="" />
+      <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="PREFERRED_AVD" value="" />
+      <option name="USE_COMMAND_LINE" value="true" />
+      <option name="COMMAND_LINE" value="" />
+      <option name="WIPE_USER_DATA" value="false" />
+      <option name="DISABLE_BOOT_ANIMATION" value="false" />
+      <option name="NETWORK_SPEED" value="full" />
+      <option name="NETWORK_LATENCY" value="none" />
+      <option name="CLEAR_LOGCAT" value="false" />
+      <option name="SHOW_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
+      <option name="SELECTED_MATRIX_CONFIGURATION_ID" value="0" />
+      <option name="SELECTED_CLOUD_PROJECT_ID" value="" />
+      <option name="IS_VALID_CLOUD_SELECTION" value="false" />
+      <option name="INVALID_CLOUD_SELECTION_ERROR" value="" />
+      <method />
+    </configuration>
+    <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Tests">
+      <module name="" />
+      <option name="TESTING_TYPE" value="0" />
+      <option name="INSTRUMENTATION_RUNNER_CLASS" value="" />
+      <option name="METHOD_NAME" value="" />
+      <option name="CLASS_NAME" value="" />
+      <option name="PACKAGE_NAME" value="" />
       <option name="TARGET_SELECTION_MODE" value="EMULATOR" />
       <option name="USE_LAST_SELECTED_DEVICE" value="false" />
       <option name="PREFERRED_AVD" value="" />
@@ -1835,6 +1826,22 @@
       <envs />
       <method />
     </configuration>
+    <configuration default="true" type="GradleRunConfiguration" factoryName="Gradle">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list />
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <method />
+    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="" />
@@ -1854,6 +1861,11 @@
       </option>
       <envs />
       <patterns />
+      <method />
+    </configuration>
+    <configuration default="true" type="JarApplication" factoryName="JAR Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <envs />
       <method />
     </configuration>
     <configuration default="true" type="Remote" factoryName="Remote">
@@ -1899,7 +1911,7 @@
       <option name="DEPLOY" value="true" />
       <option name="ARTIFACT_NAME" value="" />
       <option name="TARGET_SELECTION_MODE" value="SHOW_DIALOG" />
-      <option name="USE_LAST_SELECTED_DEVICE" value="false" />
+      <option name="USE_LAST_SELECTED_DEVICE" value="true" />
       <option name="PREFERRED_AVD" value="" />
       <option name="USE_COMMAND_LINE" value="true" />
       <option name="COMMAND_LINE" value="" />
@@ -1950,33 +1962,33 @@
     <frame x="0" y="0" width="1280" height="800" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286119" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286119" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.5679887" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.05815832" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.30371568" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3286119" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -1987,17 +1999,109 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/app.iml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.226913">
+        <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="843" column="0" selection-start-line="843" selection-start-column="0" selection-end-line="843" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#7395#7434#0" expanded="true" />
+            <element signature="e#7509#7821#0" expanded="true" />
+            <element signature="e#7820#7821#0" expanded="true" />
+            <element signature="e#8435#9348#0" expanded="true" />
+            <element signature="e#9347#9348#0" expanded="true" />
+            <element signature="e#11035#11631#0" expanded="true" />
+            <element signature="e#11630#11631#0" expanded="true" />
+            <element signature="e#11722#11911#0" expanded="true" />
+            <element signature="e#11910#11911#0" expanded="true" />
+            <element signature="e#12349#12694#0" expanded="true" />
+            <element signature="e#12693#12694#0" expanded="true" />
+            <element signature="e#12817#13050#0" expanded="true" />
+            <element signature="e#13049#13050#0" expanded="true" />
+            <element signature="e#13268#13424#0" expanded="true" />
+            <element signature="e#13423#13424#0" expanded="true" />
+            <element signature="e#13793#14346#0" expanded="true" />
+            <element signature="e#14345#14346#0" expanded="true" />
+            <element signature="e#16928#17194#0" expanded="true" />
+            <element signature="e#17193#17194#0" expanded="true" />
+            <element signature="e#17238#18459#0" expanded="true" />
+            <element signature="e#18458#18459#0" expanded="true" />
+            <element signature="e#18562#19046#0" expanded="true" />
+            <element signature="e#19045#19046#0" expanded="true" />
+            <element signature="e#19092#19611#0" expanded="true" />
+            <element signature="e#19610#19611#0" expanded="true" />
+            <element signature="e#19714#20197#0" expanded="true" />
+            <element signature="e#20196#20197#0" expanded="true" />
+            <element signature="e#20243#20762#0" expanded="true" />
+            <element signature="e#20761#20762#0" expanded="true" />
+            <element signature="e#20911#21184#0" expanded="true" />
+            <element signature="e#21183#21184#0" expanded="true" />
+            <element signature="e#25843#25995#0" expanded="true" />
+            <element signature="e#25994#25995#0" expanded="true" />
+            <element signature="e#27088#27228#0" expanded="true" />
+            <element signature="e#27227#27228#0" expanded="true" />
+            <element signature="e#31123#31124#0" expanded="true" />
+            <element signature="e#31189#31190#0" expanded="true" />
+            <element signature="e#34527#34905#0" expanded="true" />
+            <element signature="e#34904#34905#0" expanded="true" />
+            <element signature="e#35051#35803#0" expanded="true" />
+            <element signature="e#35802#35803#0" expanded="true" />
+            <element signature="e#36655#36656#0" expanded="true" />
+            <element signature="e#36704#36705#0" expanded="true" />
+            <element signature="e#36760#36761#0" expanded="true" />
+            <element signature="e#36808#36809#0" expanded="true" />
+            <element signature="e#37289#37297#0" expanded="true" />
+            <element signature="e#37545#37546#0" expanded="true" />
+            <element signature="e#37605#37606#0" expanded="true" />
+            <element signature="e#43384#43385#0" expanded="true" />
+            <element signature="e#43416#43417#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-12.222222">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="1" selection-start-line="22" selection-start-column="1" selection-end-line="22" selection-end-column="1" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="204" column="0" selection-start-line="204" selection-start-column="0" selection-end-line="204" selection-end-column="0" />
+          <folding>
+            <element signature="e#335#368#0" expanded="true" />
+            <element signature="e#393#428#0" expanded="true" />
+            <element signature="e#454#489#0" expanded="true" />
+            <element signature="e#513#546#0" expanded="true" />
+            <element signature="e#14473#14497#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/app.iml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-1.226913">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
           <caret line="22" column="1" selection-start-line="22" selection-start-column="1" selection-end-line="22" selection-end-column="1" />
           <folding />
         </state>
@@ -2011,71 +2115,137 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_calendar.xml">
       <provider editor-type-id="android-designer">
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-105.51724">
-          <caret line="204" column="0" selection-start-line="204" selection-start-column="0" selection-end-line="204" selection-end-column="0" />
-          <folding>
-            <element signature="e#335#370#0" expanded="true" />
-            <element signature="e#396#431#0" expanded="true" />
-            <element signature="e#455#488#0" expanded="true" />
-            <element signature="e#515#548#0" expanded="true" />
-            <element signature="e#5950#5974#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.2222223">
-          <caret line="843" column="0" selection-start-line="843" selection-start-column="0" selection-end-line="843" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#5736#5775#0" expanded="true" />
-            <element signature="e#5850#6162#0" expanded="true" />
-            <element signature="e#6161#6162#0" expanded="true" />
-            <element signature="e#9633#10229#0" expanded="true" />
-            <element signature="e#10228#10229#0" expanded="true" />
-            <element signature="e#10946#11291#0" expanded="true" />
-            <element signature="e#11290#11291#0" expanded="true" />
-            <element signature="e#11414#11647#0" expanded="true" />
-            <element signature="e#11646#11647#0" expanded="true" />
-            <element signature="e#11865#12021#0" expanded="true" />
-            <element signature="e#12020#12021#0" expanded="true" />
-            <element signature="e#12507#12917#0" expanded="true" />
-            <element signature="e#12916#12917#0" expanded="true" />
-            <element signature="e#15525#15791#0" expanded="true" />
-            <element signature="e#15790#15791#0" expanded="true" />
-            <element signature="e#15835#17056#0" expanded="true" />
-            <element signature="e#17055#17056#0" expanded="true" />
-            <element signature="e#17159#17643#0" expanded="true" />
-            <element signature="e#17642#17643#0" expanded="true" />
-            <element signature="e#17689#18208#0" expanded="true" />
-            <element signature="e#18207#18208#0" expanded="true" />
-            <element signature="e#18311#18794#0" expanded="true" />
-            <element signature="e#18793#18794#0" expanded="true" />
-            <element signature="e#18840#19359#0" expanded="true" />
-            <element signature="e#19358#19359#0" expanded="true" />
-            <element signature="e#19508#19781#0" expanded="true" />
-            <element signature="e#19780#19781#0" expanded="true" />
-            <element signature="e#21400#21401#0" expanded="true" />
-            <element signature="e#21466#21467#0" expanded="true" />
-            <element signature="e#24804#25182#0" expanded="true" />
-            <element signature="e#25181#25182#0" expanded="true" />
-            <element signature="e#25328#26080#0" expanded="true" />
-            <element signature="e#26079#26080#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="-9.724138">
+          <caret line="29" column="40" selection-start-line="9" selection-start-column="4" selection-end-line="29" selection-end-column="40" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.022970904">
-          <caret line="1" column="48" selection-start-line="1" selection-start-column="48" selection-end-line="1" selection-end-column="48" />
+        <state vertical-scroll-proportion="0.28503564">
+          <caret line="8" column="40" selection-start-line="8" selection-start-column="40" selection-end-line="8" selection-end-column="40" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_calendar_quickstart.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/fragment_card.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-7.7586207">
+          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml">
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-36.42857">
+          <caret line="136" column="55" selection-start-line="136" selection-start-column="55" selection-end-line="136" selection-end-column="55" />
+          <folding>
+            <element signature="e#335#368#0" expanded="true" />
+            <element signature="e#393#428#0" expanded="true" />
+            <element signature="e#454#489#0" expanded="true" />
+            <element signature="e#513#546#0" expanded="true" />
+            <element signature="e#14473#14497#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/Calendar.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.451613">
+          <caret line="60" column="6" selection-start-line="60" selection-start-column="6" selection-end-line="60" selection-end-column="68" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/SelectCardActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="120" column="45" selection-start-line="120" selection-start-column="45" selection-end-line="120" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/madelyntav/c4q/nyc/googlecards/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.51626015">
+          <caret line="588" column="23" selection-start-line="588" selection-start-column="23" selection-end-line="588" selection-end-column="23" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#7395#7434#0" expanded="true" />
+            <element signature="e#7509#7821#0" expanded="true" />
+            <element signature="e#7820#7821#0" expanded="true" />
+            <element signature="e#8435#9348#0" expanded="true" />
+            <element signature="e#9347#9348#0" expanded="true" />
+            <element signature="e#11035#11631#0" expanded="true" />
+            <element signature="e#11630#11631#0" expanded="true" />
+            <element signature="e#11722#11911#0" expanded="true" />
+            <element signature="e#11910#11911#0" expanded="true" />
+            <element signature="e#12349#12694#0" expanded="true" />
+            <element signature="e#12693#12694#0" expanded="true" />
+            <element signature="e#12817#13050#0" expanded="true" />
+            <element signature="e#13049#13050#0" expanded="true" />
+            <element signature="e#13268#13424#0" expanded="true" />
+            <element signature="e#13423#13424#0" expanded="true" />
+            <element signature="e#13793#14346#0" expanded="true" />
+            <element signature="e#14345#14346#0" expanded="true" />
+            <element signature="e#16928#17194#0" expanded="true" />
+            <element signature="e#17193#17194#0" expanded="true" />
+            <element signature="e#17238#18459#0" expanded="true" />
+            <element signature="e#18458#18459#0" expanded="true" />
+            <element signature="e#18562#19046#0" expanded="true" />
+            <element signature="e#19045#19046#0" expanded="true" />
+            <element signature="e#19092#19611#0" expanded="true" />
+            <element signature="e#19610#19611#0" expanded="true" />
+            <element signature="e#19714#20197#0" expanded="true" />
+            <element signature="e#20196#20197#0" expanded="true" />
+            <element signature="e#20243#20762#0" expanded="true" />
+            <element signature="e#20761#20762#0" expanded="true" />
+            <element signature="e#20911#21184#0" expanded="true" />
+            <element signature="e#21183#21184#0" expanded="true" />
+            <element signature="e#25843#25995#0" expanded="true" />
+            <element signature="e#25994#25995#0" expanded="true" />
+            <element signature="e#27088#27228#0" expanded="true" />
+            <element signature="e#27227#27228#0" expanded="true" />
+            <element signature="e#31123#31124#0" expanded="true" />
+            <element signature="e#31189#31190#0" expanded="true" />
+            <element signature="e#34527#34905#0" expanded="true" />
+            <element signature="e#34904#34905#0" expanded="true" />
+            <element signature="e#35051#35803#0" expanded="true" />
+            <element signature="e#35802#35803#0" expanded="true" />
+            <element signature="e#36655#36656#0" expanded="true" />
+            <element signature="e#36704#36705#0" expanded="true" />
+            <element signature="e#36760#36761#0" expanded="true" />
+            <element signature="e#36808#36809#0" expanded="true" />
+            <element signature="e#37289#37297#0" expanded="true" />
+            <element signature="e#37545#37546#0" expanded="true" />
+            <element signature="e#37605#37606#0" expanded="true" />
+            <element signature="e#43384#43385#0" expanded="true" />
+            <element signature="e#43416#43417#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

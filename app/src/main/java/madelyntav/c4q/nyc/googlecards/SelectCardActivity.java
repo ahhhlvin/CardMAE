@@ -1,9 +1,9 @@
 package madelyntav.c4q.nyc.googlecards;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,7 +13,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class SelectCardActivity extends ActionBarActivity {
@@ -42,16 +41,11 @@ public class SelectCardActivity extends ActionBarActivity {
                 MainActivity.flickrChecked = false;
             } else {
             }
-//        if (MainActivity.weatherChecked) {
+        if (MainActivity.weatherChecked) {
 
-//        } else {
+        } else {
 
-//        }
-//        if (MainActivity.stocksChecked) {
-
-//        } else {
-
-//        }
+        }
             if (MainActivity.mapChecked) {
                 new Handler().post(new Runnable() {
                     @Override
@@ -65,11 +59,11 @@ public class SelectCardActivity extends ActionBarActivity {
                 MainActivity.mapChecked = false;
             } else {
             }
-//        if (MainActivity.calendarChecked) {
+        if (MainActivity.calendarChecked) {
 
-//        } else {
+        } else {
 
-//        }
+        }
             if (MainActivity.todoChecked) {
                 new Handler().post(new Runnable() {
                     @Override
@@ -99,8 +93,6 @@ public class SelectCardActivity extends ActionBarActivity {
                         MainActivity.flickrChecked = true;
                     } else if (item.equals("Weather")) {
                         MainActivity.weatherChecked = true;
-                    } else if (item.equals("Stocks")) {
-                        MainActivity.stocksChecked = true;
                     } else if (item.equals("Map")) {
                         MainActivity.mapChecked = true;
                     } else if (item.equals("Calendar")) {
@@ -126,7 +118,7 @@ public class SelectCardActivity extends ActionBarActivity {
         checkableList = (ListView) findViewById(R.id.checkableList);
         //set multiple selection mode
         checkableList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
-        String[] items ={"Flickr", "Weather", "Stocks", "Map", "Calendar", "To-do List"};
+        String[] items ={"Flickr", "Weather", "Map", "Calendar", "To-do List"};
         //supply data itmes to ListView
         ArrayAdapter<String> aa=new ArrayAdapter<String>(this,R.layout.checkable_list_layout,R.id.txt_title,items);
         checkableList.setAdapter(aa);
