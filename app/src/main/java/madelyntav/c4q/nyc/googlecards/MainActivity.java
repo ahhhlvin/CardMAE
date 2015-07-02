@@ -164,7 +164,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         storedName = sharedPreferences.getString("UserName", null);
         homeAddress = sharedPreferences.getString("homeAddress", "");
         workAddress = sharedPreferences.getString("workAddress", "");
-        if (!storedName.equals("")) {
+        if (storedName != null) {
             nameLayout.setVisibility(View.VISIBLE);
             nameView.setText("Hello, " + storedName + "!");
             enterNameLayout.setVisibility(View.GONE);
