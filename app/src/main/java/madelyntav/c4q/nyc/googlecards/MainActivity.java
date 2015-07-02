@@ -238,7 +238,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Uri uri = Uri.parse("http://m.weather.com/weather/tenday/USGA0028");
+                Uri uri = Uri.parse("http://m.weather.com/weather/tenday/USNY0833");
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
             }
