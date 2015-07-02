@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">GoogleCards</string>
+    <string name="app_name">CardMAE</string>
     <string name="error_title">Ooops! Sorry</string>
     <string name="error_ok">Ok</string>
     <string name="network_unavailable">Network is unavailable!</string>

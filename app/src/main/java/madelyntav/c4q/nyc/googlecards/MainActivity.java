@@ -84,7 +84,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 
-
 public class MainActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private ImageButton mBtnFind, nameButton, largeNameButton, listButton, addCardButton;
@@ -100,7 +99,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private LinearLayout addressLayout, nameLayout, enterNameLayout;
     private Button saveAddress;
     private SwipeRefreshLayout swipeLayout;
-    private TextView nameView;
+    private TextView nameView, calendarTitle;
     private ListView listView;
     GridView mGridView;
     ArrayAdapter<String> listAdapter;
@@ -165,19 +164,14 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         storedName = sharedPreferences.getString("UserName", null);
         homeAddress = sharedPreferences.getString("homeAddress", "");
         workAddress = sharedPreferences.getString("workAddress", "");
-        if (name.equals("") && storedName != null) {
+        if (!storedName.equals("")) {
             nameLayout.setVisibility(View.VISIBLE);
-            enterNameLayout.setVisibility(View.GONE);
             nameView.setText("Hello, " + storedName + "!");
-        } else if (name.equals("") || storedName == null) {
-            enterNameLayout.setVisibility(View.VISIBLE);
-            nameLayout.setVisibility(View.GONE);
+            enterNameLayout.setVisibility(View.GONE);
         } else {
-                enterNameLayout.setVisibility(View.VISIBLE);
             nameLayout.setVisibility(View.GONE);
-
+            enterNameLayout.setVisibility(View.VISIBLE);
         }
-
 
 
         // NOTIFICATION CODE
@@ -191,7 +185,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         mBuilder.setAutoCancel(true);
         Notification notification = mBuilder.build();
         notificationManager.notify(1234, notification);
-
 
 
         ButterKnife.bind(this);
@@ -254,8 +247,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         new ShareNote();
 
 
-
-
         Handler handler = new Handler();
         handler.post(new Runnable() {
             @Override
@@ -289,6 +280,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         flickrCard = (CardView) findViewById(R.id.flickrCard);
         weatherCard = (CardView) findViewById(R.id.weatherCard);
         mapCard = (CardView) findViewById(R.id.mapCard);
+        calendarTitle = (TextView) findViewById(R.id.calendarTitle);
         calendarCard = (CardView) findViewById(R.id.calendarCard);
         todoCard = (CardView) findViewById(R.id.todoCard);
 
@@ -310,8 +302,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         }
         if (calendarChecked) {
             calendarCard.setVisibility(View.VISIBLE);
+            calendarTitle.setVisibility(View.VISIBLE);
         } else {
             calendarCard.setVisibility(View.GONE);
+            calendarTitle.setVisibility(View.GONE);
+
         }
         if (todoChecked) {
             todoCard.setVisibility(View.VISIBLE);
@@ -369,10 +364,12 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         nameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                name = nameText.getText().toString();
-                enterNameLayout.setVisibility(View.GONE);
-                nameLayout.setVisibility(View.VISIBLE);
-                nameView.setText("Hello, " + name + "!");
+                if (!nameText.equals("") || storedName != null) {
+                    name = nameText.getText().toString();
+                    enterNameLayout.setVisibility(View.GONE);
+                    nameLayout.setVisibility(View.VISIBLE);
+                    nameView.setText("Hello, " + name + "!");
+                }
             }
         });
 
@@ -634,6 +631,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         } else {
         }
     }
+
     @Override
     protected void onActivityResult(
             int requestCode, int resultCode, Intent data) {
@@ -727,7 +725,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if (dataStrings == null) {mStatusText.setText("Error retrieving data!");
+                if (dataStrings == null) {
+                    mStatusText.setText("Error retrieving data!");
                 } else if (dataStrings.size() == 0) {
                     mStatusText.setText("No data found.");
                 } else {
@@ -815,7 +814,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-
     // GOOGLE SEARCH BAR CODE
     public void onSearchClick(View v) {
         try {
@@ -880,10 +878,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     private void updateDisplay() {
         mTemperatureLabel.setText(mCurrentWeather.getTemperature() + "");
-        mHumidityValue.setText(mCurrentWeather.getHumidity() + "%");
-        mPrecipValue.setText(mCurrentWeather.getPrecipChance() + "%");
+        mHumidityValue.setText(mCurrentWeather.getHumidity() + " %");
+        mPrecipValue.setText(mCurrentWeather.getPrecipChance() + " %");
         mSummaryLabel.setText(mCurrentWeather.getSummary());
-        mWindValue.setText(mCurrentWeather.getWind() + "mph");
+        mWindValue.setText(mCurrentWeather.getWind() + " mph");
 
 
         Drawable drawable = getResources().getDrawable(mCurrentWeather.getIconId());
@@ -1001,14 +999,16 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         SharedPreferences namePref = getSharedPreferences("Name", MODE_PRIVATE);
         SharedPreferences.Editor editor = namePref.edit();
-        editor.putString("UserName", nameText.getText().toString());
+        if (!name.equals("")) {
+            editor.putString("UserName", name);
+        } else {}
         editor.putString("homeAddress", homeAddress);
         editor.putString("workAddress", workAddress);
         editor.apply();
 
     }
 
-    public class ApiAsyncTask extends AsyncTask<Void, Void, ArrayList<String>>  {
+    public class ApiAsyncTask extends AsyncTask<Void, Void, ArrayList<String>> {
         public MainActivity mActivity;
         private OnTaskCompleted listener;
         private Context contxt;
@@ -1024,9 +1024,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         ApiAsyncTask(MainActivity activity) {
             this.mActivity = activity;
         }
+
         public ApiAsyncTask(OnTaskCompleted listener) {
             this.listener = listener;
         }
+
         public ApiAsyncTask(Context context, OnTaskCompleted listener) {
             // API = apiURL;
             this.contxt = context;
@@ -1056,7 +1058,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
 
         @Override
-        protected  void onPostExecute(final ArrayList<String> eventStrings) {
+        protected void onPostExecute(final ArrayList<String> eventStrings) {
             if (eventStrings.size() > 0) {
                 mActivity.clearResultsText();
 
@@ -1065,10 +1067,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             }
             mAllEventsFragment.updateEventData(eventStrings);
 
-            if(todayEventstrings.size() > 0) {
+            if (todayEventstrings.size() > 0) {
                 mCardFragment.updateEventData(todayEventstrings);
-            }
-            else{
+            } else {
 
                 mStatusText.setText("No Events Found");
             }
@@ -1078,7 +1079,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
 
-         // Fetch a list of events from the primary calendar.
+        // Fetch a list of events from the primary calendar.
 
         private ArrayList<String> getDataFromApi() throws IOException {
 
@@ -1086,7 +1087,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             DateTime tomorrow = new DateTime(System.currentTimeMillis() + 86400000);
 
             eventStrings = new ArrayList<String>();
-            todayEventstrings= new ArrayList<>();
+            todayEventstrings = new ArrayList<>();
 
             Events events = mActivity.mService.events().list("primary")
                     .setTimeMin(now)
@@ -1109,7 +1110,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 exc.printStackTrace();
             }
 
-            if(items.size()==0){
+            if (items.size() == 0) {
 
                 FileInputStream input = null; // Open input stream
                 try {
@@ -1162,7 +1163,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                         String.format(event.getSummary() + " /" + location + " /" + start + " /" + end));
             }
             //Get all of the events of the primary calendar for the next 24 hours
-            Events events1=mActivity.mService.events().list("primary")
+            Events events1 = mActivity.mService.events().list("primary")
                     .setTimeMin(now)
                     .setTimeMax(tomorrow)
                     .setSingleEvents(true)
@@ -1187,7 +1188,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                         end1 = event.getEnd().getDate();
                     }
                 }
-                todayEventstrings.add(event.getSummary()+"/"+location+"/"+start1+"/"+end1);
+                todayEventstrings.add(event.getSummary() + "/" + location + "/" + start1 + "/" + end1);
             }
 
             return eventStrings;
@@ -1222,13 +1223,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         @Override
         public CharSequence getPageTitle(int position) {
-            if(position ==0){
+            if (position == 0) {
                 return "Today's Events";
-            }
-            else if(position==1){
+            } else if (position == 1) {
                 return "All Upcoming Events";
-            }
-            else if(position==2){
+            } else if (position == 2) {
                 return "Create New Event";
             }
             return null;
@@ -1363,8 +1362,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
 
         // super.onBackPressed(); // Comment this super call to avoid calling finish()
     }
