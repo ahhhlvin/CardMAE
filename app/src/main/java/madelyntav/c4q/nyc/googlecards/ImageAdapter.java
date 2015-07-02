@@ -48,7 +48,7 @@ public class ImageAdapter extends BaseAdapter {
 
 
         String imageUrl = getItem(position);
-        Picasso.with(mContext).load(imageUrl).resize(300, 300).centerCrop().into((ImageView) convertView);
+        Picasso.with(mContext).load(imageUrl).resize(200, 200).centerCrop().into((ImageView) convertView);
 
         return convertView;
     }

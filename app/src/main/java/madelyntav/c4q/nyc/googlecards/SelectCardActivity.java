@@ -20,6 +20,7 @@ public class SelectCardActivity extends ActionBarActivity {
     ArrayList<String> selectedItems = new ArrayList<String>();
     Button updateButton;
     private ListView checkableList;
+    String selectedItem;
 
 
     @Override
@@ -153,7 +154,7 @@ public class SelectCardActivity extends ActionBarActivity {
         checkableList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // selected item
-                String selectedItem = ((TextView) view).getText().toString();
+                selectedItem = ((TextView) view).getText().toString();
                 if (selectedItems.contains(selectedItem))
                     selectedItems.remove(selectedItem); //remove deselected item from the list of selected items
                 else
