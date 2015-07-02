@@ -14,7 +14,7 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="4"
-        android:id="@+id/editText"
+        android:id="@+id/shareText"
         android:gravity="start"
         android:hint="Share thoughts with friends!"/>
 

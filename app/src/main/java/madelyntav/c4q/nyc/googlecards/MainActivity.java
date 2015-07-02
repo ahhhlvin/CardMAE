@@ -164,7 +164,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         storedName = sharedPreferences.getString("UserName", null);
         homeAddress = sharedPreferences.getString("homeAddress", "");
         workAddress = sharedPreferences.getString("workAddress", "");
-        if (!storedName.equals("")) {
+        if (storedName != null) {
             nameLayout.setVisibility(View.VISIBLE);
             nameView.setText("Hello, " + storedName + "!");
             enterNameLayout.setVisibility(View.GONE);
@@ -238,7 +238,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Uri uri = Uri.parse("http://m.weather.com/weather/tenday/USGA0028");
+                Uri uri = Uri.parse("http://m.weather.com/weather/tenday/USNY0833");
                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                 startActivity(intent);
             }
