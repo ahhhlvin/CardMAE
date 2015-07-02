@@ -13,6 +13,7 @@ import java.util.List;
  * Created by alvin2 on 6/24/15.
  */
 
+
 public class ImageAdapter extends BaseAdapter {
 
     Context mContext;
@@ -43,12 +44,12 @@ public class ImageAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
 
         if (convertView == null) {
-            convertView = new ImageView(mContext);
+            convertView = (ImageView) new ImageView(mContext);
         }
 
 
         String imageUrl = getItem(position);
-        Picasso.with(mContext).load(imageUrl).resize(200, 200).centerCrop().into((ImageView) convertView);
+        Picasso.with(mContext).load(imageUrl).resize(200, 200).into((ImageView) convertView);
 
         return convertView;
     }

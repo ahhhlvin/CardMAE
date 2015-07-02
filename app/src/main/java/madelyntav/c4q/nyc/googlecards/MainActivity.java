@@ -277,6 +277,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
 
+        //////// FLICKR CARD
+
+
+
+
         flickrCard = (CardView) findViewById(R.id.flickrCard);
         weatherCard = (CardView) findViewById(R.id.weatherCard);
         mapCard = (CardView) findViewById(R.id.mapCard);
@@ -329,7 +334,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 new Handler().post(new Runnable() {
                     @Override
                     public void run() {
-                        //new ParserTask.AsyncLoading().execute();
+                        new AsyncLoading().execute();
+
+
 
                     }
                 });
@@ -348,12 +355,13 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void run() {
                 initializeViews();
-                //new ParserTask.AsyncLoading().execute();
+                new AsyncLoading().execute();
 
             }
         });
 
-
+        initializeViews();
+        new AsyncLoading().execute();
 //
 
         // NAME CARD
@@ -867,10 +875,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    private void initializeViews() {
-        mGridView = (GridView) findViewById(R.id.gridView);
-    }
-
     private void alertUseraboutError() {
         HandlerError dialofFragment = new HandlerError();
         dialofFragment.show(getFragmentManager(), "error_dialog");
@@ -1061,6 +1065,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         protected void onPostExecute(final ArrayList<String> eventStrings) {
             if (eventStrings.size() > 0) {
                 mActivity.clearResultsText();
+
 
             } else {
 
@@ -1330,35 +1335,45 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             }
         }
 
-        public final class AsyncLoading extends AsyncTask<Void, Void, List<String>> {
-
-            @Override
-            protected List<String> doInBackground(Void... params) {
-                // TODO : Step 3 - by using FlickrGetter.java, get latest 20 images' Urls from Flickr and return the result.
 
 
-                try {
-                    return new FlickrGetter().getBitmapList();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(List<String> imageList) {
-                // TODO : Step 5 - Now we have ImageAdapter and the data(list), post the picture!
-
-                adapter = new ImageAdapter(MainActivity.this, imageList);
-                mGridView.setAdapter(adapter);
-
-            }
-        }
 
 
     }
+
+
+    private void initializeViews() {
+        mGridView = (GridView) findViewById(R.id.gridView);
+    }
+
+
+    private class AsyncLoading extends AsyncTask<Void, Void, List<String>> {
+
+        @Override
+        protected List<String> doInBackground(Void... params) {
+            // TODO : Step 3 - by using FlickrGetter.java, get latest 20 images' Urls from Flickr and return the result.
+
+
+            try {
+                return new FlickrGetter().getBitmapList();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(List<String> imageList) {
+            // TODO : Step 5 - Now we have ImageAdapter and the data(list), post the picture!
+
+            ImageAdapter adapter = new ImageAdapter(MainActivity.this, imageList);
+            mGridView.setAdapter(adapter);
+
+        }
+    }
+
 
 
     @Override
@@ -1366,7 +1381,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         // super.onBackPressed(); // Comment this super call to avoid calling finish()
     }
+
+
+
 }
+
 
 
 

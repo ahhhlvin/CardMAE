@@ -31,19 +31,19 @@ public class SelectCardActivity extends ActionBarActivity {
 
 
 
-            if (MainActivity.flickrChecked) {
-                new Handler().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        checkableList.performItemClick(
-                                checkableList.getChildAt(0),
-                                0,
-                                checkableList.getAdapter().getItemId(0));
-                    }
-                });
-                MainActivity.flickrChecked = false;
-            } else {
-            }
+        if (MainActivity.flickrChecked) {
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    checkableList.performItemClick(
+                            checkableList.getChildAt(0),
+                            0,
+                            checkableList.getAdapter().getItemId(0));
+                }
+            });
+            MainActivity.flickrChecked = false;
+        } else {
+        }
 
 
         if (MainActivity.weatherChecked) {
@@ -61,19 +61,19 @@ public class SelectCardActivity extends ActionBarActivity {
         }
 
 
-            if (MainActivity.mapChecked) {
-                new Handler().post(new Runnable() {
-                    @Override
-                    public void run() {
-                        checkableList.performItemClick(
-                                checkableList.getChildAt(2),
-                                2,
-                                checkableList.getAdapter().getItemId(2));
-                    }
-                });
-                MainActivity.mapChecked = false;
-            } else {
-            }
+        if (MainActivity.mapChecked) {
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    checkableList.performItemClick(
+                            checkableList.getChildAt(2),
+                            2,
+                            checkableList.getAdapter().getItemId(2));
+                }
+            });
+            MainActivity.mapChecked = false;
+        } else {
+        }
 
 
 
@@ -87,8 +87,16 @@ public class SelectCardActivity extends ActionBarActivity {
                             checkableList.getAdapter().getItemId(3));
                 }
             });
-            MainActivity.calendarChecked = false;
         } else {
+            new Handler().post(new Runnable() {
+                @Override
+                public void run() {
+                    checkableList.performItemClick(
+                            checkableList.getChildAt(3),
+                            3,
+                            checkableList.getAdapter().getItemId(3));
+                }
+            });
         }
 
 
