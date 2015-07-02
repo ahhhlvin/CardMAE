@@ -132,6 +132,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     public PagesAdapter mPagesAdapter;
     public static final String TAG = MainActivity.class.getSimpleName();
     private WeatherInf mCurrentWeather;
+    String forcastURL;
 
 
     @Bind(R.id.bt_website)
@@ -194,46 +195,52 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         String apiKey = "4bdd5c74892f3ce180e1c291279ce444";
         double latitude = 40.748817;
         double longitude = -73.985428;
-        String forcastURL = "https://api.forecast.io/forecast/" + apiKey + "/" + latitude + "," + longitude;
+        forcastURL = "https://api.forecast.io/forecast/" + apiKey + "/" + latitude + "," + longitude;
 
-        if (isNetworkAvailable()) {
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                if (isNetworkAvailable()) {
 
-            OkHttpClient client = new OkHttpClient();
-            Request request = new Request.Builder().url(forcastURL).build();
+                    OkHttpClient client = new OkHttpClient();
+                    Request request = new Request.Builder().url(forcastURL).build();
 
-            Call call = client.newCall(request);
-            call.enqueue(new Callback() {
-                @Override
-                public void onFailure(Request request, IOException e) {
+                    Call call = client.newCall(request);
+                    call.enqueue(new Callback() {
+                        @Override
+                        public void onFailure(Request request, IOException e) {
 
-                }
-
-                @Override
-                public void onResponse(Response response) throws IOException {
-
-                    try {
-                        String jsonData = response.body().string();
-                        Log.v(TAG, jsonData);
-                        if (response.isSuccessful()) {
-                            mCurrentWeather = getCurrentDetails(jsonData);
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    updateDisplay();
-                                }
-                            });
-
-                        } else {
-                            alertUseraboutError();
                         }
-                    } catch (IOException e) {
-                    } catch (JSONException e) {
-                    }
+
+                        @Override
+                        public void onResponse(Response response) throws IOException {
+
+                            try {
+                                String jsonData = response.body().string();
+                                Log.v(TAG, jsonData);
+                                if (response.isSuccessful()) {
+                                    mCurrentWeather = getCurrentDetails(jsonData);
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            updateDisplay();
+                                        }
+                                    });
+
+                                } else {
+                                    alertUseraboutError();
+                                }
+                            } catch (IOException e) {
+                            } catch (JSONException e) {
+                            }
+                        }
+                    });
+                } else {
+                    Toast.makeText(getApplicationContext(), getString(R.string.network_unavailable), Toast.LENGTH_LONG).show();
                 }
-            });
-        } else {
-            Toast.makeText(this, getString(R.string.network_unavailable), Toast.LENGTH_LONG).show();
-        }
+            }
+        });
+
 
         mButton.setOnClickListener(new View.OnClickListener() {
             @Override
