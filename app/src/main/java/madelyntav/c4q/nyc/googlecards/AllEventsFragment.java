@@ -7,6 +7,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -51,6 +52,34 @@ public class AllEventsFragment extends android.support.v4.app.Fragment {
             mEventAdapter= new EventAdapter(getActivity(),R.id.timeStart, mEvents);
             location=(TextView) rowView.findViewById(R.id.location);
             mEventListView.setAdapter(mEventAdapter);
+
+
+        mEventListView.setOnTouchListener(new ListView.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Disallow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        // Allow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+
+                // Handle ListView touch events.
+                v.onTouchEvent(event);
+
+                return true;
+
+            }
+
+        });
 
 
             return fragmentView;

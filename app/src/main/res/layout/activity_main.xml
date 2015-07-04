@@ -194,12 +194,10 @@
 
                         </LinearLayout>
 
-
                         <ListView
                             android:id="@+id/listView"
                             android:layout_width="match_parent"
                             android:layout_height="180dp" />
-
 
                     </LinearLayout>
 
@@ -290,9 +288,8 @@
 
                             <ImageView
                                 android:id="@+id/icon_image_view"
-                                android:layout_width="0dp"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
+                                android:layout_width="100dp"
+                                android:layout_height="100dp"
                                 android:background="@null"
                                 android:src="@mipmap/cloudy_night" />
 
