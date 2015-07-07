@@ -111,7 +111,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     protected static CardView todoCard;
     protected static boolean flickrChecked = true;
     protected static boolean weatherChecked = true;
-    protected static boolean stocksChecked = true;
     protected static boolean mapChecked = true;
     protected static boolean calendarChecked = true;
     protected static boolean todoChecked = true;
@@ -418,22 +417,20 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
 
 
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
                 listButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         if (!listEnter.equals("")) {
                             list.add(listEnter.getText().toString());
+                            listAdapter.notifyDataSetChanged();
                             listView.setAdapter(listAdapter);
+
                         }
                         listEnter.setText("");
 
                     }
                 });
-            }
-        });
+
 
         //Swipe to dismiss for ToDoList
         SwipeDismissListViewTouchListener touchListener =
@@ -641,10 +638,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onResume() {
         super.onResume();
-        if (isGooglePlayServicesAvailable()) {
             refreshResults();
-        } else {
-        }
+
     }
 
     @Override
@@ -706,13 +701,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         if (credential.getSelectedAccountName() == null) {
             chooseAccount();
         } else {
-            if (isDeviceOnline()) {
                 new ApiAsyncTask(this).execute();
-            } else {
                 //mStatusText.setText("No network connection available.");
             }
         }
-    }
 
     /**
      * Clear any existing Google Calendar API data from the TextView and update
@@ -1063,22 +1055,13 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             return results;
         }
 
-        public void onTaskCompleted(Boolean success) {
-            mPagesAdapter.notifyDataSetChanged();
-        }
-
-
         @Override
         protected void onPostExecute(final ArrayList<String> eventStrings) {
             if (eventStrings.size() > 0) {
                 mActivity.clearResultsText();
 
-
-            } else {
-
+                mAllEventsFragment.updateEventData(eventStrings);
             }
-            mAllEventsFragment.updateEventData(eventStrings);
-
             if (todayEventstrings.size() > 0) {
                 mCardFragment.updateEventData(todayEventstrings);
             } else {
@@ -1108,51 +1091,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     .execute();
 
             final List<Event> items = events.getItems();
-
-
-            try {
-                FileOutputStream output = openFileOutput("lines.txt", MODE_WORLD_READABLE);
-                DataOutputStream dout = new DataOutputStream(output);
-                dout.writeInt(items.size()); // Save line count
-                for (Event line : items) // Save lines
-                    dout.writeUTF(String.valueOf(line));
-                dout.flush(); // Flush stream ...
-                dout.close(); // ... and close.
-            } catch (IOException exc) {
-                exc.printStackTrace();
-            }
-
-            if (items.size() == 0) {
-
-                FileInputStream input = null; // Open input stream
-                try {
-                    input = openFileInput("lines.txt");
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
-                DataInputStream din = new DataInputStream(input);
-                int sz = 0; // Read line count
-                try {
-                    sz = din.readInt();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                for (int i = 0; i < sz; i++) { // Read lines
-                    String line = null;
-                    try {
-                        line = din.readUTF();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                    eventStrings.add(line);
-                }
-                try {
-                    din.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
 
             for (Event event : items) {
                 DateTime start = event.getStart().getDateTime();
