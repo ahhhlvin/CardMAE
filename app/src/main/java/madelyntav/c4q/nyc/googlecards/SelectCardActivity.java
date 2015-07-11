@@ -41,7 +41,6 @@ public class SelectCardActivity extends ActionBarActivity {
                             checkableList.getAdapter().getItemId(0));
                 }
             });
-            MainActivity.flickrChecked = false;
         } else {
         }
 
@@ -56,7 +55,6 @@ public class SelectCardActivity extends ActionBarActivity {
                             checkableList.getAdapter().getItemId(1));
                 }
             });
-            MainActivity.weatherChecked = false;
         } else {
         }
 
@@ -71,7 +69,6 @@ public class SelectCardActivity extends ActionBarActivity {
                             checkableList.getAdapter().getItemId(2));
                 }
             });
-            MainActivity.mapChecked = false;
         } else {
         }
 
@@ -110,7 +107,6 @@ public class SelectCardActivity extends ActionBarActivity {
                             checkableList.getAdapter().getItemId(4));
                 }
             });
-            MainActivity.todoChecked = false;
         } else {
         }
 
@@ -131,8 +127,6 @@ public class SelectCardActivity extends ActionBarActivity {
                         MainActivity.weatherChecked = true;
                     } else if (item.equals("Map")) {
                         MainActivity.mapChecked = true;
-                    } else if (item.equals("Calendar")) {
-                        MainActivity.calendarChecked = true;
                     } else if (item.equals("To-do List")) {
                         MainActivity.todoChecked = true;
                     }
@@ -194,3 +188,4 @@ public class SelectCardActivity extends ActionBarActivity {
 
 
 }
+

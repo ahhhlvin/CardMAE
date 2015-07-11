@@ -2,7 +2,6 @@ package madelyntav.c4q.nyc.googlecards;
 
 import android.accounts.AccountManager;
 import android.app.Activity;
-import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.SearchManager;
@@ -23,7 +22,9 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -35,8 +36,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -287,7 +286,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 
-
         flickrCard = (CardView) findViewById(R.id.flickrCard);
         weatherCard = (CardView) findViewById(R.id.weatherCard);
         mapCard = (CardView) findViewById(R.id.mapCard);
@@ -341,8 +339,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     @Override
                     public void run() {
                         new AsyncLoading().execute();
-
-
+                        initializeViews();
 
                     }
                 });
@@ -407,81 +404,104 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         });
 
 
-        // TO-DO LIST
+// TO-DO LIST
         listEnter = (EditText) findViewById(R.id.enterList);
         listButton = (ImageButton) findViewById(R.id.listButton);
 
 
         listView = (ListView) findViewById(R.id.listView);
         list = new ArrayList<>();
-        listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
 
+                FileInputStream input = null; // Open input stream
+                try {
+                    input = openFileInput("ToDo.txt");
 
-                listButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        if (!listEnter.equals("")) {
-                            list.add(listEnter.getText().toString());
-                            listAdapter.notifyDataSetChanged();
-                            listView.setAdapter(listAdapter);
-
+                    DataInputStream din = new DataInputStream(input);
+                    int sz = din.readInt(); // Read line count
+                    for (int i = 0; i < sz; i++) { // Read lines
+                        String line = din.readUTF();
+                        if (line.equals("") || line.equals(null)) {
+                        } else {
+                            list.add(line);
                         }
-                        listEnter.setText("");
-
                     }
-                });
+                    din.close();
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                listAdapter.notifyDataSetChanged();
+
+            }
+
+        });
+
+        listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_checked, list);
+
+        listButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!listEnter.getText().toString().equals("")) {
+                    list.add(listEnter.getText().toString());
+                    listAdapter.notifyDataSetChanged();
+                    listView.setAdapter(listAdapter);
+
+                } else {
+                }
+
+                listEnter.setText("");
+
+            }
+        });
 
 
-        //Swipe to dismiss for ToDoList
-        SwipeDismissListViewTouchListener touchListener =
-                new SwipeDismissListViewTouchListener(
-                        listView, new SwipeDismissListViewTouchListener.DismissCallbacks() {
-                    @Override
-                    public boolean canDismiss(int position) {
-                        return true;
-                    }
+        listView.setChoiceMode(listView.CHOICE_MODE_NONE);
 
-                    public void onDismiss(ListView listView, int[] reverseSortedPositions) {
-                        for (int position : reverseSortedPositions) {
-                            listAdapter.remove(listAdapter.getItem(position));
-                            //TODO remove space leftover after removing
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                parent.removeViewInLayout(view);
+                list.remove(position);
+                listAdapter.notifyDataSetChanged();
 
-                        }
-                        listAdapter.notifyDataSetChanged();
+                Toast.makeText(MainActivity.this, "Great Job! Making Progress!", Toast.LENGTH_SHORT).show();
+
+            }
+        });
 
 
-                    }
-                });
-        listView.setOnTouchListener(touchListener);
-        listView.setOnScrollListener(touchListener.makeScrollListener());
+        //Makes to-do list scrollable from main scrollview
+        listView.setOnTouchListener(new ListView.OnTouchListener() {
 
-//        //Makes to-do list scrollable from main scrollview
-//        listView.setOnTouchListener(new ListView.OnTouchListener() {
-//
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                if (list.size() > 3) {
-//                    int action = event.getAction();
-//                    switch (action) {
-//                        case MotionEvent.ACTION_DOWN:
-//                            // Disallow ScrollView to intercept touch events.
-//                            v.getParent().requestDisallowInterceptTouchEvent(true);
-//                            break;
-//
-//                        case MotionEvent.ACTION_UP:
-//                            // Allow ScrollView to intercept touch events.
-//                            v.getParent().requestDisallowInterceptTouchEvent(false);
-//                            break;
-//                    }
-//
-//                    // Handle ListView touch events.
-//                    v.onTouchEvent(event);
-//                }
-//                return true;
-//
-//            }
-//
-//        });
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                int action = event.getAction();
+                switch (action) {
+                    case MotionEvent.ACTION_DOWN:
+                        // Disallow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(true);
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        // Allow ScrollView to intercept touch events.
+                        v.getParent().requestDisallowInterceptTouchEvent(false);
+                        break;
+                }
+
+                // Handle ListView touch events.
+                v.onTouchEvent(event);
+
+                return true;
+
+            }
+
+        });
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // MAP CARD
@@ -638,7 +658,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     protected void onResume() {
         super.onResume();
-            refreshResults();
+        refreshResults();
 
     }
 
@@ -651,7 +671,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 if (resultCode == RESULT_OK) {
                     refreshResults();
                 } else {
-                    isGooglePlayServicesAvailable();
+                    refreshResults();
                 }
                 break;
             case REQUEST_ACCOUNT_PICKER:
@@ -701,10 +721,10 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         if (credential.getSelectedAccountName() == null) {
             chooseAccount();
         } else {
-                new ApiAsyncTask(this).execute();
-                //mStatusText.setText("No network connection available.");
-            }
+            new ApiAsyncTask(this).execute();
+            //mStatusText.setText("No network connection available.");
         }
+    }
 
     /**
      * Clear any existing Google Calendar API data from the TextView and update
@@ -722,43 +742,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     /**
-     * Fill the data TextView with the given List of Strings; called from
-     * background threads and async tasks that need to update the UI (in the
-     * UI thread).
-     *
-     * @param dataStrings a List of Strings to populate the main TextView with.
-     */
-    public void updateResultsText(final List<String> dataStrings) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (dataStrings == null) {
-                    mStatusText.setText("Error retrieving data!");
-                } else if (dataStrings.size() == 0) {
-                    mStatusText.setText("No data found.");
-                } else {
-                    mStatusText.setText("");
-                }
-            }
-        });
-    }
-
-    /**
-     * Show a status message in the list header TextView; called from background
-     * threads and async tasks that need to update the UI (in the UI thread).
-     *
-     * @param message a String to display in the UI header TextView.
-     */
-    public void updateStatus(final String message) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                mStatusText.setText(message);
-            }
-        });
-    }
-
-    /**
      * Starts an activity in Google Play Services so the user can pick an
      * account.
      */
@@ -766,60 +749,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         startActivityForResult(
                 credential.newChooseAccountIntent(), REQUEST_ACCOUNT_PICKER);
     }
-
-    /**
-     * Checks whether the device currently has a network connection.
-     *
-     * @return true if the device has a network connection, false otherwise.
-     */
-    private boolean isDeviceOnline() {
-        ConnectivityManager connMgr =
-                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connMgr.getActiveNetworkInfo();
-        return (networkInfo != null && networkInfo.isConnected());
-    }
-
-    /**
-     * Check that Google Play services APK is installed and up to date. Will
-     * launch an error dialog for the user to update Google Play Services if
-     * possible.
-     *
-     * @return true if Google Play Services is available and up to
-     * date on this device; false otherwise.
-     */
-    private boolean isGooglePlayServicesAvailable() {
-        final int connectionStatusCode =
-                GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-        if (GooglePlayServicesUtil.isUserRecoverableError(connectionStatusCode)) {
-            showGooglePlayServicesAvailabilityErrorDialog(connectionStatusCode);
-            return false;
-        } else if (connectionStatusCode != ConnectionResult.SUCCESS) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
-     * Display an error dialog showing that Google Play Services is missing
-     * or out of date.
-     *
-     * @param connectionStatusCode code describing the presence (or lack of)
-     *                             Google Play Services on this device.
-     */
-    void showGooglePlayServicesAvailabilityErrorDialog(
-            final int connectionStatusCode) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Dialog dialog = GooglePlayServicesUtil.getErrorDialog(
-                        connectionStatusCode,
-                        MainActivity.this,
-                        REQUEST_GOOGLE_PLAY_SERVICES);
-                dialog.show();
-            }
-        });
-    }
-
 
     // GOOGLE SEARCH BAR CODE
     public void onSearchClick(View v) {
@@ -1004,7 +933,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         SharedPreferences.Editor editor = namePref.edit();
         if (!name.equals("")) {
             editor.putString("UserName", name);
-        } else {}
+        } else {
+        }
         editor.putString("homeAddress", homeAddress);
         editor.putString("workAddress", workAddress);
         editor.apply();
@@ -1019,11 +949,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         private ArrayList<String> eventStrings;
         private ArrayList<String> todayEventstrings;
 
-        /**
-         * Constructor.
-         *
-         * @param activity MainActivity that spawned this task.
-         */
         ApiAsyncTask(MainActivity activity) {
             this.mActivity = activity;
         }
@@ -1041,14 +966,13 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
         /**
          * Background task to call Google Calendar API.
-         *
-         * @param params no parameters needed for this task.
          */
         @Override
         protected ArrayList<String> doInBackground(Void... params) {
             ArrayList<String> results = new ArrayList<String>();
             try {
                 results.addAll(getDataFromApi());
+
             } catch (IOException e) {
                 // log an error
             }
@@ -1065,17 +989,12 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             if (todayEventstrings.size() > 0) {
                 mCardFragment.updateEventData(todayEventstrings);
             } else {
-
                 mStatusText.setText("No Events Found");
             }
-
             mStatusText.setText("");
-
         }
 
-
         // Fetch a list of events from the primary calendar.
-
         private ArrayList<String> getDataFromApi() throws IOException {
 
             DateTime now = new DateTime(System.currentTimeMillis());
@@ -1089,202 +1008,215 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                     .setOrderBy("startTime")
                     .setSingleEvents(true)
                     .execute();
+            if (events != null) {
 
-            final List<Event> items = events.getItems();
+                final List<Event> items = events.getItems();
 
-            for (Event event : items) {
-                DateTime start = event.getStart().getDateTime();
 
-                DateTime end = event.getEnd().getDateTime();
+                    for (Event event : items) {
+                        DateTime start = event.getStart().getDateTime();
 
-                String location = event.getLocation();
-                if (location == null) {
-                    location = "";
-                }
-                if (start == null) {
-                    // All-day events don't have start times, so just use
-                    // the start date.
-                    start = event.getStart().getDate();
-                    if (end == null) {
-                        end = event.getEnd().getDate();
+                        DateTime end = event.getEnd().getDateTime();
+
+                        String location = event.getLocation();
+                        if (location == null) {
+                            location = "";
+                        }
+                        if (start == null) {
+                            // All-day events don't have start times, so just use
+                            // the start date.
+                            start = event.getStart().getDate();
+                            if (end == null) {
+                                end = event.getEnd().getDate();
+                            }
+                        }
+                        eventStrings.add(
+                                String.format(event.getSummary() + " /" + location + " /" + start + " /" + end));
                     }
+                }else{
+
+                    SharedPreferences allEvents = getSharedPreferences("Events", MODE_PRIVATE);
+                    eventStrings = (ArrayList<String>) allEvents.getAll();
+
                 }
-                eventStrings.add(
-                        String.format(event.getSummary() + " /" + location + " /" + start + " /" + end));
-            }
-            //Get all of the events of the primary calendar for the next 24 hours
-            Events events1 = mActivity.mService.events().list("primary")
-                    .setTimeMin(now)
-                    .setTimeMax(tomorrow)
-                    .setSingleEvents(true)
-                    .execute();
+                //Get all of the events of the primary calendar for the next 24 hours
+                Events events1 = mActivity.mService.events().list("primary")
+                        .setTimeMin(now)
+                        .setTimeMax(tomorrow)
+                        .setSingleEvents(true)
+                        .execute();
 
 
-            List<Event> items1 = events1.getItems();
-            for (Event event : items1) {
-                DateTime start1 = event.getStart().getDateTime();
+                List<Event> items1 = events1.getItems();
+                for (Event event : items1) {
+                    DateTime start1 = event.getStart().getDateTime();
 
-                DateTime end1 = event.getEnd().getDateTime();
+                    DateTime end1 = event.getEnd().getDateTime();
 
-                String location = event.getLocation();
-                if (location == null) {
-                    location = "";
-                }
-                if (start1 == null) {
-                    // All-day events don't have start times, so just use
-                    // the start date.
-                    start1 = event.getStart().getDate();
-                    if (end1 == null) {
-                        end1 = event.getEnd().getDate();
+                    String location = event.getLocation();
+                    if (location == null) {
+                        location = "";
                     }
+                    if (start1 == null) {
+                        // All-day events don't have start times, so just use
+                        // the start date.
+                        start1 = event.getStart().getDate();
+                        if (end1 == null) {
+                            end1 = event.getEnd().getDate();
+                        }
+                    }
+                    todayEventstrings.add(event.getSummary() + "/" + location + "/" + start1 + "/" + end1);
                 }
-                todayEventstrings.add(event.getSummary() + "/" + location + "/" + start1 + "/" + end1);
+
+
+                SharedPreferences allEvents = getSharedPreferences("Events", MODE_PRIVATE);
+                SharedPreferences.Editor editor = allEvents.edit();
+                for (String line : eventStrings) {
+                    editor.putString(line.toString(), line);
+                }
+                editor.apply();
+                return eventStrings;
             }
 
-            return eventStrings;
         }
 
-    }
-
-    public class PagesAdapter extends FragmentPagerAdapter {
-        public PagesAdapter(android.support.v4.app.FragmentManager fragmentManager) {
-            super(fragmentManager);
-            mCardFragment = new CardFragment();
-            mAllEventsFragment = new AllEventsFragment();
-            mAddEventToCal = new AddEventToCal();
-        }
-
-        @Override
-        public android.support.v4.app.Fragment getItem(int position) {
-            if (position == 0) {
-                return mCardFragment;
-            } else if (position == 1) {
-                return mAllEventsFragment;
-            } else if (position == 2) {
-                return mAddEventToCal;
+        public class PagesAdapter extends FragmentPagerAdapter {
+            public PagesAdapter(android.support.v4.app.FragmentManager fragmentManager) {
+                super(fragmentManager);
+                mCardFragment = new CardFragment();
+                mAllEventsFragment = new AllEventsFragment();
+                mAddEventToCal = new AddEventToCal();
             }
-            return null;
-        }
 
-        @Override
-        public int getCount() {
-            return 3;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            if (position == 0) {
-                return "Today's Events";
-            } else if (position == 1) {
-                return "All Upcoming Events";
-            } else if (position == 2) {
-                return "Create New Event";
+            @Override
+            public android.support.v4.app.Fragment getItem(int position) {
+                if (position == 0) {
+                    return mCardFragment;
+                } else if (position == 1) {
+                    return mAllEventsFragment;
+                } else if (position == 2) {
+                    return mAddEventToCal;
+                }
+                return null;
             }
-            return null;
-        }
-    }
 
-    private class DownloadTask extends AsyncTask<String, Integer, String> {
-
-        String data = null;
-
-        // Invoked by execute() method of this object
-        @Override
-        protected String doInBackground(String... url) {
-            try {
-                data = downloadUrl(url[0]);
-            } catch (Exception e) {
-                Log.d("Background Task", e.toString());
+            @Override
+            public int getCount() {
+                return 3;
             }
-            return data;
-        }
 
-        // Executed after the complete execution of doInBackground() method
-        @Override
-        protected void onPostExecute(String result) {
-
-            // Instantiating ParserTask which parses the json data from Geocoding webservice
-            // in a non-ui thread
-            ParserTask parserTask = new ParserTask();
-
-            // Start parsing the places in JSON format
-            // Invokes the "doInBackground()" method of the class ParseTask
-            parserTask.execute(result);
-        }
-    }
-
-    /**
-     * A class to parse the Geocoding Places in non-ui thread
-     */
-    class ParserTask extends AsyncTask<String, Integer, List<HashMap<String, String>>> {
-
-        JSONObject jObject;
-
-        // Invoked by execute() method of this object
-        @Override
-        protected List<HashMap<String, String>> doInBackground(String... jsonData) {
-
-            List<HashMap<String, String>> places = null;
-            GeocodeJSONParser parser = new GeocodeJSONParser();
-
-            try {
-                jObject = new JSONObject(jsonData[0]);
-
-                /** Getting the parsed data as a an ArrayList */
-                places = parser.parse(jObject);
-
-            } catch (Exception e) {
-                Log.d("Exception", e.toString());
-            }
-            return places;
-        }
-
-        // Executed after the complete execution of doInBackground() method
-        @Override
-        protected void onPostExecute(List<HashMap<String, String>> list) {
-
-            // Clears all the existing markers
-            mMap.clear();
-
-            for (int i = 0; i < list.size(); i++) {
-
-                // Creating a marker
-                MarkerOptions markerOptions = new MarkerOptions();
-
-                // Getting a place from the places list
-                HashMap<String, String> hmPlace = list.get(i);
-
-                // Getting latitude of the place
-                double lat = Double.parseDouble(hmPlace.get("lat"));
-
-                // Getting longitude of the place
-                double lng = Double.parseDouble(hmPlace.get("lng"));
-
-                // Getting name
-                String name = hmPlace.get("formatted_address");
-
-                LatLng latLng = new LatLng(lat, lng);
-
-                // Setting the position for the marker
-                markerOptions.position(latLng);
-
-                // Setting the title for the marker
-                markerOptions.title(name);
-
-                // Placing a marker on the touched position
-                mMap.addMarker(markerOptions);
-
-                // Locate the first location
-                if (i == 0)
-                    mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+            @Override
+            public CharSequence getPageTitle(int position) {
+                if (position == 0) {
+                    return "Events In The Next 24 Hours";
+                } else if (position == 1) {
+                    return "All Upcoming Events";
+                } else if (position == 2) {
+                    return "Create New Event";
+                }
+                return null;
             }
         }
 
+        private class DownloadTask extends AsyncTask<String, Integer, String> {
+
+            String data = null;
+
+            // Invoked by execute() method of this object
+            @Override
+            protected String doInBackground(String... url) {
+                try {
+                    data = downloadUrl(url[0]);
+                } catch (Exception e) {
+                    Log.d("Background Task", e.toString());
+                }
+                return data;
+            }
+
+            // Executed after the complete execution of doInBackground() method
+            @Override
+            protected void onPostExecute(String result) {
+
+                // Instantiating ParserTask which parses the json data from Geocoding webservice
+                // in a non-ui thread
+                ParserTask parserTask = new ParserTask();
+
+                // Start parsing the places in JSON format
+                // Invokes the "doInBackground()" method of the class ParseTask
+                parserTask.execute(result);
+            }
+        }
+
+        /**
+         * A class to parse the Geocoding Places in non-ui thread
+         */
+        class ParserTask extends AsyncTask<String, Integer, List<HashMap<String, String>>> {
+
+            JSONObject jObject;
+
+            // Invoked by execute() method of this object
+            @Override
+            protected List<HashMap<String, String>> doInBackground(String... jsonData) {
+
+                List<HashMap<String, String>> places = null;
+                GeocodeJSONParser parser = new GeocodeJSONParser();
+
+                try {
+                    jObject = new JSONObject(jsonData[0]);
+
+                    /** Getting the parsed data as a an ArrayList */
+                    places = parser.parse(jObject);
+
+                } catch (Exception e) {
+                    Log.d("Exception", e.toString());
+                }
+                return places;
+            }
+
+            // Executed after the complete execution of doInBackground() method
+            @Override
+            protected void onPostExecute(List<HashMap<String, String>> list) {
+
+                // Clears all the existing markers
+                mMap.clear();
+
+                for (int i = 0; i < list.size(); i++) {
+
+                    // Creating a marker
+                    MarkerOptions markerOptions = new MarkerOptions();
+
+                    // Getting a place from the places list
+                    HashMap<String, String> hmPlace = list.get(i);
+
+                    // Getting latitude of the place
+                    double lat = Double.parseDouble(hmPlace.get("lat"));
+
+                    // Getting longitude of the place
+                    double lng = Double.parseDouble(hmPlace.get("lng"));
+
+                    // Getting name
+                    String name = hmPlace.get("formatted_address");
+
+                    LatLng latLng = new LatLng(lat, lng);
+
+                    // Setting the position for the marker
+                    markerOptions.position(latLng);
+
+                    // Setting the title for the marker
+                    markerOptions.title(name);
+
+                    // Placing a marker on the touched position
+                    mMap.addMarker(markerOptions);
+
+                    // Locate the first location
+                    if (i == 0)
+                        mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+                }
+            }
 
 
+        }
 
-
-    }
 
 
     private void initializeViews() {
@@ -1292,7 +1224,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
 
-    private class AsyncLoading extends AsyncTask<Void, Void, List<String>> {
+    public final class AsyncLoading extends AsyncTask<Void, Void, List<String>> {
 
         @Override
         protected List<String> doInBackground(Void... params) {
@@ -1313,21 +1245,17 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         protected void onPostExecute(List<String> imageList) {
             // TODO : Step 5 - Now we have ImageAdapter and the data(list), post the picture!
 
-            ImageAdapter adapter = new ImageAdapter(MainActivity.this, imageList);
+            adapter = new ImageAdapter(MainActivity.this, imageList);
             mGridView.setAdapter(adapter);
 
         }
     }
-
-
 
     @Override
     public void onBackPressed() {
 
         // super.onBackPressed(); // Comment this super call to avoid calling finish()
     }
-
-
 
 }
 
