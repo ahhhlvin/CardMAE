@@ -29,6 +29,7 @@ public class SelectCardActivity extends ActionBarActivity {
         setContentView(R.layout.activity_select_card);
 
 
+        checkableList = (ListView) findViewById(R.id.checkableList);
 
 
         if (MainActivity.flickrChecked) {
@@ -41,6 +42,7 @@ public class SelectCardActivity extends ActionBarActivity {
                             checkableList.getAdapter().getItemId(0));
                 }
             });
+            MainActivity.flickrChecked = false;
         } else {
         }
 
@@ -55,6 +57,7 @@ public class SelectCardActivity extends ActionBarActivity {
                             checkableList.getAdapter().getItemId(1));
                 }
             });
+            MainActivity.weatherChecked = false;
         } else {
         }
 
@@ -69,6 +72,7 @@ public class SelectCardActivity extends ActionBarActivity {
                             checkableList.getAdapter().getItemId(2));
                 }
             });
+            MainActivity.mapChecked = false;
         } else {
         }
 
@@ -107,6 +111,7 @@ public class SelectCardActivity extends ActionBarActivity {
                             checkableList.getAdapter().getItemId(4));
                 }
             });
+            MainActivity.todoChecked = false;
         } else {
         }
 
@@ -127,6 +132,8 @@ public class SelectCardActivity extends ActionBarActivity {
                         MainActivity.weatherChecked = true;
                     } else if (item.equals("Map")) {
                         MainActivity.mapChecked = true;
+                    } else if (item.equals("Calendar")) {
+                        MainActivity.calendarChecked = true;
                     } else if (item.equals("To-do List")) {
                         MainActivity.todoChecked = true;
                     }
@@ -145,7 +152,6 @@ public class SelectCardActivity extends ActionBarActivity {
 
         super.onStart();
         //create an instance of ListView
-        checkableList = (ListView) findViewById(R.id.checkableList);
         //set multiple selection mode
         checkableList.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
         String[] items ={"Flickr", "Weather", "Map", "Calendar", "To-do List"};
