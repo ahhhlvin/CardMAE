@@ -41,87 +41,87 @@ public class SelectCardActivity extends ActionBarActivity {
                 public void onClick(View view) {
 
 
-                    for (int i = 0; i < selectedItems.size(); i++) {
-                        String item = selectedItems.get(i);
-
-                        if (item.equals("Flickr")) {
-                            MainActivity.flickrChecked = true;
-                        } else if (item.equals("Weather")) {
-                            MainActivity.weatherChecked = true;
-                        } else if (item.equals("Map")) {
-                            MainActivity.mapChecked = true;
-                        } else if (item.equals("Calendar")) {
-                            MainActivity.calendarChecked = true;
-                        } else if (item.equals("To-do List")) {
-                            MainActivity.todoChecked = true;
-                        }
-                    }
-
-
-                    Intent toMain = new Intent(getApplicationContext(), MainActivity.class);
-                    startActivity(toMain);
-                }
-            });
-
-        }
-
-
-    public void onResume() {
-        super.onResume();
-
-        new Handler().post(new Runnable() {
-            @Override
-            public void run() {
-                if (MainActivity.flickrChecked) {
-                    checkableList.performItemClick(
-                            checkableList.getChildAt(0),
-                            0,
-                            checkableList.getAdapter().getItemId(0));
-                    MainActivity.flickrChecked = false;
-                } else {
-                }
-
-
-                if (MainActivity.weatherChecked) {
-                    checkableList.performItemClick(
-                            checkableList.getChildAt(1),
-                            1,
-                            checkableList.getAdapter().getItemId(1));
-                    MainActivity.weatherChecked = false;
-                } else {
-                }
-
-
-                if (MainActivity.mapChecked) {
-                    checkableList.performItemClick(
-                            checkableList.getChildAt(2),
-                            2,
-                            checkableList.getAdapter().getItemId(2));
-                    MainActivity.mapChecked = false;
-                } else {
-                }
-
-
-                if (MainActivity.calendarChecked) {
-                    checkableList.performItemClick(
-                            checkableList.getChildAt(3),
-                            3,
-                            checkableList.getAdapter().getItemId(3));
-                } else {
-                    checkableList.performItemClick(
-                            checkableList.getChildAt(3),
-                            3,
-                            checkableList.getAdapter().getItemId(3));
-                }
-
-                    if (MainActivity.todoChecked) {
-                        checkableList.performItemClick(
-                                checkableList.getChildAt(4),
-                                4,
-                                checkableList.getAdapter().getItemId(4));
-                        MainActivity.todoChecked = false;
-                    } else {
-                    }
+//                    for (int i = 0; i < selectedItems.size(); i++) {
+//                        String item = selectedItems.get(i);
+//
+//                        if (item.equals("Flickr")) {
+//                            MainActivity.flickrChecked = true;
+//                        } else if (item.equals("Weather")) {
+//                            MainActivity.weatherChecked = true;
+//                        } else if (item.equals("Map")) {
+//                            MainActivity.mapChecked = true;
+//                        } else if (item.equals("Calendar")) {
+//                            MainActivity.calendarChecked = true;
+//                        } else if (item.equals("To-do List")) {
+//                            MainActivity.todoChecked = true;
+//                        }
+//                    }
+//
+//
+//                    Intent toMain = new Intent(getApplicationContext(), MainActivity.class);
+//                    startActivity(toMain);
+//                }
+//            });
+//
+//        }
+//
+//
+//    public void onResume() {
+//        super.onResume();
+//
+//        new Handler().post(new Runnable() {
+//            @Override
+//            public void run() {
+//                if (MainActivity.flickrChecked) {
+//                    checkableList.performItemClick(
+//                            checkableList.getChildAt(0),
+//                            0,
+//                            checkableList.getAdapter().getItemId(0));
+//                    MainActivity.flickrChecked = false;
+//                } else {
+//                }
+//
+//
+//                if (MainActivity.weatherChecked) {
+//                    checkableList.performItemClick(
+//                            checkableList.getChildAt(1),
+//                            1,
+//                            checkableList.getAdapter().getItemId(1));
+//                    MainActivity.weatherChecked = false;
+//                } else {
+//                }
+//
+//
+//                if (MainActivity.mapChecked) {
+//                    checkableList.performItemClick(
+//                            checkableList.getChildAt(2),
+//                            2,
+//                            checkableList.getAdapter().getItemId(2));
+//                    MainActivity.mapChecked = false;
+//                } else {
+//                }
+//
+//
+//                if (MainActivity.calendarChecked) {
+//                    checkableList.performItemClick(
+//                            checkableList.getChildAt(3),
+//                            3,
+//                            checkableList.getAdapter().getItemId(3));
+//                } else {
+//                    checkableList.performItemClick(
+//                            checkableList.getChildAt(3),
+//                            3,
+//                            checkableList.getAdapter().getItemId(3));
+//                }
+//
+//                    if (MainActivity.todoChecked) {
+//                        checkableList.performItemClick(
+//                                checkableList.getChildAt(4),
+//                                4,
+//                                checkableList.getAdapter().getItemId(4));
+//                        MainActivity.todoChecked = false;
+//                    } else {
+//                    }
 
                 }
 
