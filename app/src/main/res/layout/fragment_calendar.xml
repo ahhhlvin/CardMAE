@@ -1,0 +1,53 @@
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/calendarCard"
+    tools:context="madelyntav.c4q.nyc.googlecards.CalendarFragment">
+
+    <!--<android.support.v7.widget.CardView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/calendarTitle"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_above="@+id/pager"-->
+            <!--android:gravity="center_horizontal"-->
+            <!--android:padding="5dp"-->
+            <!--android:text="calendar"-->
+            <!--android:textColor="#2196f3"-->
+            <!--android:textSize="30dp" />-->
+
+    <!--</android.support.v7.widget.CardView>-->
+
+    <!--<android.support.v7.widget.CardView-->
+        <!--android:id="@+id/calendarCard"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+
+        <TextView
+            android:id="@+id/mStatusText"
+            android:layout_width="fill_parent"
+            android:layout_height="300dp"
+            android:gravity="center"
+            android:textStyle="bold" />
+
+
+        <!-- activity_screen_slide.xml -->
+        <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v4.view.PagerTabStrip
+                android:layout_width="match_parent"
+                android:layout_height="50dp">
+
+            </android.support.v4.view.PagerTabStrip>
+
+        </android.support.v4.view.ViewPager>
+
+    </android.support.v7.widget.CardView>
+

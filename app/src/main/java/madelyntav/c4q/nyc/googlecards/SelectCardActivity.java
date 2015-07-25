@@ -31,7 +31,7 @@ public class SelectCardActivity extends ActionBarActivity {
 
 
 
-        if (MainActivity.flickrChecked) {
+        if (MainActivityFragment.flickrChecked) {
             new Handler().post(new Runnable() {
                 @Override
                 public void run() {
@@ -41,12 +41,12 @@ public class SelectCardActivity extends ActionBarActivity {
                             checkableList.getAdapter().getItemId(0));
                 }
             });
-            MainActivity.flickrChecked = false;
+            MainActivityFragment.flickrChecked = false;
         } else {
         }
 
 
-        if (MainActivity.weatherChecked) {
+        if (MainActivityFragment.weatherChecked) {
             new Handler().post(new Runnable() {
                 @Override
                 public void run() {
@@ -56,12 +56,12 @@ public class SelectCardActivity extends ActionBarActivity {
                             checkableList.getAdapter().getItemId(1));
                 }
             });
-            MainActivity.weatherChecked = false;
+            MainActivityFragment.weatherChecked = false;
         } else {
         }
 
 
-        if (MainActivity.mapChecked) {
+        if (MainActivityFragment.mapChecked) {
             new Handler().post(new Runnable() {
                 @Override
                 public void run() {
@@ -71,13 +71,13 @@ public class SelectCardActivity extends ActionBarActivity {
                             checkableList.getAdapter().getItemId(2));
                 }
             });
-            MainActivity.mapChecked = false;
+            MainActivityFragment.mapChecked = false;
         } else {
         }
 
 
 
-        if (MainActivity.calendarChecked) {
+        if (MainActivityFragment.calendarChecked) {
             new Handler().post(new Runnable() {
                 @Override
                 public void run() {
@@ -100,7 +100,7 @@ public class SelectCardActivity extends ActionBarActivity {
         }
 
 
-        if (MainActivity.todoChecked) {
+        if (MainActivityFragment.todoChecked) {
             new Handler().post(new Runnable() {
                 @Override
                 public void run() {
@@ -110,7 +110,7 @@ public class SelectCardActivity extends ActionBarActivity {
                             checkableList.getAdapter().getItemId(4));
                 }
             });
-            MainActivity.todoChecked = false;
+            MainActivityFragment.todoChecked = false;
         } else {
         }
 
@@ -126,15 +126,15 @@ public class SelectCardActivity extends ActionBarActivity {
 
 
                     if (item.equals("Flickr")) {
-                        MainActivity.flickrChecked = true;
+                        MainActivityFragment.flickrChecked = true;
                     } else if (item.equals("Weather")) {
-                        MainActivity.weatherChecked = true;
+                        MainActivityFragment.weatherChecked = true;
                     } else if (item.equals("Map")) {
-                        MainActivity.mapChecked = true;
+                        MainActivityFragment.mapChecked = true;
                     } else if (item.equals("Calendar")) {
-                        MainActivity.calendarChecked = true;
+                        MainActivityFragment.calendarChecked = true;
                     } else if (item.equals("To-do List")) {
-                        MainActivity.todoChecked = true;
+                        MainActivityFragment.todoChecked = true;
                     }
                 }
 
