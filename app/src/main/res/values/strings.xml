@@ -15,4 +15,5 @@
     <string name="title_activity_map_card">MapCard</string>
     <string name="title_activity_maps">Maps</string>
     <string name="title_activity_card_select">CardSelect</string>
+    <string name="title_activity_fragment">FragmentActivity</string>
 </resources>

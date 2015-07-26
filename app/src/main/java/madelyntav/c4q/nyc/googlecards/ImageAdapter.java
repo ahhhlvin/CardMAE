@@ -18,7 +18,7 @@ public class ImageAdapter extends BaseAdapter {
     Context mContext;
     List<String> imageUrlList;
 
-    public ImageAdapter(Context mContext, List<String> imageUrlList) {
+    public ImageAdapter(MainFragment.AsyncLoading mContext, List<String> imageUrlList) {
         this.mContext = mContext;
         this.imageUrlList = imageUrlList;
 
