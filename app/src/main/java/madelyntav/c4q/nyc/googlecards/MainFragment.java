@@ -165,7 +165,7 @@ public class MainFragment extends Fragment {
             nameLayout = (LinearLayout) view.findViewById(R.id.nameLayout);
             enterNameLayout = (LinearLayout) view.findViewById(R.id.enterNameLayout);
 
-            SharedPreferences sharedPreferences = getSharedPreferences("Name", MODE_PRIVATE);
+            SharedPreferences sharedPreferences = getActivity().getSharedPreferences("Name", MODE_PRIVATE);
             storedName = sharedPreferences.getString("UserName", null);
             homeAddress = sharedPreferences.getString("homeAddress", "");
             workAddress = sharedPreferences.getString("workAddress", "");
@@ -237,7 +237,7 @@ public class MainFragment extends Fragment {
                     }
                 });
             } else {
-                Toast.makeText(this, getString(R.string.network_unavailable), Toast.LENGTH_LONG).show();
+                Toast.makeText(MainFragment.this, getString(R.string.network_unavailable), Toast.LENGTH_LONG).show();
             }
 
             mButton.setOnClickListener(new View.OnClickListener() {
@@ -435,7 +435,7 @@ public class MainFragment extends Fragment {
                     list.remove(position);
                     listAdapter.notifyDataSetChanged();
 
-                    Toast.makeText(MainActivity.this, "Great Job! Making Progress!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainFragment.this, "Great Job! Making Progress!", Toast.LENGTH_SHORT).show();
 
                 }
             });
@@ -1179,8 +1179,6 @@ public class MainFragment extends Fragment {
 
         @Override
         protected List<String> doInBackground(Void... params) {
-            // TODO : Step 3 - by using FlickrGetter.java, get latest 20 images' Urls from Flickr and return the result.
-
 
             try {
                 return new FlickrGetter().getBitmapList();
@@ -1194,18 +1192,10 @@ public class MainFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<String> imageList) {
-            // TODO : Step 5 - Now we have ImageAdapter and the data(list), post the picture!
 
-            adapter = new ImageAdapter(MainActivity.this, imageList);
+            adapter = new ImageAdapter(this, imageList);
             mGridView.setAdapter(adapter);
 
         }
     }
-
-    @Override
-    public void onBackPressed() {
-
-        // super.onBackPressed(); // Comment this super call to avoid calling finish()
-    }
-  }
 }
